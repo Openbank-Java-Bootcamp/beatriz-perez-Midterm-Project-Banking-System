@@ -52,12 +52,19 @@ Patterns that indicate fraud include:
 
 ### Steps
 
-1. Spring Boot set up with **spring Initializr**:
+1. Download project structure and dependencies from [start.spring.io](https://start.spring.io/)
 
-![spring initializr](./src/images/initializr.png)
+    Spring Boot set up with **spring Initializr**:
+
+    ![spring initializr](./src/images/initializr.png)
 
 2. Model:
-   1. Create entities for accounts and users and establish their properties and relationships
+   a. Create entities for accounts and users and establish their properties and relationships
+   b. Create auxiliary classes and enums (Status, Money...)
+   c. Add dependencies and application properties for validation
+   d. Add conditions for each entity property when needed
+
+3. 
 
 ***
 
