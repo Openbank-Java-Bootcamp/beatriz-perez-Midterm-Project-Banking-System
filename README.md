@@ -2,9 +2,7 @@
 
 by **Beatriz Pérez Fernández** for OpenBank-IronHack Java BootCamp
 
----
 ***
-___
 
 ## Assignment Requirements and Deliverables:
 
@@ -32,13 +30,21 @@ Patterns that indicate fraud include:
 
 ### Deliverables
 - A working REST API, built by you that runs on a local server.
-- The URL of the GitHub repository for your app.
+
+- The URL of the GitHub repository for your app:
+
+[Github repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
+
 - A simplified class diagram representing your project structure should be added to the repo.
+
+[Class diagram](https://drive.google.com/file/d/1AzKxl9wNN_4bO68MQG1XOqBxD4r2wUzp/view?usp=sharing)
+
 - Adequate and complete documentation in the README.md file.
 
----
+[README.md file](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System/blob/master/README.md)
+
+
 ***
-___
 
 ## How the project was built:
 
@@ -51,9 +57,7 @@ ___
 2. Model:
    1. Create entities for accounts and users and establish their properties and relationships
 
----
 ***
-___
 
 ## How the project works and how to use it:
 
