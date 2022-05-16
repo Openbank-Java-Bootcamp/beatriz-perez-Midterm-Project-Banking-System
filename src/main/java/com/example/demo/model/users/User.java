@@ -1,12 +1,16 @@
-package com.example.demo.model;
+package com.example.demo.model.users;
 
 import com.example.demo.model.aux.Role;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
+@NoArgsConstructor
+@Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "user")
 public class User {
@@ -20,6 +24,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
-
-
+    public User(String username) {
+        this.username = username;
+    }
 }

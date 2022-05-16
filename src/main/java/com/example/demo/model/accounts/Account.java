@@ -1,7 +1,8 @@
 package com.example.demo.model.accounts;
 
 import com.example.demo.enums.Status;
-import com.example.demo.model.User;
+import com.example.demo.model.users.AccountHolder;
+import com.example.demo.model.users.User;
 import com.example.demo.model.aux.Money;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -31,11 +32,11 @@ public class Account {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "primary_owner")
-    private User primaryOwner;
+    private AccountHolder primaryOwner;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "secondary_owner")
-    private User secondaryOwner;
+    private AccountHolder secondaryOwner;
 
     private Status status;
 
@@ -61,7 +62,7 @@ public class Account {
     private Money penaltyFee;
 
     // Constructor
-    public Account(String secretKey, User primaryOwner, Optional<User> secondaryOwner, Money balance, Money minimumBalance, Money penaltyFee) {
+    public Account(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Money penaltyFee) {
         this.creationDate = new Date(); // Current date
         this.secretKey = secretKey;
         this.primaryOwner = primaryOwner;
