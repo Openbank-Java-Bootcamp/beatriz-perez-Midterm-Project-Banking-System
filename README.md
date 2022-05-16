@@ -29,19 +29,21 @@ Patterns that indicate fraud include:
 - More than 2 transactions occur on a single account within a 1 second period.
 
 ### Deliverables
-- A working REST API, built by you that runs on a local server.
+- A working REST API, built by you that runs on a local server:
+      
+
 
 - The URL of the GitHub repository for your app:
 
-[Github repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
+   [GitHub repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
 
-- A simplified class diagram representing your project structure should be added to the repo.
+- A simplified class diagram representing your project structure should be added to the repo:
 
-[Class diagram](https://drive.google.com/file/d/1AzKxl9wNN_4bO68MQG1XOqBxD4r2wUzp/view?usp=sharing)
+   [Class diagram](https://drive.google.com/file/d/1AzKxl9wNN_4bO68MQG1XOqBxD4r2wUzp/view?usp=sharing)
 
-- Adequate and complete documentation in the README.md file.
+- Adequate and complete documentation in the README.md file:
 
-[README.md file](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System/blob/master/README.md)
+   [README.md file](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System/blob/master/README.md)
 
 
 ***
