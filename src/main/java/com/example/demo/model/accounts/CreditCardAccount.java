@@ -31,33 +31,33 @@ public class CreditCardAccount  extends Account{
     private Money creditLimit;
 
     // Constructors
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Money penaltyFee, Double interestRate, Money creditLimit) {
-        super(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, penaltyFee);
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Double interestRate, Money creditLimit) {
+        super(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance);
         this.interestRate = interestRate;
         // Savings accounts may be instantiated with a minimum balance of less than 1000 but no lower than 100
         if( creditLimit.getAmount().doubleValue() > 100000.0 ) {
             // MESSAGE <----------------------------------------------------------------------------------------------------- !
-            // "CreditCard accounts should have a maximum credit limit of 100000"
+            // "CreditCard accounts should have a maximum credit limit of 100000. Credit limit has been set to 100000."
             super.setMinimumBalance(new Money(new BigDecimal("100000")));
         }
         if( creditLimit.getAmount().doubleValue()< 100.0 ) {
             // MESSAGE <----------------------------------------------------------------------------------------------------- !
-            // "CreditCard accounts should have a minimum credit limit of 100"
+            // "CreditCard accounts should have a minimum credit limit of 100. Credit limit has been set to 100."
             super.setMinimumBalance(new Money(new BigDecimal("100")));
         }
         this.creditLimit = creditLimit;
     }
     // default creditLimit
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Money penaltyFee, Double interestRate) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, penaltyFee, interestRate, new Money(new BigDecimal("100")));
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Double interestRate) {
+        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, interestRate, new Money(new BigDecimal("100")));
     }
     // default interestRate
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Money penaltyFee, Money creditLimit) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, penaltyFee, 0.2, creditLimit);
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Money creditLimit) {
+        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, 0.2, creditLimit);
     }
     // default interestRate & creditLimit
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Money penaltyFee) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, penaltyFee, new Money(new BigDecimal("100")));
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance) {
+        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, new Money(new BigDecimal("100")));
     }
 
 }

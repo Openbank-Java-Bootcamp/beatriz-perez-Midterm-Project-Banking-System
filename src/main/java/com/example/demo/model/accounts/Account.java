@@ -2,12 +2,12 @@ package com.example.demo.model.accounts;
 
 import com.example.demo.enums.Status;
 import com.example.demo.model.users.AccountHolder;
-import com.example.demo.model.users.User;
 import com.example.demo.model.aux.Money;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_number")
-    private Long accountNumber;
+    private Long accountNumber; // Embedded <-----------------------------------
 
     @Column(name = "creation_date")
     private Date creationDate;
@@ -59,10 +59,10 @@ public class Account {
             @AttributeOverride(name = "amount", column = @Column(name = "penalty_fee")),
             @AttributeOverride(name = "currency", column = @Column(name = "penalty_fee_currency"))
     })
-    private Money penaltyFee;
+    private Money penaltyFee = new Money(new BigDecimal("40"));
 
     // Constructor
-    public Account(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Money penaltyFee) {
+    public Account(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance) {
         this.creationDate = new Date(); // Current date
         this.secretKey = secretKey;
         this.primaryOwner = primaryOwner;
@@ -70,6 +70,5 @@ public class Account {
         this.status = Status.ACTIVE; // All accounts are active when created
         this.balance = balance;
         this.minimumBalance = minimumBalance;
-        this.penaltyFee = penaltyFee;
     }
 }
