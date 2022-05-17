@@ -76,6 +76,10 @@ Patterns that indicate fraud include:
    - Create service interfaces for all entities: roles, accounts and users to include methods to implement
    - Create service implementations (classes) for all entities: roles, accounts and users to implement methods
 
+5. Controller: create ENDPOINTS and add methods for requests
+   - Create controller interfaces for all entities: roles, accounts and users to include methods to implement
+   - Create controller implementations (classes) for all entities: roles, accounts and users to implement methods and establish endpoint routes
+
 ***
 
 ## How the project works and how to use it:
