@@ -80,6 +80,12 @@ Patterns that indicate fraud include:
    - Create controller interfaces for all entities: roles, accounts and users to include methods to implement
    - Create controller implementations (classes) for all entities: roles, accounts and users to implement methods and establish endpoint routes
 
+6. Security configuration, AUTHENTICATION and AUTHORIZATION
+   - Add dependencies: jwt dependency
+   - Add filters for authentication and authorisation
+   - Add a security configuration file
+   - Use PasswordEncoder to encode passwords
+
 ***
 
 ## How the project works and how to use it:
