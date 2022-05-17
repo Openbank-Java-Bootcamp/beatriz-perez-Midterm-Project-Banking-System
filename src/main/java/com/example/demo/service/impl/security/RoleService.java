@@ -27,11 +27,11 @@ public class RoleService implements RoleServiceInterface {
         return roleRepo.save(role);
     }
 
-    public void addRoleToUser(Long userId, String roleName) {
-        Optional<User> user = userRepo.findById(userId);
+    public void addRoleToUser(String username, String roleName) {
+        User user = userRepo.findByUsername(username);
         Role role = roleRepo.findByName(roleName);
-        user.get().getRoles().add(role);
-        userRepo.save(user.get());
+        user.getRoles().add(role);
+        userRepo.save(user);
     }
 
 }

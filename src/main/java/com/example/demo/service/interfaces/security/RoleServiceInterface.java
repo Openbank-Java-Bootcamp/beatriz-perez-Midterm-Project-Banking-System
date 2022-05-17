@@ -6,6 +6,6 @@ public interface RoleServiceInterface {
 
     Role saveRole(Role role);
 
-    void addRoleToUser(Long userId, String roleName);
+    void addRoleToUser(String username, String roleName);
 
 }

@@ -34,6 +34,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         if(userRepo.findByUsername(user.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
         // Save new user:
         log.info("Saving a new user {} in the DB", user.getUsername());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 

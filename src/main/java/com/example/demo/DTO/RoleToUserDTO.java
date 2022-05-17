@@ -7,8 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class RoleToUserDTO {
 
-    private Long userId;
-
+    private String username;
     private String roleName;
 
 }

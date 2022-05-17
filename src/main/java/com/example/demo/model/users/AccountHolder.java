@@ -17,8 +17,8 @@ public class AccountHolder extends User{
     private Date dateOfBirth;
 
     // Constructors
-    public AccountHolder(String username, Date dateOfBirth) {
-        super(username);
+    public AccountHolder(String username, String password, Date dateOfBirth) {
+        super(username, password);
         this.dateOfBirth = dateOfBirth;
     }
 }
