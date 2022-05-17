@@ -1,4 +1,4 @@
-package com.example.demo.model.aux;
+package com.example.demo.model.security;
 
 import jakarta.persistence.*;
 import lombok.Data;

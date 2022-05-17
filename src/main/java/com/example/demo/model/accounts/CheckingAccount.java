@@ -27,7 +27,7 @@ public class CheckingAccount extends Account{
     private AccountType type;
 
     // Constructor
-    public CheckingAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance) {
+    public CheckingAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance) {
         super(secretKey, primaryOwner, secondaryOwner, balance, new Money(new BigDecimal("250")));
         if( getAge(primaryOwner) < 24 ) {
             this.type = AccountType.STUDENT;

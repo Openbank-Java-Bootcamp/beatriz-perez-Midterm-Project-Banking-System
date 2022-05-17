@@ -62,11 +62,11 @@ public class Account {
     private Money penaltyFee = new Money(new BigDecimal("40"));
 
     // Constructor
-    public Account(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance) {
+    public Account(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {
         this.creationDate = new Date(); // Current date
         this.secretKey = secretKey;
         this.primaryOwner = primaryOwner;
-        this.secondaryOwner = secondaryOwner.get();
+        this.secondaryOwner = secondaryOwner;
         this.status = Status.ACTIVE; // All accounts are active when created
         this.balance = balance;
         this.minimumBalance = minimumBalance;

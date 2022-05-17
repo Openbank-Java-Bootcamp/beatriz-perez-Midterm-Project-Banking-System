@@ -1,6 +1,6 @@
 package com.example.demo.model.users;
 
-import com.example.demo.model.aux.Role;
+import com.example.demo.model.security.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

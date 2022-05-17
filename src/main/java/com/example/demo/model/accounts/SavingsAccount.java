@@ -25,7 +25,7 @@ public class SavingsAccount  extends Account{
     private BigDecimal interestRate;
 
     // Constructors
-    public SavingsAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate) throws IllegalArgumentException {
+    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate) throws IllegalArgumentException {
         super( secretKey, primaryOwner, secondaryOwner, balance, minimumBalance );
         this.interestRate = interestRate;
         BigDecimal maxMinimumBalance = new BigDecimal("1000");
@@ -41,15 +41,15 @@ public class SavingsAccount  extends Account{
         }
     }
     // default minimumBalance:
-    public SavingsAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, BigDecimal interestRate) {
+    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, BigDecimal interestRate) {
         this( secretKey, primaryOwner, secondaryOwner, balance, new Money(new BigDecimal("1000")), interestRate );
     }
     // default interest rate:
-    public SavingsAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance) {
+    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {
         this( secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, new BigDecimal("0.0025") );
     }
     // default interest rate & minimumBalance
-    public SavingsAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance) {
+    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance) {
         this( secretKey, primaryOwner, secondaryOwner, balance, new Money(new BigDecimal("1000")) );
     }
 }

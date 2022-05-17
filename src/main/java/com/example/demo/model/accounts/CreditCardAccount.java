@@ -30,7 +30,7 @@ public class CreditCardAccount  extends Account{
     private Money creditLimit;
 
     // Constructors
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate, Money creditLimit) throws IllegalArgumentException {
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate, Money creditLimit) throws IllegalArgumentException {
         super(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance);
         this.interestRate = interestRate;
         BigDecimal maxCreditLimit = new BigDecimal("100000");
@@ -47,15 +47,15 @@ public class CreditCardAccount  extends Account{
         this.creditLimit = creditLimit;
     }
     // default creditLimit
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate) {
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate) {
         this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, interestRate, new Money(new BigDecimal("100")));
     }
     // default interestRate
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, Money creditLimit) {
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, Money creditLimit) {
         this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance,  new BigDecimal("0.2"), creditLimit);
     }
     // default interestRate & creditLimit
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance) {
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {
         this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, new Money(new BigDecimal("100")));
     }
 
