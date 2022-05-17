@@ -4,6 +4,7 @@ import com.example.demo.model.security.Role;
 import com.example.demo.model.users.User;
 import com.example.demo.repository.security.RoleRepository;
 import com.example.demo.repository.users.UserRepository;
+import com.example.demo.service.interfaces.security.RoleServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RoleService {
+public class RoleService implements RoleServiceInterface {
 
     @Autowired
     private RoleRepository roleRepo;

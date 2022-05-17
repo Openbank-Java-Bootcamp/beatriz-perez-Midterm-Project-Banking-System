@@ -1,6 +1,7 @@
 package com.example.demo.controller.impl.security;
 
 import com.example.demo.DTO.RoleToUserDTO;
+import com.example.demo.controller.interfaces.security.RoleControllerInterface;
 import com.example.demo.model.security.Role;
 import com.example.demo.service.interfaces.security.RoleServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class RoleController {
+public class RoleController implements RoleControllerInterface {
 
     @Autowired
     private RoleServiceInterface roleService;
