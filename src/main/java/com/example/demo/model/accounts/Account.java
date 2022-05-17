@@ -4,6 +4,8 @@ import com.example.demo.enums.Status;
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.aux.Money;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -28,16 +30,19 @@ public class Account {
     private Date creationDate;
 
     @Column(name = "secret_key")
+    @NotEmpty(message = "You must have a secret key")
     private String secretKey; // HASHED <-----------------------------------
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "primary_owner")
+    @NotNull(message = "Accounts must have an owner")
     private AccountHolder primaryOwner;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "secondary_owner")
     private AccountHolder secondaryOwner;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Embedded
@@ -45,6 +50,7 @@ public class Account {
             @AttributeOverride(name = "amount", column = @Column(name = "balance")),
             @AttributeOverride(name = "currency", column = @Column(name = "balance_currency"))
     })
+    @NotNull(message = "Accounts must have a balance")
     private Money balance;
 
     @Embedded
@@ -52,6 +58,7 @@ public class Account {
             @AttributeOverride(name = "amount", column = @Column(name = "minimum_balance")),
             @AttributeOverride(name = "currency", column = @Column(name = "minimum_balance_currency"))
     })
+    @NotNull(message = "Accounts must have a minimum balance")
     private Money minimumBalance;
 
     @Embedded
