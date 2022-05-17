@@ -11,6 +11,7 @@ by **Beatriz Pérez Fernández** for OpenBank-IronHack Java BootCamp
 2. The system must have 3 types of Users: Admins, Third-party Users and AccountHolders.
 3. Admins can create new accounts. When creating a new account they can create Checking, Savings, or CreditCard Accounts.
 4. Interest and Fees should be applied appropriately.
+5. Account Access
 
 ### Technical Requirements
 - Include a Java/Spring Boot backend.
@@ -49,6 +50,10 @@ Patterns that indicate fraud include:
 ***
 
 ## How the project was built:
+
+- Task management in Trello:
+
+   [Trello tasks board](https://trello.com/invite/b/uEPSEIQa/8df7c946d07d38e4d7ce9ce5a126751e/midtermbankingsystem)
 
 ### Steps
 
