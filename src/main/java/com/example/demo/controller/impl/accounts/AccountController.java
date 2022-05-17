@@ -13,7 +13,15 @@ public class AccountController implements AccountControllerInterface {
     @Autowired
     private AccountServiceInterface AccountService;
 
+    // GET ENDPOINTS
+
     // POST ENDPOINTS
+
+    // PUT ENDPOINTS
+
+    // PATCH ENDPOINTS
+
+    // DELETE ENDPOINTS
 
 
 }
