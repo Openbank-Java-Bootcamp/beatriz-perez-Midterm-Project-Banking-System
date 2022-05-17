@@ -57,19 +57,24 @@ Patterns that indicate fraud include:
 
 ### Steps
 
-1. Download project structure and dependencies from [start.spring.io](https://start.spring.io/)
+1. Download PROJECT STRUCTURE and dependencies from [start.spring.io](https://start.spring.io/)
 
     Spring Boot set up with **spring Initializr**:
 
     ![spring initializr](./src/images/initializr.png)
 
-2. Model:
-   a. Create entities for accounts and users and establish their properties and relationships
-   b. Create auxiliary classes and enums (Status, Money...)
-   c. Add dependencies and application properties for validation
-   d. Add conditions for each entity property when needed
+2. Model: CREATE ENTITIES
+   - Create entities for accounts and users and establish their properties and relationships
+   - Create auxiliary classes and enums (Status, Money...)
+   - Add dependencies and application properties for validation
+   - Add conditions for each entity property when needed
 
-3. 
+3. Repository: COMMUNICATE WITH DATABASE
+   - Create repositories for all entities: roles, accounts and users to communicate with the DataBase
+
+4. Service: CREATE METHODS AND ADD BUSINESS LOGIC
+   - Create service interfaces for all entities: roles, accounts and users to include methods to implement
+   - Create service implementations (classes) for all entities: roles, accounts and users to implement methods
 
 ***
 
