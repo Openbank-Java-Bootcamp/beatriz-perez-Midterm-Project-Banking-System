@@ -30,21 +30,19 @@ public class CreditCardAccount  extends Account{
     private Money creditLimit;
 
     // Constructors
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate, Money creditLimit) {
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, Optional<AccountHolder> secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate, Money creditLimit) throws IllegalArgumentException {
         super(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance);
         this.interestRate = interestRate;
         BigDecimal maxCreditLimit = new BigDecimal("100000");
         BigDecimal minCreditLimit = new BigDecimal("100");
         // Check CREDIT LIMIT allowed range:
         if( creditLimit.getAmount().compareTo(maxCreditLimit) == 1 ) {
-            // MESSAGE <----------------------------------------------------------------------------------------------------- !
-            // "CreditCard accounts should have a maximum credit limit of 100000. Credit limit has been set to 100000."
             super.setMinimumBalance(new Money(maxCreditLimit));
+            throw new IllegalArgumentException("CreditCard accounts should have a maximum credit limit of 100000. Credit limit has been set to 100000.");
         }
         if( creditLimit.getAmount().compareTo(minCreditLimit) == -1 ) {
-            // MESSAGE <----------------------------------------------------------------------------------------------------- !
-            // "CreditCard accounts should have a minimum credit limit of 100. Credit limit has been set to 100."
             super.setMinimumBalance(new Money(minCreditLimit));
+            throw new IllegalArgumentException("CreditCard accounts should have a minimum credit limit of 100. Credit limit has been set to 100.");
         }
         this.creditLimit = creditLimit;
     }
