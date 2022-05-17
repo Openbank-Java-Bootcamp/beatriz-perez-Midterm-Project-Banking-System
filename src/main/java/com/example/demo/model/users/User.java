@@ -15,6 +15,7 @@ import java.util.Collection;
 @Table(name = "user")
 public class User {
 
+    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +25,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
+    // Constructor
     public User(String username) {
         this.username = username;
     }

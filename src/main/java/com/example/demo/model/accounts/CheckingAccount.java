@@ -39,6 +39,7 @@ public class CheckingAccount extends Account{
         }
     }
 
+    // Methods
     private int getAge(AccountHolder primaryOwner) {
         Date today = new Date();
         Date birthDate = primaryOwner.getDateOfBirth();
