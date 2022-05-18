@@ -6,4 +6,6 @@ public interface SavingsAccountServiceInterface {
 
     SavingsAccount createSavingsAccount(SavingsAccount account);
 
+    void checkMinimumBalance(SavingsAccount account);
+
 }

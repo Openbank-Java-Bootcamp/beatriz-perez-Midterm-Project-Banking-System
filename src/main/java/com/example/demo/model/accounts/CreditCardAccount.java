@@ -24,7 +24,7 @@ public class CreditCardAccount  extends Account{
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "amount", column = @Column(name = "credit_limit")),
-            @AttributeOverride(name = "amount", column = @Column(name = "credit_limit"))
+            @AttributeOverride(name = "currency", column = @Column(name = "credit_limit_currency"))
     })
     private Money creditLimit;
 

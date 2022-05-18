@@ -27,6 +27,15 @@ public class CreditCardAccountService implements CreditCardAccountServiceInterfa
         // Handle possible errors:
 
         // Set CREDIT LIMIT according to allowed range:
+        checkCreditLimit(account);
+        // Encrypt secret key:
+        account.setSecretKey(passwordEncoder.encode(account.getSecretKey()));
+        // Save new account:
+        log.info("Saving a new CreditCard Account in the DB");
+        return CreditCardAccountRepo.save(account);
+    }
+
+    public void checkCreditLimit(CreditCardAccount account) {
         BigDecimal maxCreditLimitAmount = new BigDecimal("100000");
         BigDecimal minCreditLimitAmount = new BigDecimal("100");
         if( account.getCreditLimit().getAmount().compareTo(maxCreditLimitAmount) == 1 ) {
@@ -37,15 +46,5 @@ public class CreditCardAccountService implements CreditCardAccountServiceInterfa
             account.setCreditLimit(new Money(minCreditLimitAmount));
             log.error("CreditCard accounts should have a minimum credit limit of {}. Credit limit has been set to this minimum value.", minCreditLimitAmount);
         }
-
-        // Encrypt secret key:
-        account.setSecretKey(passwordEncoder.encode(account.getSecretKey()));
-
-        // Save new account:
-        log.info("Saving a new CreditCard Account in the DB");
-        return CreditCardAccountRepo.save(account);
     }
-
-
-
 }

@@ -24,31 +24,13 @@ public class CheckingAccount extends Account{
     })
     private Money monthlyMaintenanceFee;
 
+    @Enumerated(EnumType.STRING)
     private AccountType type;
 
     // Constructor
     public CheckingAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance) {
-        super(secretKey, primaryOwner, secondaryOwner, balance, new Money(new BigDecimal("250")));
-        if( getAge(primaryOwner) < 24 ) {
-            this.type = AccountType.STUDENT;
-            super.setMinimumBalance(new Money(new BigDecimal("0")));
-            this.monthlyMaintenanceFee = new Money(new BigDecimal("0"));
-        } else {
-            this.type = AccountType.REGULAR;
-            this.monthlyMaintenanceFee = new Money(new BigDecimal("12"));
-        }
+        super( secretKey, primaryOwner, secondaryOwner, balance, new Money(new BigDecimal("0"), balance.getCurrency()));
+        this.monthlyMaintenanceFee = new Money(new BigDecimal("0"), balance.getCurrency());
+        this.type = AccountType.STUDENT;
     }
-
-    // Methods
-    private int getAge(AccountHolder primaryOwner) {
-        Date today = new Date();
-        Date birthDate = primaryOwner.getDateOfBirth();
-
-        Integer age = today.getYear() - birthDate.getYear();
-        if (today.getMonth() < birthDate.getMonth()) age--;
-        if (today.getMonth() == birthDate.getMonth() && today.getDay() < birthDate.getDay()) age--;
-        return age;
-    }
-
-
 }

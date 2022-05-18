@@ -65,10 +65,10 @@ public class Account {
             @AttributeOverride(name = "amount", column = @Column(name = "penalty_fee")),
             @AttributeOverride(name = "currency", column = @Column(name = "penalty_fee_currency"))
     })
-    private Money penaltyFee = DEFAULT_PENALTY_FEE;
+    private Money penaltyFee;
 
     // Default values
-    private static final Money DEFAULT_PENALTY_FEE = new Money(new BigDecimal("40"));
+    private static final BigDecimal FIXED_PENALTY_FEE_AMOUNT = new BigDecimal("40");
 
 
     // Constructor
@@ -80,5 +80,6 @@ public class Account {
         this.status = Status.ACTIVE; // All accounts are active when created
         this.balance = balance;
         this.minimumBalance = minimumBalance;
+        this.penaltyFee = new Money(FIXED_PENALTY_FEE_AMOUNT, balance.getCurrency()); // Penalty fee will have the same currency as the balance
     }
 }

@@ -6,4 +6,6 @@ public interface CreditCardAccountServiceInterface {
 
     CreditCardAccount createCreditCardAccount(CreditCardAccount account);
 
+    void checkCreditLimit(CreditCardAccount account);
+
 }

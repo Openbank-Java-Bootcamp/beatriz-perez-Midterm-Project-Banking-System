@@ -27,6 +27,15 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
         // Handle possible errors:
 
         // Set MINIMUM BALANCE according to allowed range:
+        checkMinimumBalance(account);
+        // Encrypt secret key:
+        account.setSecretKey(passwordEncoder.encode(account.getSecretKey()));
+        // Save new account:
+        log.info("Saving a new Savings Account in the DB");
+        return SavingsAccountRepo.save(account);
+    }
+
+    public void checkMinimumBalance(SavingsAccount account) {
         BigDecimal maxMinimumBalanceAmount = new BigDecimal("1000");
         BigDecimal minMinimumBalanceAmount = new BigDecimal("100");
         if( account.getMinimumBalance().getAmount().compareTo(maxMinimumBalanceAmount) == 1 ) {
@@ -37,15 +46,5 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
             account.setMinimumBalance(new Money(minMinimumBalanceAmount));
             log.error("Savings accounts should have a minimum balance of {} as a minimum. Minimum balance has been set to this minimum value.", minMinimumBalanceAmount);
         }
-
-        // Encrypt secret key:
-        account.setSecretKey(passwordEncoder.encode(account.getSecretKey()));
-
-        // Save new account:
-        log.info("Saving a new Savings Account in the DB");
-        return SavingsAccountRepo.save(account);
     }
-
-
-
 }
