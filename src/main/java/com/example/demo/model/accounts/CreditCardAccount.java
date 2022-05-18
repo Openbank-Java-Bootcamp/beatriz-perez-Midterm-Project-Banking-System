@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 
 @Entity
 @NoArgsConstructor
@@ -30,26 +31,25 @@ public class CreditCardAccount  extends Account{
 
     // Default values
     private static final BigDecimal DEFAULT_INTEREST_RATE = new BigDecimal("0.2");
-    private static final Money DEFAULT_CREDIT_LIMIT = new Money(new BigDecimal("100"));
+    private static final BigDecimal DEFAULT_CREDIT_LIMIT_AMOUNT = new BigDecimal("100");
 
 
     // Constructors
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate, Money creditLimit) {
-        super(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance);
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate, Money creditLimit) {
+        super( secretKey, primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency );
         this.interestRate = interestRate;
         this.creditLimit = creditLimit;
     }
     // default creditLimit
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, interestRate, DEFAULT_CREDIT_LIMIT);
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {
+        this(secretKey,primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency, interestRate, new Money(DEFAULT_CREDIT_LIMIT_AMOUNT, currency));
     }
     // default interestRate
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, Money creditLimit) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, DEFAULT_INTEREST_RATE, creditLimit);
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency, Money creditLimit) {
+        this(secretKey,primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency, DEFAULT_INTEREST_RATE, creditLimit);
     }
-    // default interestRate & creditLimit
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, DEFAULT_CREDIT_LIMIT);
+    // default creditLimit & interestRate
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency) {
+        this(secretKey,primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency, DEFAULT_INTEREST_RATE, new Money(DEFAULT_CREDIT_LIMIT_AMOUNT, currency));
     }
-
 }

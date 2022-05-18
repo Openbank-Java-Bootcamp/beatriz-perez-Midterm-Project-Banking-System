@@ -7,6 +7,6 @@ public interface CheckingAccountServiceInterface {
 
     CheckingAccount createCheckingAccount(CheckingAccount account);
 
-    Integer checkAge(AccountHolder primaryOwner);
+    void checkAge(CheckingAccount account);
 
 }

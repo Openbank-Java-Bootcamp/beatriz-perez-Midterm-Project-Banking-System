@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 
 @Entity
 @NoArgsConstructor
@@ -27,20 +28,20 @@ public class SavingsAccount  extends Account{
     private static final BigDecimal DEFAULT_MINIMUM_BALANCE_AMOUNT = new BigDecimal("1000");
 
     // Constructors
-    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate) {
-        super( secretKey, primaryOwner, secondaryOwner, balance, new Money(DEFAULT_MINIMUM_BALANCE_AMOUNT, balance.getCurrency()) );
+    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {
+        super( secretKey, primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency );
         this.interestRate = interestRate;
     }
     // default minimumBalance:
-    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, BigDecimal interestRate) {
-        this( secretKey, primaryOwner, secondaryOwner, balance, new Money(DEFAULT_MINIMUM_BALANCE_AMOUNT, balance.getCurrency()), interestRate );
+    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {
+        this(secretKey, primaryOwner, secondaryOwner, DEFAULT_MINIMUM_BALANCE_AMOUNT, balanceAmount, currency, interestRate);
     }
     // default interest rate:
-    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {
-        this( secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, DEFAULT_INTEREST_RATE );
+    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency) {
+        this(secretKey, primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency, DEFAULT_INTEREST_RATE);
     }
     // default interest rate & minimumBalance
-    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance) {
-        this( secretKey, primaryOwner, secondaryOwner, balance, new Money(DEFAULT_MINIMUM_BALANCE_AMOUNT, balance.getCurrency()) );
+    public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency) {
+        this(secretKey, primaryOwner, secondaryOwner, DEFAULT_MINIMUM_BALANCE_AMOUNT, balanceAmount, currency, DEFAULT_INTEREST_RATE);
     }
 }

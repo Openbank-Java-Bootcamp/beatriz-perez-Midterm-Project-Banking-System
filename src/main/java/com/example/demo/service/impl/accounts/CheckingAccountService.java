@@ -30,13 +30,7 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
         // Handle possible errors:
 
         // Set account type and conditions according to owner's age:
-        Integer age = checkAge(account.getPrimaryOwner());
-        if( age > 24 ) {
-            account.setType(AccountType.REGULAR);
-            account.setMinimumBalance(new Money(new BigDecimal("250"), account.getBalance().getCurrency()));
-            account.setMonthlyMaintenanceFee(new Money(new BigDecimal("12"), account.getBalance().getCurrency()));
-        }
-
+        checkAge(account);
         // Encrypt secret key:
         account.setSecretKey(passwordEncoder.encode(account.getSecretKey()));
         // Save new account:
@@ -44,13 +38,18 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
         return CheckingAccountRepo.save(account);
     }
 
-    public Integer checkAge(AccountHolder primaryOwner) {
+    public void checkAge(CheckingAccount account) {
         Date today = new Date();
-        Date birthDate = primaryOwner.getDateOfBirth();
+        Date birthDate = account.getPrimaryOwner().getDateOfBirth();
 
         Integer age = today.getYear() - birthDate.getYear();
         if (today.getMonth() < birthDate.getMonth()) age--;
         if (today.getMonth() == birthDate.getMonth() && today.getDay() < birthDate.getDay()) age--;
-        return age;
+
+        if( age > 24 ) {
+            account.setType(AccountType.REGULAR);
+            account.setMinimumBalance(new Money(account.REGULAR_MINIMUM_BALANCE_AMOUNT, account.getMinimumBalance().getCurrency()));
+            account.setMonthlyMaintenanceFee(new Money(account.REGULAR_MAINTENANCE_FEE_AMOUNT, account.getMonthlyMaintenanceFee().getCurrency()));
+        }
     }
 }

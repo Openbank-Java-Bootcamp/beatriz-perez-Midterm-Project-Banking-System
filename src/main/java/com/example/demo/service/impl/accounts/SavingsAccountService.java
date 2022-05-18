@@ -25,7 +25,7 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
     // Methods
     public SavingsAccount createSavingsAccount(SavingsAccount account) {
         // Handle possible errors:
-
+            // balanceAmount < min -------------------------------------------
         // Set MINIMUM BALANCE according to allowed range:
         checkMinimumBalance(account);
         // Encrypt secret key:

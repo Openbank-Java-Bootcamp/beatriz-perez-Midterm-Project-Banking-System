@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
 
 @Entity
@@ -72,14 +73,14 @@ public class Account {
 
 
     // Constructor
-    public Account(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {
+    public Account(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency) {
         this.creationDate = new Date(); // Current date
         this.secretKey = secretKey;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
         this.status = Status.ACTIVE; // All accounts are active when created
-        this.balance = balance;
-        this.minimumBalance = minimumBalance;
-        this.penaltyFee = new Money(FIXED_PENALTY_FEE_AMOUNT, balance.getCurrency()); // Penalty fee will have the same currency as the balance
+        this.balance = new Money(balanceAmount, currency);
+        this.minimumBalance = new Money(minimumBalanceAmount, currency); // MinimumBalance will have the same currency as the balance
+        this.penaltyFee = new Money(FIXED_PENALTY_FEE_AMOUNT, currency); // Penalty fee will have the same currency as the balance
     }
 }

@@ -8,8 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Optional;
+import java.util.Currency;
 
 @Entity
 @NoArgsConstructor
@@ -27,10 +26,18 @@ public class CheckingAccount extends Account{
     @Enumerated(EnumType.STRING)
     private AccountType type;
 
+    // Default values
+    private static final BigDecimal STUDENT_MINIMUM_BALANCE_AMOUNT = new BigDecimal("0");
+    private static final BigDecimal STUDENT_MAINTENANCE_FEE_AMOUNT = new BigDecimal("0");
+
+    public static final BigDecimal REGULAR_MINIMUM_BALANCE_AMOUNT = new BigDecimal("250");
+    public static final BigDecimal REGULAR_MAINTENANCE_FEE_AMOUNT = new BigDecimal("12");
+
+
     // Constructor
-    public CheckingAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance) {
-        super( secretKey, primaryOwner, secondaryOwner, balance, new Money(new BigDecimal("0"), balance.getCurrency()));
-        this.monthlyMaintenanceFee = new Money(new BigDecimal("0"), balance.getCurrency());
+    public CheckingAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency) {
+        super( secretKey, primaryOwner, secondaryOwner, STUDENT_MINIMUM_BALANCE_AMOUNT, balanceAmount, currency );
+        this.monthlyMaintenanceFee = new Money(STUDENT_MAINTENANCE_FEE_AMOUNT, currency);
         this.type = AccountType.STUDENT;
     }
 }
