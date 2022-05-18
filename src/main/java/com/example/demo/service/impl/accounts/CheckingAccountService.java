@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -39,12 +40,12 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
     }
 
     public void checkAge(CheckingAccount account) {
-        Date today = new Date();
-        Date birthDate = account.getPrimaryOwner().getDateOfBirth();
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = account.getPrimaryOwner().getDateOfBirth();
 
         Integer age = today.getYear() - birthDate.getYear();
-        if (today.getMonth() < birthDate.getMonth()) age--;
-        if (today.getMonth() == birthDate.getMonth() && today.getDay() < birthDate.getDay()) age--;
+        if (today.getMonth().getValue() < birthDate.getMonth().getValue()) age--;
+        if (today.getMonth() == birthDate.getMonth() && today.getDayOfMonth() < birthDate.getDayOfMonth()) age--;
 
         if( age > 24 ) {
             account.setType(AccountType.REGULAR);

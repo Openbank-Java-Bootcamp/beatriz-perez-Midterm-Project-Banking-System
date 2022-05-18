@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Currency;
 import java.util.Date;
 
@@ -27,7 +28,7 @@ public class Account {
     private Long accountNumber;
 
     @Column(name = "creation_date")
-    private Date creationDate;
+    private LocalDate creationDate;
 
     @Column(name = "secret_key")
     @NotEmpty(message = "You must have a secret key")
@@ -74,7 +75,7 @@ public class Account {
 
     // Constructor
     public Account(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency) {
-        this.creationDate = new Date(); // Current date
+        this.creationDate = LocalDate.now(); // Current date
         this.secretKey = secretKey;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
