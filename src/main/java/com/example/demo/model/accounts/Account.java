@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Optional;
 
 @Entity
 @NoArgsConstructor
@@ -24,14 +23,14 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_number")
-    private Long accountNumber; // Embedded <-----------------------------------
+    private Long accountNumber;
 
     @Column(name = "creation_date")
     private Date creationDate;
 
     @Column(name = "secret_key")
     @NotEmpty(message = "You must have a secret key")
-    private String secretKey; // HASHED <-----------------------------------
+    private String secretKey;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "primary_owner")
