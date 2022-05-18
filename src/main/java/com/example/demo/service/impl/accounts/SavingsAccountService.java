@@ -25,19 +25,22 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
     // Methods
     public SavingsAccount createSavingsAccount(SavingsAccount account) {
         // Handle possible errors:
+
         // Set MINIMUM BALANCE according to allowed range:
-        BigDecimal maxMinimumBalance = new BigDecimal("1000");
-        BigDecimal minMinimumBalance = new BigDecimal("100");
-        if( account.getMinimumBalance().getAmount().compareTo(maxMinimumBalance) == 1 ) {
-            account.setMinimumBalance(new Money(maxMinimumBalance));
-            log.error("Savings accounts should have a minimum balance of 1000 as a maximum. Minimum balance has been set to 1000.");
+        BigDecimal maxMinimumBalanceAmount = new BigDecimal("1000");
+        BigDecimal minMinimumBalanceAmount = new BigDecimal("100");
+        if( account.getMinimumBalance().getAmount().compareTo(maxMinimumBalanceAmount) == 1 ) {
+            account.setMinimumBalance(new Money(maxMinimumBalanceAmount));
+            log.error("Savings accounts should have a minimum balance of {} as a maximum. Minimum balance has been set to this maximum value.", maxMinimumBalanceAmount);
         }
-        if( account.getMinimumBalance().getAmount().compareTo(minMinimumBalance) == -1 ) {
-            account.setMinimumBalance(new Money(minMinimumBalance));
-            log.error("Savings accounts should have a minimum balance of 100 as a minimum. Minimum balance has been set to 100.");
+        if( account.getMinimumBalance().getAmount().compareTo(minMinimumBalanceAmount) == -1 ) {
+            account.setMinimumBalance(new Money(minMinimumBalanceAmount));
+            log.error("Savings accounts should have a minimum balance of {} as a minimum. Minimum balance has been set to this minimum value.", minMinimumBalanceAmount);
         }
+
         // Encrypt secret key:
         account.setSecretKey(passwordEncoder.encode(account.getSecretKey()));
+
         // Save new account:
         log.info("Saving a new Savings Account in the DB");
         return SavingsAccountRepo.save(account);

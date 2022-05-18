@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Entity
 @NoArgsConstructor
@@ -29,34 +28,28 @@ public class CreditCardAccount  extends Account{
     })
     private Money creditLimit;
 
+    // Default values
+    private static final BigDecimal DEFAULT_INTEREST_RATE = new BigDecimal("0.2");
+    private static final Money DEFAULT_CREDIT_LIMIT = new Money(new BigDecimal("100"));
+
+
     // Constructors
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate, Money creditLimit) throws IllegalArgumentException {
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate, Money creditLimit) {
         super(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance);
         this.interestRate = interestRate;
-        BigDecimal maxCreditLimit = new BigDecimal("100000");
-        BigDecimal minCreditLimit = new BigDecimal("100");
-        // Check CREDIT LIMIT allowed range:
-        if( creditLimit.getAmount().compareTo(maxCreditLimit) == 1 ) {
-            super.setMinimumBalance(new Money(maxCreditLimit));
-            throw new IllegalArgumentException("CreditCard accounts should have a maximum credit limit of 100000. Credit limit has been set to 100000.");
-        }
-        if( creditLimit.getAmount().compareTo(minCreditLimit) == -1 ) {
-            super.setMinimumBalance(new Money(minCreditLimit));
-            throw new IllegalArgumentException("CreditCard accounts should have a minimum credit limit of 100. Credit limit has been set to 100.");
-        }
         this.creditLimit = creditLimit;
     }
     // default creditLimit
     public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, interestRate, new Money(new BigDecimal("100")));
+        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, interestRate, DEFAULT_CREDIT_LIMIT);
     }
     // default interestRate
     public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, Money creditLimit) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance,  new BigDecimal("0.2"), creditLimit);
+        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, DEFAULT_INTEREST_RATE, creditLimit);
     }
     // default interestRate & creditLimit
     public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {
-        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, new Money(new BigDecimal("100")));
+        this(secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, DEFAULT_CREDIT_LIMIT);
     }
 
 }

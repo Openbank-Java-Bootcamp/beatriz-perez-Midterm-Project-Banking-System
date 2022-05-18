@@ -65,7 +65,11 @@ public class Account {
             @AttributeOverride(name = "amount", column = @Column(name = "penalty_fee")),
             @AttributeOverride(name = "currency", column = @Column(name = "penalty_fee_currency"))
     })
-    private Money penaltyFee = new Money(new BigDecimal("40"));
+    private Money penaltyFee = DEFAULT_PENALTY_FEE;
+
+    // Default values
+    private static final Money DEFAULT_PENALTY_FEE = new Money(new BigDecimal("40"));
+
 
     // Constructor
     public Account(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {

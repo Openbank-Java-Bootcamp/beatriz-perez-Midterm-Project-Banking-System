@@ -22,6 +22,11 @@ public class SavingsAccount  extends Account{
     @DecimalMin(value = "0", message = "CreditCard accounts should have a positive interest rate")
     private BigDecimal interestRate;
 
+    // Default values
+    private static final BigDecimal DEFAULT_INTEREST_RATE = new BigDecimal("0.0025");
+    private static final Money DEFAULT_MINIMUM_BALANCE = new Money(new BigDecimal("1000"));
+
+
     // Constructors
     public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance, BigDecimal interestRate) {
         super( secretKey, primaryOwner, secondaryOwner, balance, minimumBalance );
@@ -29,14 +34,14 @@ public class SavingsAccount  extends Account{
     }
     // default minimumBalance:
     public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, BigDecimal interestRate) {
-        this( secretKey, primaryOwner, secondaryOwner, balance, new Money(new BigDecimal("1000")), interestRate );
+        this( secretKey, primaryOwner, secondaryOwner, balance, DEFAULT_MINIMUM_BALANCE, interestRate );
     }
     // default interest rate:
     public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money minimumBalance) {
-        this( secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, new BigDecimal("0.0025") );
+        this( secretKey, primaryOwner, secondaryOwner, balance, minimumBalance, DEFAULT_INTEREST_RATE );
     }
     // default interest rate & minimumBalance
     public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance) {
-        this( secretKey, primaryOwner, secondaryOwner, balance, new Money(new BigDecimal("1000")) );
+        this( secretKey, primaryOwner, secondaryOwner, balance, DEFAULT_MINIMUM_BALANCE );
     }
 }
