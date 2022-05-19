@@ -82,6 +82,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(DELETE, "/api/users/third-party/{id}").hasAnyAuthority("ROLE_ADMIN");
 
 
+        // ACCOUNTS:
+        // To get a list of all active accounts you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(GET, "/api/accounts").hasAnyAuthority("ROLE_ADMIN");
+        // To get the details of an account by account number you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(GET, "/api/accounts/{account-number}").hasAnyAuthority("ROLE_ADMIN");
+
+        // To create a new Checking Account you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(POST, "/api/accounts/checking").hasAnyAuthority("ROLE_ADMIN");
+        // To create a new Credit Card Account you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(POST, "/api/accounts/credit-card").hasAnyAuthority("ROLE_ADMIN");
+        // To create a new Savings Account you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(POST, "/api/accounts/savings").hasAnyAuthority("ROLE_ADMIN");
+
+        // To delete an account by account number you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(DELETE, "/api/accounts/{account-number}").hasAnyAuthority("ROLE_ADMIN");
+
+
 
         // For any request you should de authenticated (logged in):
         http.authorizeRequests().anyRequest().authenticated();

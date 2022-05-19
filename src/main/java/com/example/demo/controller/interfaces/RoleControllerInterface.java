@@ -1,4 +1,4 @@
-package com.example.demo.controller.interfaces.security;
+package com.example.demo.controller.interfaces;
 
 import com.example.demo.DTO.RoleToUserDTO;
 import com.example.demo.model.security.Role;

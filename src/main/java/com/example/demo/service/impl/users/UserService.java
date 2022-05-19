@@ -36,7 +36,14 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     // Methods:
 
     // GET A LIST OF ALL EXISTING USERS
-c
+    public List<User> getAllUsers() {
+        // Handle possible errors:
+        if(userRepo.findAll().size() == 0) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No elements to show" ); }
+        // Return results
+        log.info("Fetching all users");
+        return userRepo.findAll();
+    }
+
     // GET A USER'S DETAILS BY ID
     public User getUserById(Long id) {
         // Handle possible errors:

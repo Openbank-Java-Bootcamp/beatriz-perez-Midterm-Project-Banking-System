@@ -1,4 +1,4 @@
-package com.example.demo.controller.interfaces.users;
+package com.example.demo.controller.interfaces;
 
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.ThirdParty;

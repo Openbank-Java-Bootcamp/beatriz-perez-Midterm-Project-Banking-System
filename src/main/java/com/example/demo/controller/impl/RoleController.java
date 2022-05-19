@@ -1,7 +1,7 @@
-package com.example.demo.controller.impl.security;
+package com.example.demo.controller.impl;
 
 import com.example.demo.DTO.RoleToUserDTO;
-import com.example.demo.controller.interfaces.security.RoleControllerInterface;
+import com.example.demo.controller.interfaces.RoleControllerInterface;
 import com.example.demo.model.security.Role;
 import com.example.demo.service.interfaces.security.RoleServiceInterface;
 import jakarta.validation.Valid;

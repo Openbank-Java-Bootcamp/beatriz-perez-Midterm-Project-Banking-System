@@ -23,6 +23,8 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
     private PasswordEncoder passwordEncoder;
 
     // Methods
+
+    // CREATE A NEW SAVINGS ACCOUNT
     public SavingsAccount createSavingsAccount(SavingsAccount account) {
         // Handle possible errors:
             // balanceAmount < min -------------------------------------------
@@ -35,6 +37,8 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
         return SavingsAccountRepo.save(account);
     }
 
+
+    // CHECK MINIMUM BALANCE
     public void checkMinimumBalance(SavingsAccount account) {
         BigDecimal maxMinimumBalanceAmount = new BigDecimal("1000");
         BigDecimal minMinimumBalanceAmount = new BigDecimal("100");

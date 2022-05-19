@@ -27,6 +27,8 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
     private PasswordEncoder passwordEncoder;
 
     // Methods
+
+    // CREATE A NEW CHECKING ACCOUNT
     public CheckingAccount createCheckingAccount(CheckingAccount account) {
         // Handle possible errors:
 
@@ -39,6 +41,8 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
         return CheckingAccountRepo.save(account);
     }
 
+
+    // CHECK ACCOUNT OWNER'S AGE
     public void checkAge(CheckingAccount account) {
         LocalDate today = LocalDate.now();
         LocalDate birthDate = account.getPrimaryOwner().getDateOfBirth();

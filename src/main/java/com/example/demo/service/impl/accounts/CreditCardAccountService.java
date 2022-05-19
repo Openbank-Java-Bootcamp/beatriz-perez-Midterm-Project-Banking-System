@@ -23,6 +23,8 @@ public class CreditCardAccountService implements CreditCardAccountServiceInterfa
     private PasswordEncoder passwordEncoder;
 
     // Methods
+
+    // CREATE A NEW CREDIT CARD ACCOUNT
     public CreditCardAccount createCreditCardAccount(CreditCardAccount account) {
         // Handle possible errors:
 
@@ -35,6 +37,7 @@ public class CreditCardAccountService implements CreditCardAccountServiceInterfa
         return CreditCardAccountRepo.save(account);
     }
 
+    // CHECK CREDIT LIMIT
     public void checkCreditLimit(CreditCardAccount account) {
         BigDecimal maxCreditLimitAmount = new BigDecimal("100000");
         BigDecimal minCreditLimitAmount = new BigDecimal("100");

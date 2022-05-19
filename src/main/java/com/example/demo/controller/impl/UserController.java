@@ -1,6 +1,6 @@
-package com.example.demo.controller.impl.users;
+package com.example.demo.controller.impl;
 
-import com.example.demo.controller.interfaces.users.UserControllerInterface;
+import com.example.demo.controller.interfaces.UserControllerInterface;
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.ThirdParty;
 import com.example.demo.model.users.User;
