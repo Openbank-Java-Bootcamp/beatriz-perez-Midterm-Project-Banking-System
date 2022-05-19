@@ -2,6 +2,7 @@ package com.example.demo.service.impl.users;
 
 import com.example.demo.model.users.User;
 import com.example.demo.repository.users.UserRepository;
+import com.example.demo.service.interfaces.security.RoleServiceInterface;
 import com.example.demo.service.interfaces.users.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +27,22 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     @Autowired
     private UserRepository userRepo;
     @Autowired
+    private RoleServiceInterface roleService;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     // Methods
     public User saveUser(User user) {
         // Handle possible errors:
         if(userRepo.findByUsername(user.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
+        // Encrypt secret key:
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         // Save new user:
         log.info("Saving a new user {} in the DB", user.getUsername());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(user);
+        User dbUser = userRepo.save(user);
+        // Add ADMIN role to user (all User class instances are ADMIN users):
+        roleService.addRoleToUser(user.getUsername(), "ROLE_ADMIN");
+        return dbUser;
     }
 
     @Override

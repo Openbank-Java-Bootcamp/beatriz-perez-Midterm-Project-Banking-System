@@ -1,18 +1,20 @@
 package com.example.demo.model.aux;
 
 import jakarta.persistence.Embeddable;
+import lombok.NoArgsConstructor;
 
 import java.math.RoundingMode;
 import java.math.BigDecimal;
 import java.util.Currency;
 
 @Embeddable
+@NoArgsConstructor
 public class Money {
 
     private static final Currency USD = Currency.getInstance("USD");
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
 
-    private final Currency currency;
+    private Currency currency;
     private BigDecimal amount;
 
     /**

@@ -44,19 +44,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
-        // Anyone can access the login
+        // LOG IN - Anyone can access the login
         http.authorizeRequests().antMatchers("/api/login/**").permitAll();
 
-        // GET ROUTES:
-        // To see all users you need to have an ADMIN role:
-        http.authorizeRequests().antMatchers(GET, "/api/users").hasAnyAuthority("ROLE_USER");
-
-        // POST ROUTES:
-        // To save a new user you need to have an ADMIN role:
-        http.authorizeRequests().antMatchers(POST, "/api/users").hasAnyAuthority("ROLE_ADMIN");
-        // To save a new role you need to have an ADMIN role:
+        // ROLES:
+        // To get a list of all existing roles you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(GET, "/api/roles").hasAnyAuthority("ROLE_ADMIN");
+        // To create a new role you need to have an ADMIN role:
         http.authorizeRequests().antMatchers(POST, "/api/roles").hasAnyAuthority("ROLE_ADMIN");
+        // To assign a role to a user manually you need to have an ADMIN role:
         http.authorizeRequests().antMatchers(POST, "/api/roles/assign").hasAnyAuthority("ROLE_ADMIN");
+
+        // USERS:
+        // To see all active users you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(GET, "/api/users").hasAnyAuthority("ROLE_ADMIN");
+        // To create a new user you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(POST, "/api/users").hasAnyAuthority("ROLE_ADMIN");
 
         // PUT ROUTES:
         // PATCH ROUTES:

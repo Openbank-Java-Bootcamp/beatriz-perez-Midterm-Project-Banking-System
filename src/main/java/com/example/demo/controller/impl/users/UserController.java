@@ -16,6 +16,8 @@ public class UserController implements UserControllerInterface {
     private UserServiceInterface userService;
 
     // POST ENDPOINTS
+
+    // Create
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveUser(@RequestBody @Valid User user) {
