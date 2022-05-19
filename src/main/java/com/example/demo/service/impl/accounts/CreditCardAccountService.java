@@ -1,8 +1,11 @@
 package com.example.demo.service.impl.accounts;
 
+import com.example.demo.DTO.NewCreditCardAccountDTO;
+import com.example.demo.model.accounts.CheckingAccount;
 import com.example.demo.model.accounts.CreditCardAccount;
 import com.example.demo.model.aux.Money;
 import com.example.demo.repository.accounts.CreditCardAccountRepository;
+import com.example.demo.repository.users.AccountHolderRepository;
 import com.example.demo.service.interfaces.accounts.CreditCardAccountServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +24,32 @@ public class CreditCardAccountService implements CreditCardAccountServiceInterfa
     @Autowired
     private CreditCardAccountRepository CreditCardAccountRepo;
     @Autowired
+    private AccountHolderRepository accHolderRepo;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     // Methods
 
     // CREATE A NEW CREDIT CARD ACCOUNT
+    public CreditCardAccount createCreditCardAccount(NewCreditCardAccountDTO accountDTO) {
+        CreditCardAccount account = new CreditCardAccount(
+                accountDTO.getSecretKey(),
+                accHolderRepo.findById( accountDTO.getPrimaryOwnerId() ).get(),
+                null,
+                accountDTO.getMinimumBalanceAmount(),
+                accountDTO.getBalanceAmount(),
+                Currency.getInstance( accountDTO.getCurrencyCode() )
+        );
+        // Handle possible errors:
+
+        // Set CREDIT LIMIT according to allowed range:
+        checkCreditLimit(account);
+        // Encrypt secret key:
+        account.setSecretKey(passwordEncoder.encode(account.getSecretKey()));
+        // Save new account:
+        log.info("Saving a new CreditCard Account in the DB");
+        return CreditCardAccountRepo.save(account);
+    }
     public CreditCardAccount createCreditCardAccount(CreditCardAccount account) {
         // Handle possible errors:
 

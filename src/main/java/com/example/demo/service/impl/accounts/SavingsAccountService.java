@@ -1,8 +1,11 @@
 package com.example.demo.service.impl.accounts;
 
+import com.example.demo.DTO.NewSavingsAccountDTO;
+import com.example.demo.model.accounts.CheckingAccount;
 import com.example.demo.model.accounts.SavingsAccount;
 import com.example.demo.model.aux.Money;
 import com.example.demo.repository.accounts.SavingsAccountRepository;
+import com.example.demo.repository.users.AccountHolderRepository;
 import com.example.demo.service.interfaces.accounts.SavingsAccountServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +24,32 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
     @Autowired
     private SavingsAccountRepository SavingsAccountRepo;
     @Autowired
+    private AccountHolderRepository accHolderRepo;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     // Methods
 
     // CREATE A NEW SAVINGS ACCOUNT
+    public SavingsAccount createSavingsAccount(NewSavingsAccountDTO accountDTO) {
+        SavingsAccount account = new SavingsAccount(
+                accountDTO.getSecretKey(),
+                accHolderRepo.findById( accountDTO.getPrimaryOwnerId() ).get(),
+                null,
+                accountDTO.getBalanceAmount(),
+                Currency.getInstance( accountDTO.getCurrencyCode() )
+        );
+        // Handle possible errors:
+            // balanceAmount < min -------------------------------------------
+        // Set MINIMUM BALANCE according to allowed range:
+        checkMinimumBalance(account);
+        // Encrypt secret key:
+        account.setSecretKey(passwordEncoder.encode(account.getSecretKey()));
+        // Save new account:
+        log.info("Saving a new Savings Account in the DB");
+        return SavingsAccountRepo.save(account);
+    }
+
     public SavingsAccount createSavingsAccount(SavingsAccount account) {
         // Handle possible errors:
             // balanceAmount < min -------------------------------------------

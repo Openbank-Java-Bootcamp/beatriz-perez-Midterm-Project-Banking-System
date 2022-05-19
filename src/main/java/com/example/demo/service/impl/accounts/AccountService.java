@@ -1,6 +1,7 @@
 package com.example.demo.service.impl.accounts;
 
 import com.example.demo.model.accounts.Account;
+import com.example.demo.model.aux.Money;
 import com.example.demo.model.users.User;
 import com.example.demo.repository.accounts.AccountRepository;
 import com.example.demo.service.interfaces.accounts.AccountServiceInterface;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +42,18 @@ public class AccountService implements AccountServiceInterface {
         // Return user:
         log.info("Fetching account information");
         return AccountRepo.findById(accountNumber).get();
+    }
+
+    // MODIFY AN ACCOUNTS BALANCE BY ACCOUNT NUMBER
+    public void updateAccountBalance(Long accountNumber, BigDecimal newBalanceAmount) {
+        Optional<Account> account = AccountRepo.findById(accountNumber);
+        // Handle possible errors:
+        if(account.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No account found with the specified number"); }
+        // Update account:
+        log.info("Updating balance of account");
+        Money newBalance = new Money( newBalanceAmount, account.get().getBalance().getCurrency() );
+        account.get().setBalance(newBalance);
+        AccountRepo.save(account.get());
     }
 
     // DELETE AN ACCOUNT BY ACCOUNT NUMBER

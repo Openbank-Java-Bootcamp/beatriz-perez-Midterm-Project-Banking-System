@@ -1,5 +1,9 @@
 package com.example.demo.controller.impl.accounts;
 
+import com.example.demo.DTO.AccountBalanceOnlyDTO;
+import com.example.demo.DTO.NewCheckingAccountDTO;
+import com.example.demo.DTO.NewCreditCardAccountDTO;
+import com.example.demo.DTO.NewSavingsAccountDTO;
 import com.example.demo.controller.interfaces.accounts.AccountControllerInterface;
 import com.example.demo.model.accounts.Account;
 import com.example.demo.model.accounts.CheckingAccount;
@@ -50,22 +54,30 @@ public class AccountController implements AccountControllerInterface {
     // Create a new Checking Account
     @PostMapping("/accounts/checking")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCheckingAccount(@RequestBody @Valid CheckingAccount checkingAccount) { checkingService.createCheckingAccount(checkingAccount); }
+    public void createCheckingAccount(@RequestBody @Valid NewCheckingAccountDTO accountDTO) { checkingService.createCheckingAccount(accountDTO); }
 
     // Create a new Credit Card Account
     @PostMapping("/accounts/credit-card")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCreditCardAccount(@RequestBody @Valid CreditCardAccount creditCardAccount) { creditCardService.createCreditCardAccount(creditCardAccount); }
+    public void createCreditCardAccount(@RequestBody @Valid NewCreditCardAccountDTO accountDTO) { creditCardService.createCreditCardAccount(accountDTO); }
 
     // Create a new Savings Account
     @PostMapping("/accounts/savings")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createSavingsAccount(@RequestBody @Valid SavingsAccount savingsAccount) { savingsService.createSavingsAccount(savingsAccount); }
+    public void createSavingsAccount(@RequestBody @Valid NewSavingsAccountDTO accountDTO) { savingsService.createSavingsAccount(accountDTO); }
 
 
     // PUT ENDPOINTS ----------------------------------------------------------------------------------
 
     // PATCH ENDPOINTS --------------------------------------------------------------------------------
+
+    // Modify an account's balance
+    @PatchMapping("/accounts/{account-number}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateAccountBalance(@PathVariable(name = "account-number") String number, @RequestBody AccountBalanceOnlyDTO accountDto) {
+        accountService.updateAccountBalance(Long.parseLong(number), accountDto.getNewBalanceAmount());
+    }
+
 
     // DELETE ENDPOINTS -------------------------------------------------------------------------------
 

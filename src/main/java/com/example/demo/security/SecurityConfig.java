@@ -43,59 +43,67 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
-        // LOG IN - Anyone can access the login
+        // ----------------------------------------------------------------------------------------------------------------------
+        // Anyone ca access:
+        // LOG IN
         http.authorizeRequests().antMatchers("/api/login/**").permitAll();
 
+        // ----------------------------------------------------------------------------------------------------------------------
+        // You need to have an ADMIN role to :
+
         // ROLES:
-        // To get a list of all existing roles you need to have an ADMIN role:
+        // get a list of all existing roles
         http.authorizeRequests().antMatchers(GET, "/api/roles").hasAnyAuthority("ROLE_ADMIN");
-        // To create a new role you need to have an ADMIN role:
+        // create a new role
         http.authorizeRequests().antMatchers(POST, "/api/roles").hasAnyAuthority("ROLE_ADMIN");
-        // To assign a role to a user manually you need to have an ADMIN role:
+        // assign a role to a user manually
         http.authorizeRequests().antMatchers(POST, "/api/roles/assign").hasAnyAuthority("ROLE_ADMIN");
 
         // USERS:
-        // To get a list of all active users you need to have an ADMIN role:
+        // get a list of all active users
         http.authorizeRequests().antMatchers(GET, "/api/users").hasAnyAuthority("ROLE_ADMIN");
-        // To get the details of a user by ID you need to have an ADMIN role:
+        // get the details of a user by ID
         http.authorizeRequests().antMatchers(GET, "/api/users/{id}").hasAnyAuthority("ROLE_ADMIN");
-        // To get a list of all active third parties you need to have an ADMIN role:
+        // get a list of all active third parties
         http.authorizeRequests().antMatchers(GET, "/api/users/third-party").hasAnyAuthority("ROLE_ADMIN");
 
-        // To create a new admin-user you need to have an ADMIN role:
+        // create a new admin-user
         http.authorizeRequests().antMatchers(POST, "/api/users/admin-user").hasAnyAuthority("ROLE_ADMIN");
-        // To create a new AccountHolder user you need to have an ADMIN role:
+        // create a new AccountHolder user
         http.authorizeRequests().antMatchers(POST, "/api/users/account-holder").hasAnyAuthority("ROLE_ADMIN");
-        // To create a new ThirdParty user you need to have an ADMIN role:
+        // create a new ThirdParty user
         http.authorizeRequests().antMatchers(POST, "/api/users/third-party").hasAnyAuthority("ROLE_ADMIN");
 
-        // To update an admin-user you need to have an ADMIN role:
+        // update an admin-user
         http.authorizeRequests().antMatchers(PUT, "/api/users/admin-user/{id}").hasAnyAuthority("ROLE_ADMIN");
-        // To update an AccountHolder user you need to have an ADMIN role:
+        // update an AccountHolder user
         http.authorizeRequests().antMatchers(PUT, "/api/users/account-holder/{id}").hasAnyAuthority("ROLE_ADMIN");
-        // To update a ThirdParty user you need to have an ADMIN role:
+        // update a ThirdParty user
         http.authorizeRequests().antMatchers(PUT, "/api/users/third-party/{id}").hasAnyAuthority("ROLE_ADMIN");
 
-        // To delete a user by ID you need to have an ADMIN role:
+        // delete a user by ID
         http.authorizeRequests().antMatchers(DELETE, "/api/users/{id}").hasAnyAuthority("ROLE_ADMIN");
-        // To delete a ThirdParty user by ID you need to have an ADMIN role:
+        // delete a ThirdParty user by ID
         http.authorizeRequests().antMatchers(DELETE, "/api/users/third-party/{id}").hasAnyAuthority("ROLE_ADMIN");
 
 
         // ACCOUNTS:
-        // To get a list of all active accounts you need to have an ADMIN role:
+        // get a list of all active accounts
         http.authorizeRequests().antMatchers(GET, "/api/accounts").hasAnyAuthority("ROLE_ADMIN");
-        // To get the details of an account by account number you need to have an ADMIN role:
+        // get the details of an account by account number
         http.authorizeRequests().antMatchers(GET, "/api/accounts/{account-number}").hasAnyAuthority("ROLE_ADMIN");
 
-        // To create a new Checking Account you need to have an ADMIN role:
+        // create a new Checking Account
         http.authorizeRequests().antMatchers(POST, "/api/accounts/checking").hasAnyAuthority("ROLE_ADMIN");
-        // To create a new Credit Card Account you need to have an ADMIN role:
+        // create a new Credit Card Account
         http.authorizeRequests().antMatchers(POST, "/api/accounts/credit-card").hasAnyAuthority("ROLE_ADMIN");
-        // To create a new Savings Account you need to have an ADMIN role:
+        // create a new Savings Account
         http.authorizeRequests().antMatchers(POST, "/api/accounts/savings").hasAnyAuthority("ROLE_ADMIN");
 
-        // To delete an account by account number you need to have an ADMIN role:
+        // freely modify an account's balance
+        http.authorizeRequests().antMatchers(PATCH, "/api/accounts/{account-number}").hasAnyAuthority("ROLE_ADMIN");
+
+        // delete an account by account number
         http.authorizeRequests().antMatchers(DELETE, "/api/accounts/{account-number}").hasAnyAuthority("ROLE_ADMIN");
 
 

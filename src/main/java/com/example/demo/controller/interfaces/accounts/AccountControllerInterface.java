@@ -1,11 +1,10 @@
 package com.example.demo.controller.interfaces.accounts;
 
+import com.example.demo.DTO.AccountBalanceOnlyDTO;
+import com.example.demo.DTO.NewCheckingAccountDTO;
+import com.example.demo.DTO.NewCreditCardAccountDTO;
+import com.example.demo.DTO.NewSavingsAccountDTO;
 import com.example.demo.model.accounts.Account;
-import com.example.demo.model.accounts.CheckingAccount;
-import com.example.demo.model.accounts.CreditCardAccount;
-import com.example.demo.model.accounts.SavingsAccount;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -17,13 +16,14 @@ public interface AccountControllerInterface {
     Account getAccountByNumber(String number);
 
     // Create a new Checking Account
-    void createCheckingAccount(CheckingAccount checkingAccount);
+    void createCheckingAccount(NewCheckingAccountDTO accountDTO);
     // Create a new Credit Card Account
-    void createCreditCardAccount(CreditCardAccount creditCardAccount);
+    void createCreditCardAccount(NewCreditCardAccountDTO accountDTO);
     // Create a new Savings Account
-    void createSavingsAccount(SavingsAccount savingsAccount);
+    void createSavingsAccount(NewSavingsAccountDTO accountDTO);
 
-
+    // Modify an account's balance
+    void updateAccountBalance(String number, AccountBalanceOnlyDTO accountDto);
 
     // Delete account by accountNumber
     void deleteAccountByNumber(String number);
