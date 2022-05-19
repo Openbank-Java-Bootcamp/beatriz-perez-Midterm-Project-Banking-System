@@ -94,4 +94,9 @@ public class UserController implements UserControllerInterface {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserById(@PathVariable String id){ userService.deleteUserById(Long.parseLong(id)); }
 
+    // Delete third party by ID
+    @DeleteMapping("/users/third-party/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteThirdPartyById(@PathVariable String id){ thirdPartyService.deleteThirdPartyById(Long.parseLong(id)); }
+
 }

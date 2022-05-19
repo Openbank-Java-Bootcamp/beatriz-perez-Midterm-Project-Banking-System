@@ -78,6 +78,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // To delete a user by ID you need to have an ADMIN role:
         http.authorizeRequests().antMatchers(DELETE, "/api/users/{id}").hasAnyAuthority("ROLE_ADMIN");
+        // To delete a ThirdParty user by ID you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(DELETE, "/api/users/third-party/{id}").hasAnyAuthority("ROLE_ADMIN");
 
 
 

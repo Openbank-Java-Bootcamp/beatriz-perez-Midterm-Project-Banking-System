@@ -15,4 +15,7 @@ public interface ThirdPartyServiceInterface {
     // UPDATE A THIRD PARTY BY ID
     void updateThirdPartyById(Long id, ThirdParty thirdParty);
 
+    // DELETE A THIRD PARTY BY ID
+    void deleteThirdPartyById(Long id);
+
 }

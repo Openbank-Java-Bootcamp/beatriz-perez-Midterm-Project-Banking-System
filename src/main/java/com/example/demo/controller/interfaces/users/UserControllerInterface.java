@@ -3,9 +3,6 @@ package com.example.demo.controller.interfaces.users;
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.ThirdParty;
 import com.example.demo.model.users.User;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -34,5 +31,7 @@ public interface UserControllerInterface {
 
     // Delete user by ID
     void deleteUserById(String id);
+    // Delete third party by ID
+    void deleteThirdPartyById(String id);
 
 }

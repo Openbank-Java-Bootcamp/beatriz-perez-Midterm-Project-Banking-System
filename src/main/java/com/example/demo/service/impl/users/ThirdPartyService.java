@@ -58,4 +58,14 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
         ThirdPartyRepo.save(thirdParty);
     }
 
+    // DELETE A THIRD PARTY BY ID
+    public void deleteThirdPartyById(Long id) {
+        Optional<ThirdParty> thirdParty = ThirdPartyRepo.findById(id);
+        // Handle possible errors:
+        if(thirdParty.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No thirdParty found with the specified ID"); }
+        // Delete user:
+        log.info("Deleting thirdParty");
+        ThirdPartyRepo.delete(thirdParty.get());
+    }
+
 }
