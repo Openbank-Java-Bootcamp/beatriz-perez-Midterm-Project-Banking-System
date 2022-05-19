@@ -15,7 +15,7 @@ public interface UserServiceInterface {
     // CREATE A NEW USER-ADMIN
     User createUser(User user);
 
-    // UPDATE A USER BY ID
+    // UPDATE A USER-ADMIN BY ID
     void updateUserById(Long id, User user);
 
     // DELETE A USER BY ID

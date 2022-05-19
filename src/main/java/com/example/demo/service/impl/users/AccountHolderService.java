@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -25,8 +27,9 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     private PasswordEncoder passwordEncoder;
 
     // Methods
-    public AccountHolder createAccountHolder(AccountHolder accountHolder) {
 
+    // CREATE A NEW ACCOUNT HOLDER
+    public AccountHolder createAccountHolder(AccountHolder accountHolder) {
         // Handle possible errors:
         if(AccountHolderRepo.findByUsername(accountHolder.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
         // Encrypt secret key:
@@ -38,4 +41,16 @@ public class AccountHolderService implements AccountHolderServiceInterface {
         roleService.addRoleToUser(accountHolder.getUsername(), "ROLE_ACCOUNTHOLDER");
         return dbHolder;
     }
+
+    // UPDATE AN ACCOUNT HOLDER BY ID
+    public void updateAccountHolderById(Long id, AccountHolder accountHolder) {
+        Optional<AccountHolder> oldAccountHolder = AccountHolderRepo.findById(id);
+        // Handle possible errors:
+        if(oldAccountHolder.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No accountHolder found with the specified ID"); }
+        // Update accountHolder:
+        log.info("Updating accountHolder");
+        accountHolder.setId(oldAccountHolder.get().getId());
+        AccountHolderRepo.save(accountHolder);
+    }
+
 }

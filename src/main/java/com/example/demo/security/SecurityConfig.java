@@ -16,8 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -68,8 +67,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // To create a new ThirdParty user you need to have an ADMIN role:
         http.authorizeRequests().antMatchers(POST, "/api/users/third-party").hasAnyAuthority("ROLE_ADMIN");
 
-        // To delete a user by ID you need to have an ADMIN role:
+        // To update an admin-user you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(PUT, "/api/users/admin-user/{id}").hasAnyAuthority("ROLE_ADMIN");
+        // To update an AccountHolder user you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(PUT, "/api/users/account-holder/{id}").hasAnyAuthority("ROLE_ADMIN");
+        // To update a ThirdParty user you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(PUT, "/api/users/third-party/{id}").hasAnyAuthority("ROLE_ADMIN");
 
+        // To delete a user by ID you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(DELETE, "/api/users/{id}").hasAnyAuthority("ROLE_ADMIN");
 
 
 

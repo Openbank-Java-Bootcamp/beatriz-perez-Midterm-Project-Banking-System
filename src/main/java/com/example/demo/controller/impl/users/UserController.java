@@ -70,9 +70,18 @@ public class UserController implements UserControllerInterface {
     }
 
     // Update AccountHolder user
+    @PutMapping("/users/account-holder/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateAccountHolderById(@PathVariable Long id, @RequestBody @Valid AccountHolder accountHolder){
+        accountHolderService.updateAccountHolderById(id, accountHolder);
+    }
 
     // Update ThirdParty user
-
+    @PutMapping("/users/third-party/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateThirdPartyById(@PathVariable Long id, @RequestBody @Valid ThirdParty thirdParty){
+        thirdPartyService.updateThirdPartyById(id, thirdParty);
+    }
 
     // DELETE ENDPOINTS -------------------------------------------------------------------------------
 

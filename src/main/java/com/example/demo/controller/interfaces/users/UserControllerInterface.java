@@ -26,9 +26,9 @@ public interface UserControllerInterface {
     // Update ADMIN User
     void updateUserById(Long id, User user);
     // Update AccountHolder user
-
+    void updateAccountHolderById(Long id, AccountHolder accountHolder);
     // Update ThirdParty user
-
+    void updateThirdPartyById(Long id, ThirdParty thirdParty);
 
     // Delete user by ID
     void deleteUserById(Long id);

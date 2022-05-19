@@ -68,7 +68,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         return dbUser;
     }
 
-    // UPDATE A USER BY ID
+    // UPDATE A USER-ADMIN BY ID
     public void updateUserById(Long id, User user) {
         Optional<User> oldUser = userRepo.findById(id);
         // Handle possible errors:
