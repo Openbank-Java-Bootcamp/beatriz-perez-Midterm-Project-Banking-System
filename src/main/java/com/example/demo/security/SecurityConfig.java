@@ -59,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(GET, "/api/users").hasAnyAuthority("ROLE_ADMIN");
         // To get the details of a user by ID you need to have an ADMIN role:
         http.authorizeRequests().antMatchers(GET, "/api/users/{id}").hasAnyAuthority("ROLE_ADMIN");
+        // To get a list of all active third parties you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(GET, "/api/users/third-party").hasAnyAuthority("ROLE_ADMIN");
 
         // To create a new admin-user you need to have an ADMIN role:
         http.authorizeRequests().antMatchers(POST, "/api/users/admin-user").hasAnyAuthority("ROLE_ADMIN");

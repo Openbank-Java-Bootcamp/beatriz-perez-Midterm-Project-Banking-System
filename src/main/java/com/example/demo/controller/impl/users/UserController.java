@@ -37,10 +37,14 @@ public class UserController implements UserControllerInterface {
     // Get user details by ID
     @GetMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User getUserById(@PathVariable(name = "id") Long id) {
-        return userService.getUserById(id);
-    }
+    public User getUserById(@PathVariable(name = "id") String id) { return userService.getUserById(Long.parseLong(id)); }
 
+    // Get a list of all active third parties
+    @GetMapping("/users/third-party")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ThirdParty> getAllThirdParties() {
+        return thirdPartyService.getAllThirdParties();
+    }
 
     // POST ENDPOINTS --------------------------------------------------------------------------------
 
@@ -65,22 +69,22 @@ public class UserController implements UserControllerInterface {
     // Update ADMIN User
     @PutMapping("/users/admin-user/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUserById(@PathVariable Long id, @RequestBody @Valid User user){
-        userService.updateUserById(id, user);
+    public void updateUserById(@PathVariable String id, @RequestBody @Valid User user){
+        userService.updateUserById(Long.parseLong(id), user);
     }
 
     // Update AccountHolder user
     @PutMapping("/users/account-holder/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAccountHolderById(@PathVariable Long id, @RequestBody @Valid AccountHolder accountHolder){
-        accountHolderService.updateAccountHolderById(id, accountHolder);
+    public void updateAccountHolderById(@PathVariable String id, @RequestBody @Valid AccountHolder accountHolder){
+        accountHolderService.updateAccountHolderById(Long.parseLong(id), accountHolder);
     }
 
     // Update ThirdParty user
     @PutMapping("/users/third-party/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateThirdPartyById(@PathVariable Long id, @RequestBody @Valid ThirdParty thirdParty){
-        thirdPartyService.updateThirdPartyById(id, thirdParty);
+    public void updateThirdPartyById(@PathVariable String id, @RequestBody @Valid ThirdParty thirdParty){
+        thirdPartyService.updateThirdPartyById(Long.parseLong(id), thirdParty);
     }
 
     // DELETE ENDPOINTS -------------------------------------------------------------------------------
@@ -88,6 +92,6 @@ public class UserController implements UserControllerInterface {
     // Delete user by ID
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUserById(@PathVariable Long id){ userService.deleteUserById(id); }
+    public void deleteUserById(@PathVariable String id){ userService.deleteUserById(Long.parseLong(id)); }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,15 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
     private PasswordEncoder passwordEncoder;
 
     // Methods
+
+    // GET A LIST OF ALL THIRD PARTIES
+    public List<ThirdParty> getAllThirdParties() {
+        // Handle possible errors:
+        if(ThirdPartyRepo.findAll().size() == 0) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No elements to show" ); }
+        // Return results
+        log.info("Fetching all Third Parties");
+        return ThirdPartyRepo.findAll();
+    }
 
     // CREATE A NEW THIRD PARTY
     public ThirdParty createThirdParty(ThirdParty thirdParty) {

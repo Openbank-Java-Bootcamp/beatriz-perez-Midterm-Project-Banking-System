@@ -14,7 +14,9 @@ public interface UserControllerInterface {
     // Get a list of all active users:
     List<User> getAllUsers();
     // Get user details by ID:
-    User getUserById(Long id);
+    User getUserById(String id);
+    // Get a list of all active third parties:
+    List<ThirdParty> getAllThirdParties();
 
     // Create ADMIN user:
     void createUser( User user );
@@ -24,13 +26,13 @@ public interface UserControllerInterface {
     void createThirdParty(ThirdParty thirdParty);
 
     // Update ADMIN User
-    void updateUserById(Long id, User user);
+    void updateUserById(String id, User user);
     // Update AccountHolder user
-    void updateAccountHolderById(Long id, AccountHolder accountHolder);
+    void updateAccountHolderById(String id, AccountHolder accountHolder);
     // Update ThirdParty user
-    void updateThirdPartyById(Long id, ThirdParty thirdParty);
+    void updateThirdPartyById(String id, ThirdParty thirdParty);
 
     // Delete user by ID
-    void deleteUserById(Long id);
+    void deleteUserById(String id);
 
 }

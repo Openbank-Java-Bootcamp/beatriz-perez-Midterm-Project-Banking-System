@@ -2,7 +2,12 @@ package com.example.demo.service.interfaces.users;
 
 import com.example.demo.model.users.ThirdParty;
 
+import java.util.List;
+
 public interface ThirdPartyServiceInterface {
+
+    // GET A LIST OF ALL THIRD PARTIES
+    List<ThirdParty> getAllThirdParties();
 
     // CREATE A NEW THIRD PARTY
     ThirdParty createThirdParty(ThirdParty thirdParty);
