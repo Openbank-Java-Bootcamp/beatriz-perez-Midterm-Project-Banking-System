@@ -4,6 +4,6 @@ import com.example.demo.model.users.AccountHolder;
 
 public interface AccountHolderServiceInterface {
 
-    AccountHolder saveAccountHolder(AccountHolder accountHolder);
+    AccountHolder createAccountHolder(AccountHolder accountHolder);
 
 }

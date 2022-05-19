@@ -24,6 +24,8 @@ public class RoleService implements RoleServiceInterface {
     @Autowired
     private UserRepository userRepo;
 
+    // Methods:
+
     // GET A LIST OF ALL EXISTING ROLES
     public List<Role> getAllRoles() {
         // Handle error:

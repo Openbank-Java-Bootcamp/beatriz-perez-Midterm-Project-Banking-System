@@ -56,14 +56,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/api/roles/assign").hasAnyAuthority("ROLE_ADMIN");
 
         // USERS:
-        // To see all active users you need to have an ADMIN role:
+        // To get a list of all active users you need to have an ADMIN role:
         http.authorizeRequests().antMatchers(GET, "/api/users").hasAnyAuthority("ROLE_ADMIN");
-        // To create a new user you need to have an ADMIN role:
-        http.authorizeRequests().antMatchers(POST, "/api/users").hasAnyAuthority("ROLE_ADMIN");
+        // To get the details of a user by ID you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(GET, "/api/users/{id}").hasAnyAuthority("ROLE_ADMIN");
 
-        // PUT ROUTES:
-        // PATCH ROUTES:
-        // DELETE ROUTES:
+        // To create a new admin-user you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(POST, "/api/users/admin-user").hasAnyAuthority("ROLE_ADMIN");
+        // To create a new AccountHolder user you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(POST, "/api/users/account-holder").hasAnyAuthority("ROLE_ADMIN");
+        // To create a new ThirdParty user you need to have an ADMIN role:
+        http.authorizeRequests().antMatchers(POST, "/api/users/third-party").hasAnyAuthority("ROLE_ADMIN");
+
+        // To delete a user by ID you need to have an ADMIN role:
+
+
 
 
         // For any request you should de authenticated (logged in):

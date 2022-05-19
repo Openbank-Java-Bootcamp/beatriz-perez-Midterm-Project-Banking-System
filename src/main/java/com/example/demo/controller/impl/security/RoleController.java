@@ -18,7 +18,7 @@ public class RoleController implements RoleControllerInterface {
     @Autowired
     private RoleServiceInterface roleService;
 
-    // GET ENDPOINTS
+    // GET ENDPOINTS --------------------------------------------------------------------------------
 
     // Get a list of all existing roles:
     @GetMapping("/roles")
@@ -28,7 +28,7 @@ public class RoleController implements RoleControllerInterface {
     }
 
 
-    // POST ENDPOINTS
+    // POST ENDPOINTS --------------------------------------------------------------------------------
 
     // Create a new role:
     @PostMapping("/roles")

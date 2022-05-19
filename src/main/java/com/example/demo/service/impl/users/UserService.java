@@ -18,6 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +33,29 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Methods
-    public User saveUser(User user) {
+    // Methods:
+
+    // GET A LIST OF ALL EXISTING USERS
+    public List<User> getAllUsers() {
+        // Handle possible errors:
+        if(userRepo.findAll().size() == 0) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No elements to show" ); }
+        // Return results
+        log.info("Fetching all users");
+        return userRepo.findAll();
+    }
+
+    // GET A USER'S DETAILS BY ID
+    public User getUserById(Long id) {
+        // Handle possible errors:
+        if(userRepo.findById(id).isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No user found with the specified ID"); }
+        // Return user:
+        log.info("Fetching user information");
+        return userRepo.findById(id).get();
+    }
+
+
+    // CREATE A NEW USER-ADMIN
+    public User createUser(User user) {
         // Handle possible errors:
         if(userRepo.findByUsername(user.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
         // Encrypt secret key:
@@ -43,6 +66,28 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         // Add ADMIN role to user (all User class instances are ADMIN users):
         roleService.addRoleToUser(user.getUsername(), "ROLE_ADMIN");
         return dbUser;
+    }
+
+    // UPDATE A USER BY ID
+    public void updateUserById(Long id, User user) {
+        Optional<User> oldUser = userRepo.findById(id);
+        // Handle possible errors:
+        if(oldUser.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No user found with the specified ID"); }
+        // Update user:
+        log.info("Updating user");
+        user.setId(oldUser.get().getId());
+        userRepo.save(user);
+    }
+
+    // DELETE A USER BY ID
+    public void deleteUserById(Long id) {
+        Optional<User> user = userRepo.findById(id);
+        // Handle possible errors:
+        if(user.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No user found with the specified ID"); }
+        // CHECK FOR ACCOUNTS
+        // Delete user:
+        log.info("Deleting user");
+        userRepo.delete(user.get());
     }
 
     @Override

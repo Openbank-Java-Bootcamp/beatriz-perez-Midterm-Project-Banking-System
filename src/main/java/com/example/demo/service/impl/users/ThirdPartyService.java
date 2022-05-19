@@ -22,7 +22,7 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
     private PasswordEncoder passwordEncoder;
 
     // Methods
-    public ThirdParty saveThirdParty(ThirdParty thirdParty) {
+    public ThirdParty createThirdParty(ThirdParty thirdParty) {
         // Handle possible errors:
         if(ThirdPartyRepo.findByUsername(thirdParty.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
         // Encrypt secret key:

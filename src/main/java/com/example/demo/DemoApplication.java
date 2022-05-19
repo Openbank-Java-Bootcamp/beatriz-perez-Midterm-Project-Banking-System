@@ -58,14 +58,14 @@ public class DemoApplication {
 
 			// USERS:
 			// - admin users
-			userService.saveUser(new User(new Name("Antonio", "Sanchez"), "antoniosanchez", "1234"));
+			userService.createUser(new User(new Name("Antonio", "Sanchez"), "antoniosanchez", "1234"));
 			// - account holders
 			AccountHolder aH1 = new AccountHolder(new Name("Marta", "Lopez"), "martalopez", "1234", "1990-04-22", new Address("Villarias 10", "Bilbao", "Spain", "48888"));
 			AccountHolder aH2 = new AccountHolder(new Name("Lara", "Carreras"), "larita22", "lara26", "2000-10-03", new Address("Acacias 4", "Barcelona", "Spain", "48888"), new Address("Acacias 4", "Barcelona", "Spain", "48888"));
-			aHolderService.saveAccountHolder(aH1);
-			aHolderService.saveAccountHolder(aH2);
+			aHolderService.createAccountHolder(aH1);
+			aHolderService.createAccountHolder(aH2);
 			// - third parties
-			tPartyService.saveThirdParty(new ThirdParty("Paola321", "1111"));
+			tPartyService.createThirdParty(new ThirdParty("Paola321", "1111"));
 
 			// ACCOUNTS
 			// - savings accounts

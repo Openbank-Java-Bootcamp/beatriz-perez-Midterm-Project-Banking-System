@@ -4,6 +4,6 @@ import com.example.demo.model.users.ThirdParty;
 
 public interface ThirdPartyServiceInterface {
 
-    ThirdParty saveThirdParty(ThirdParty thirdParty);
+    ThirdParty createThirdParty(ThirdParty thirdParty);
 
 }

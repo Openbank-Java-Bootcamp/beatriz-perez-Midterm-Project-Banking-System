@@ -25,7 +25,7 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     private PasswordEncoder passwordEncoder;
 
     // Methods
-    public AccountHolder saveAccountHolder(AccountHolder accountHolder) {
+    public AccountHolder createAccountHolder(AccountHolder accountHolder) {
 
         // Handle possible errors:
         if(AccountHolderRepo.findByUsername(accountHolder.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
