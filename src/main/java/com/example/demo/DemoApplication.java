@@ -33,6 +33,18 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+	/*
+	FOR TESTING: --------------------------------------------------------------
+	In test: @ActiveProfiles("test")
+
+	@Autowired
+	public Environment environment;
+
+	if(!Arrays.asList(environment.getActiveProfiles()).contains("test")) {
+	}
+	---------------------------------------------------------------------------
+	 */
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

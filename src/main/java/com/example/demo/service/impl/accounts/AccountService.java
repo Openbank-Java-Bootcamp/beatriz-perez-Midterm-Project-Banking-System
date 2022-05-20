@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,6 +28,8 @@ public class AccountService implements AccountServiceInterface {
     private AccountRepository accountRepo;
     @Autowired
     private ThirdPartyRepository thirdPartyRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Methods
 
@@ -61,6 +64,19 @@ public class AccountService implements AccountServiceInterface {
     }
 
     // MODIFY AN ACCOUNTS BALANCE OPERATING AS A THIRD PARTY
+
+    /*
+
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+    if (principal instanceof UserDetails) {
+      String username = ((UserDetails)principal).getUsername();
+    } else {
+      String username = principal.toString();
+    }
+
+     */
+
     public void operateAsThirdParty(ThirdPartyTransactionDTO transactionDto) {
         Optional<ThirdParty> thirdParty = thirdPartyRepo.findByUsername(transactionDto.getUsername());
         Optional<Account> account = accountRepo.findById(transactionDto.getAccountNumber());
@@ -70,17 +86,17 @@ public class AccountService implements AccountServiceInterface {
         if(thirdParty.isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No third party user found with the specified username");
         }
-        if(!thirdParty.get().getPassword().equals(transactionDto.getPassword())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "DataBase password does not match the specified password");
+        if( !passwordEncoder.matches(transactionDto.getPassword(), thirdParty.get().getPassword()) ) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Third-party password in database does not match the specified password");
         }
         // - Account errors
         if(account.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No account found with the specified number");
         }
-        if(!account.get().getSecretKey().equals(transactionDto.getAccountSecretKey())) {
+        if(!passwordEncoder.matches(transactionDto.getAccountSecretKey(), account.get().getSecretKey()) ) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account key does not match the specified key");
         }
-        if(!account.get().getBalance().getCurrency().getSymbol().equals(transactionCurrencyCode)) {
+        if(!account.get().getBalance().getCurrency().getCurrencyCode().equals(transactionCurrencyCode)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account currency does not match the request currency");
         }
         // Update account:

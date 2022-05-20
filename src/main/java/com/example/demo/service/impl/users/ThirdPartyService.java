@@ -55,6 +55,8 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
         // Update thirdParty:
         log.info("Updating thirdParty");
         thirdParty.setId(oldThirdParty.get().getId());
+        // Encrypt secret key:
+        thirdParty.setPassword(passwordEncoder.encode(thirdParty.getPassword()));
         ThirdPartyRepo.save(thirdParty);
     }
 
