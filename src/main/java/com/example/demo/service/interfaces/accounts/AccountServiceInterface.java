@@ -1,6 +1,7 @@
 package com.example.demo.service.interfaces.accounts;
 
 import com.example.demo.DTO.ThirdPartyTransactionDTO;
+import com.example.demo.DTO.TransferDTO;
 import com.example.demo.model.accounts.Account;
 import com.example.demo.model.users.AccountHolder;
 
@@ -31,11 +32,17 @@ public interface AccountServiceInterface {
     // MODIFY AN ACCOUNTS BALANCE OPERATING AS A THIRD PARTY
     void operateAsThirdParty(ThirdPartyTransactionDTO transactionDto);
 
+    // TRANSFER MONEY AS AN ACCOUNT HOLDER
+    void transferMoney(TransferDTO transferDto);
+
     // DELETE AN ACCOUNT BY ACCOUNT NUMBER
     void deleteAccountByNumber(Long accountNumber);
 
     // GET ACCOUNT OWNER FROM AUTHENTICATION
     Optional<AccountHolder> getOwnerFromAuthentication();
 
+    // APPLY PENALTY FEE
+    boolean checkPenaltyAlreadyApplied(Account account);
+    void applyPenaltyFeeIfApplicable(boolean wasPenaltyAlreadyApplied , Account account);
 
     }

@@ -2,8 +2,6 @@ package com.example.demo.controller.interfaces.accounts;
 
 import com.example.demo.DTO.*;
 import com.example.demo.model.accounts.Account;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -32,6 +30,8 @@ public interface AccountControllerInterface {
     void updateAccountBalance(String number, AccountBalanceOnlyDTO accountDto);
     // Operate as Third Party
     void operateAsThirdParty(ThirdPartyTransactionDTO transactionDto);
+    // Transfer money as an Account Holder
+    void transferMoney(TransferDTO transferDto);
 
     // Delete account by accountNumber
     void deleteAccountByNumber(String number);

@@ -1,6 +1,7 @@
 package com.example.demo.service.impl.accounts;
 
 import com.example.demo.DTO.ThirdPartyTransactionDTO;
+import com.example.demo.DTO.TransferDTO;
 import com.example.demo.model.accounts.Account;
 import com.example.demo.model.secondary.Money;
 import com.example.demo.model.users.AccountHolder;
@@ -114,6 +115,7 @@ public class AccountService implements AccountServiceInterface {
         Money newBalance = new Money( newBalanceAmount, account.get().getBalance().getCurrency() );
         account.get().setBalance(newBalance);
         accountRepo.save(account.get());
+        // No penalty fee applicable for adjustments made by admin
     }
 
     // MODIFY AN ACCOUNTS BALANCE OPERATING AS A THIRD PARTY
@@ -139,11 +141,48 @@ public class AccountService implements AccountServiceInterface {
         if(!account.get().getBalance().getCurrency().getCurrencyCode().equals(transactionCurrencyCode)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account currency does not match the request currency");
         }
+        // Check if penalty could have been already applied:
+        boolean wasPenaltyAlreadyApplied = checkPenaltyAlreadyApplied(account.get());
         // Update account:
         log.info("Updating balance of account");
         account.get().getBalance().increaseAmount(transactionDto.getAmount());
         accountRepo.save(account.get());
+        // Check and apply PENALTY FEE:
+        applyPenaltyFeeIfApplicable(wasPenaltyAlreadyApplied, account.get());
     }
+
+    // TRANSFER MONEY AS AN ACCOUNT HOLDER
+    public void transferMoney(TransferDTO transferDto) {
+        // Get and check origin and destination accounts:
+        Account originAccount = getMyAccountByNumber(transferDto.getOriginAccountNumber());
+        Optional<Account> destinationAccount = accountRepo.findById(transferDto.getDestinationAccountNumber());
+        // Handle possible errors:
+        if(destinationAccount.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No account found with the specified destination account number"); }
+        if(!destinationAccount.get().getPrimaryOwner().getName().toString().equals(transferDto.getReceiverName())) {
+            if(destinationAccount.get().getSecondaryOwner() == null || !destinationAccount.get().getSecondaryOwner().getName().toString().equals(transferDto.getReceiverName()) ) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account's owner name does not match the specified name");
+            }
+        }
+        if(!originAccount.getBalance().getCurrency().equals(destinationAccount.get().getBalance().getCurrency())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Origin account currency does not match the request currency");
+        }
+        if(transferDto.getAmount().compareTo(BigDecimal.ZERO) == -1) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Amount should not be negative"); }
+        // The transfer should only be processed if the account has sufficient funds:
+        if(originAccount.getBalance().getAmount().compareTo(transferDto.getAmount()) == -1) {
+            throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient funds" );
+        }
+        // Check if penalty could have been already applied:
+        boolean wasPenaltyAlreadyApplied = checkPenaltyAlreadyApplied(originAccount);
+        // Update accounts:
+        log.info("Updating balance of accounts");
+        originAccount.getBalance().decreaseAmount(transferDto.getAmount());
+        accountRepo.save(originAccount);
+        destinationAccount.get().getBalance().increaseAmount(transferDto.getAmount());
+        accountRepo.save(destinationAccount.get());
+        // Check and apply PENALTY FEE:
+        applyPenaltyFeeIfApplicable(wasPenaltyAlreadyApplied, originAccount);
+    }
+
 
     // DELETE AN ACCOUNT BY ACCOUNT NUMBER
     public void deleteAccountByNumber(Long accountNumber) {
@@ -165,6 +204,19 @@ public class AccountService implements AccountServiceInterface {
             username = principal.toString();
         }
         return accountHolderRepo.findByUsername(username);
+    }
+
+    // APPLY PENALTY FEE
+    public boolean checkPenaltyAlreadyApplied(Account account) {
+        return account.getBalance().getAmount().compareTo(account.getMinimumBalance().getAmount())  == -1 ? true : false;
+    }
+    public void applyPenaltyFeeIfApplicable(boolean wasPenaltyAlreadyApplied , Account account) {
+        if(!wasPenaltyAlreadyApplied) {
+            if (account.getBalance().getAmount().compareTo(account.getMinimumBalance().getAmount())  == -1) {
+                account.getBalance().decreaseAmount(account.getPenaltyFee().getAmount());
+                accountRepo.save(account);
+            }
+        }
     }
 
 }

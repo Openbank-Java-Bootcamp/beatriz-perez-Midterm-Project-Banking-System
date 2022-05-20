@@ -57,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(GET, "/api/account-holder/accounts").hasAnyAuthority("ROLE_ACCOUNTHOLDER");
         // get the details of one of YOUR accounts by account number
         http.authorizeRequests().antMatchers(GET, "/api/account-holder/accounts/{account-number}").hasAnyAuthority("ROLE_ACCOUNTHOLDER");
+        // transfer money from one of your accounts
+        http.authorizeRequests().antMatchers(PATCH, "/api/account-holder/transfer").hasAnyAuthority("ROLE_ACCOUNTHOLDER");
 
         // ----------------------------------------------------------------------------------------------------------------------
         // You need to have an ADMIN role to :

@@ -101,7 +101,12 @@ public class AccountController implements AccountControllerInterface {
         accountService.operateAsThirdParty(transactionDto);
     }
 
-
+    // Transfer money as an Account Holder
+    @PatchMapping("/account-holder/transfer")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void transferMoney(@RequestBody TransferDTO transferDto) {
+        accountService.transferMoney(transferDto);
+    }
 
     // DELETE ENDPOINTS -------------------------------------------------------------------------------
 
