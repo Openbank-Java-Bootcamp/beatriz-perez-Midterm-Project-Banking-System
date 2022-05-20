@@ -50,6 +50,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Third Party transactions
         http.authorizeRequests().antMatchers(PATCH, "/api/accounts/third-party-transaction").permitAll();
 
+        // ----------------------------------------------------------------------------------------------------------------------
+        // You need to have an ACCOUNT HOLDER role to:
+
+        // get a list of all YOUR active accounts (as primary OR secondary owner)
+        http.authorizeRequests().antMatchers(GET, "/api/account-holder/accounts").hasAnyAuthority("ROLE_ACCOUNTHOLDER");
+        // get the details of one of YOUR accounts by account number
+        http.authorizeRequests().antMatchers(GET, "/api/account-holder/accounts/{account-number}").hasAnyAuthority("ROLE_ACCOUNTHOLDER");
 
         // ----------------------------------------------------------------------------------------------------------------------
         // You need to have an ADMIN role to :
@@ -93,6 +100,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // ACCOUNTS:
         // get a list of all active accounts
         http.authorizeRequests().antMatchers(GET, "/api/accounts").hasAnyAuthority("ROLE_ADMIN");
+        // get a list of all active accounts by owner ID (primary AND secondary owner)
+        http.authorizeRequests().antMatchers(GET, "/api/accounts/user/{owner-id}").hasAnyAuthority("ROLE_ADMIN");
         // get the details of an account by account number
         http.authorizeRequests().antMatchers(GET, "/api/accounts/{account-number}").hasAnyAuthority("ROLE_ADMIN");
 

@@ -32,6 +32,7 @@ public class AccountController implements AccountControllerInterface {
     private SavingsAccountServiceInterface savingsService;
 
     // GET ENDPOINTS --------------------------------------------------------------------------------
+    // for admin users ------------------------------------------------------------------------------
 
     // Get a list of all active accounts
     @GetMapping("/accounts")
@@ -40,10 +41,28 @@ public class AccountController implements AccountControllerInterface {
         return accountService.getAllAccounts();
     }
 
+    // Get a list of all active accounts by owner ID (primary AND secondary owner)
+    @GetMapping("/accounts/user/{owner-id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Account> getAllAccountsByOwner(@PathVariable(name = "owner-id") String id ) { return accountService.getAllAccountsByOwner(Long.parseLong(id)); }
+
     // Get account details by accountNumber
     @GetMapping("/accounts/{account-number}")
     @ResponseStatus(HttpStatus.OK)
     public Account getAccountByNumber(@PathVariable(name = "account-number") String number) { return accountService.getAccountByNumber(Long.parseLong(number)); }
+
+    // GET ENDPOINTS --------------------------------------------------------------------------------
+    // for account holder  users ----------------------------------------------------------------------
+
+    // Get a list of all MY active accounts (primary AND secondary owner) as authenticated user
+    @GetMapping("/account-holder/accounts")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Account> getAllMyAccounts() { return accountService.getAllMyAccounts(); }
+
+    // Get account details of one of MY accounts by accountNumber (primary AND secondary owner) as authenticated user
+    @GetMapping("/account-holder/accounts/{account-number}")
+    @ResponseStatus(HttpStatus.OK)
+    public Account getMyAccountByNumber(@PathVariable(name = "account-number") String number) { return accountService.getMyAccountByNumber(Long.parseLong(number)); }
 
 
     // POST ENDPOINTS --------------------------------------------------------------------------------

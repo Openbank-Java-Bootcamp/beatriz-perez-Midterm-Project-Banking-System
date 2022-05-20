@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Optional;
 
 @Entity
 @NoArgsConstructor
