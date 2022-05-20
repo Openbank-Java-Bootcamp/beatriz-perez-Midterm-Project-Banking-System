@@ -39,7 +39,7 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
     // CREATE A NEW THIRD PARTY
     public ThirdParty createThirdParty(ThirdParty thirdParty) {
         // Handle possible errors:
-        if(ThirdPartyRepo.findByUsername(thirdParty.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
+        if(ThirdPartyRepo.findByUsername(thirdParty.getUsername()).isPresent()) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
         // Encrypt secret key:
         thirdParty.setPassword(passwordEncoder.encode(thirdParty.getPassword()));
         // Save new user:

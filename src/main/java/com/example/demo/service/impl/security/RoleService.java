@@ -39,7 +39,7 @@ public class RoleService implements RoleServiceInterface {
     // CREATE A NEW ROLE
     public Role createRole(Role role) {
         // Handle possible errors:
-        if(roleRepo.findByName(role.getName()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
+        if(roleRepo.findByName(role.getName()).isPresent()) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
         // Save new role:
         log.info("Saving a new role {} to the DB", role.getName());
         return roleRepo.save(role);

@@ -31,7 +31,7 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     // CREATE A NEW ACCOUNT HOLDER
     public AccountHolder createAccountHolder(AccountHolder accountHolder) {
         // Handle possible errors:
-        if(AccountHolderRepo.findByUsername(accountHolder.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
+        if(AccountHolderRepo.findByUsername(accountHolder.getUsername()).isPresent()) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
         // Encrypt secret key:
         accountHolder.setPassword(passwordEncoder.encode(accountHolder.getPassword()));
         // Save new user:

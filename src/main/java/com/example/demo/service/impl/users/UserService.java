@@ -57,7 +57,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     // CREATE A NEW USER-ADMIN
     public User createUser(User user) {
         // Handle possible errors:
-        if(userRepo.findByUsername(user.getUsername()) != null) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
+        if(userRepo.findByUsername(user.getUsername()).isPresent()) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Element already exists" ); }
         // Encrypt secret key:
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         // Save new user:
