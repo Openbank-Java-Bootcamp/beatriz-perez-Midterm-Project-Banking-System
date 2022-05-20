@@ -1,9 +1,6 @@
 package com.example.demo.controller.impl.accounts;
 
-import com.example.demo.DTO.AccountBalanceOnlyDTO;
-import com.example.demo.DTO.NewCheckingAccountDTO;
-import com.example.demo.DTO.NewCreditCardAccountDTO;
-import com.example.demo.DTO.NewSavingsAccountDTO;
+import com.example.demo.DTO.*;
 import com.example.demo.controller.interfaces.accounts.AccountControllerInterface;
 import com.example.demo.model.accounts.Account;
 import com.example.demo.model.accounts.CheckingAccount;
@@ -77,6 +74,14 @@ public class AccountController implements AccountControllerInterface {
     public void updateAccountBalance(@PathVariable(name = "account-number") String number, @RequestBody AccountBalanceOnlyDTO accountDto) {
         accountService.updateAccountBalance(Long.parseLong(number), accountDto.getNewBalanceAmount());
     }
+
+    // Operate as Third Party
+    @PatchMapping("/accounts/third-party-transaction")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void operateAsThirdParty(@RequestBody ThirdPartyTransactionDTO transactionDto) {
+        accountService.operateAsThirdParty(transactionDto);
+    }
+
 
 
     // DELETE ENDPOINTS -------------------------------------------------------------------------------

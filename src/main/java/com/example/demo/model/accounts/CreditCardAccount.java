@@ -1,7 +1,7 @@
 package com.example.demo.model.accounts;
 
 import com.example.demo.model.users.AccountHolder;
-import com.example.demo.model.aux.Money;
+import com.example.demo.model.secondary.Money;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;

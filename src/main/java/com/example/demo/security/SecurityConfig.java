@@ -44,9 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
         // ----------------------------------------------------------------------------------------------------------------------
-        // Anyone ca access:
+        // ANYONE ca access:
         // LOG IN
         http.authorizeRequests().antMatchers("/api/login/**").permitAll();
+        // Third Party transactions
+        http.authorizeRequests().antMatchers(PATCH, "/api/accounts/third-party-transaction").permitAll();
+
 
         // ----------------------------------------------------------------------------------------------------------------------
         // You need to have an ADMIN role to :

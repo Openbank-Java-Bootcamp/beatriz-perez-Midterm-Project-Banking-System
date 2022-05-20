@@ -1,9 +1,8 @@
 package com.example.demo.service.impl.accounts;
 
 import com.example.demo.DTO.NewCreditCardAccountDTO;
-import com.example.demo.model.accounts.CheckingAccount;
 import com.example.demo.model.accounts.CreditCardAccount;
-import com.example.demo.model.aux.Money;
+import com.example.demo.model.secondary.Money;
 import com.example.demo.repository.accounts.CreditCardAccountRepository;
 import com.example.demo.repository.users.AccountHolderRepository;
 import com.example.demo.service.interfaces.accounts.CreditCardAccountServiceInterface;

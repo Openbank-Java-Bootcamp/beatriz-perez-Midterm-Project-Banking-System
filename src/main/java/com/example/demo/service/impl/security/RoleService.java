@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,15 +47,15 @@ public class RoleService implements RoleServiceInterface {
 
     // ASSIGN A ROLE TO A USER
     public void addRoleToUser(String username, String roleName) {
-        User user = userRepo.findByUsername(username);
-        Role role = roleRepo.findByName(roleName);
+        Optional<User> user = userRepo.findByUsername(username);
+        Optional<Role> role = roleRepo.findByName(roleName);
         // Handle possible errors:
-        if(user == null) { throw new ResponseStatusException( HttpStatus.NOT_FOUND, "User not found" ); }
-        if(role == null) { throw new ResponseStatusException( HttpStatus.NOT_FOUND, "Role not found" ); }
+        if(user.isEmpty()) { throw new ResponseStatusException( HttpStatus.NOT_FOUND, "User not found" ); }
+        if(role.isEmpty()) { throw new ResponseStatusException( HttpStatus.NOT_FOUND, "Role not found" ); }
         // Modify user's collection of roles:
-        user.getRoles().add(role);
+        user.get().getRoles().add(role.get());
         // Save modified user
-        userRepo.save(user);
+        userRepo.save(user.get());
     }
 
 }

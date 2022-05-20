@@ -1,16 +1,13 @@
 package com.example.demo.model.users;
 
-import com.example.demo.model.aux.Address;
-import com.example.demo.model.aux.Money;
-import com.example.demo.model.aux.Name;
+import com.example.demo.model.secondary.Address;
+import com.example.demo.model.secondary.Name;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor

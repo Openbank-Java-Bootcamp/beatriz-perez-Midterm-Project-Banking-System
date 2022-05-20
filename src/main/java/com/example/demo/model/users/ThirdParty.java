@@ -1,6 +1,5 @@
 package com.example.demo.model.users;
 
-import com.example.demo.model.aux.Name;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;

@@ -1,9 +1,8 @@
 package com.example.demo.service.impl.accounts;
 
 import com.example.demo.DTO.NewSavingsAccountDTO;
-import com.example.demo.model.accounts.CheckingAccount;
 import com.example.demo.model.accounts.SavingsAccount;
-import com.example.demo.model.aux.Money;
+import com.example.demo.model.secondary.Money;
 import com.example.demo.repository.accounts.SavingsAccountRepository;
 import com.example.demo.repository.users.AccountHolderRepository;
 import com.example.demo.service.interfaces.accounts.SavingsAccountServiceInterface;

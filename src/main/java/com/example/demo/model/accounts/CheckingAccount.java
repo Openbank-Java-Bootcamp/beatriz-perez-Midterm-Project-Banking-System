@@ -2,7 +2,7 @@ package com.example.demo.model.accounts;
 
 import com.example.demo.enums.AccountType;
 import com.example.demo.model.users.AccountHolder;
-import com.example.demo.model.aux.Money;
+import com.example.demo.model.secondary.Money;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

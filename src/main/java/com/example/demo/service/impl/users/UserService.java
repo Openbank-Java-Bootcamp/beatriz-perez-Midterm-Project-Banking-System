@@ -92,17 +92,17 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username);
-        if(user == null)  {
+        Optional<User> user = userRepo.findByUsername(username);
+        if(user.isEmpty())  {
             log.error("User not found in the DataBase");
             throw new UsernameNotFoundException("User not found in the DataBase");
         } else {
             log.error("User is found in the DataBase: {}", username);
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            user.getRoles().forEach(role -> {
+            user.get().getRoles().forEach(role -> {
                 authorities.add(new SimpleGrantedAuthority(role.getName()));
             });
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+            return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), authorities);
         }
     }
 }

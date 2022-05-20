@@ -2,7 +2,7 @@ package com.example.demo.model.accounts;
 
 import com.example.demo.enums.Status;
 import com.example.demo.model.users.AccountHolder;
-import com.example.demo.model.aux.Money;
+import com.example.demo.model.secondary.Money;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor

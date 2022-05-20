@@ -1,6 +1,6 @@
 package com.example.demo.model.users;
 
-import com.example.demo.model.aux.Name;
+import com.example.demo.model.secondary.Name;
 import com.example.demo.model.security.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

@@ -3,13 +3,12 @@ package com.example.demo;
 import com.example.demo.model.accounts.CheckingAccount;
 import com.example.demo.model.accounts.CreditCardAccount;
 import com.example.demo.model.accounts.SavingsAccount;
-import com.example.demo.model.aux.Address;
-import com.example.demo.model.aux.Name;
+import com.example.demo.model.secondary.Address;
+import com.example.demo.model.secondary.Name;
 import com.example.demo.model.security.Role;
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.ThirdParty;
 import com.example.demo.model.users.User;
-import com.example.demo.service.interfaces.accounts.AccountServiceInterface;
 import com.example.demo.service.interfaces.accounts.CheckingAccountServiceInterface;
 import com.example.demo.service.interfaces.accounts.CreditCardAccountServiceInterface;
 import com.example.demo.service.interfaces.accounts.SavingsAccountServiceInterface;
@@ -25,9 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Currency;
-import java.util.Date;
 
 @SpringBootApplication
 public class DemoApplication {
