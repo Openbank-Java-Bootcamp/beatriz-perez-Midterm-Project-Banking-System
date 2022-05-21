@@ -7,6 +7,7 @@ import com.example.demo.model.secondary.Money;
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.ThirdParty;
 import com.example.demo.repository.accounts.AccountRepository;
+import com.example.demo.repository.accounts.CreditCardAccountRepository;
 import com.example.demo.repository.users.AccountHolderRepository;
 import com.example.demo.repository.users.ThirdPartyRepository;
 import com.example.demo.repository.users.UserRepository;
@@ -33,6 +34,8 @@ public class AccountService implements AccountServiceInterface {
 
     @Autowired
     private AccountRepository accountRepo;
+    @Autowired
+    private CreditCardAccountRepository creditCardAccountRepo;
     @Autowired
     private UserRepository userRepo;
     @Autowired
@@ -141,6 +144,17 @@ public class AccountService implements AccountServiceInterface {
         if(!account.get().getBalance().getCurrency().getCurrencyCode().equals(transactionCurrencyCode)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account currency does not match the request currency");
         }
+        // The transaction should only be processed if the account has sufficient funds:
+        // check if origin account is a credit card account:
+        if(creditCardAccountRepo.findById(transactionDto.getAccountNumber()).isPresent()) {
+            if(account.get().getBalance().getAmount().add(transactionDto.getAmount()).compareTo(account.get().getMinimumBalance().getAmount()) == -1) {
+                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient credit limit" );
+            }
+        } else {
+            if(account.get().getBalance().getAmount().add(transactionDto.getAmount()).compareTo(BigDecimal.ZERO) == -1) {
+                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient funds" );
+            }
+        }
         // Check if penalty could have been already applied:
         boolean wasPenaltyAlreadyApplied = checkPenaltyAlreadyApplied(account.get());
         // Update account:
@@ -168,8 +182,15 @@ public class AccountService implements AccountServiceInterface {
         }
         if(transferDto.getAmount().compareTo(BigDecimal.ZERO) == -1) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Amount should not be negative"); }
         // The transfer should only be processed if the account has sufficient funds:
-        if(originAccount.getBalance().getAmount().compareTo(transferDto.getAmount()) == -1) {
-            throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient funds" );
+        // check if origin account is a credit card account:
+        if(creditCardAccountRepo.findById(transferDto.getOriginAccountNumber()).isPresent()) {
+            if(originAccount.getBalance().getAmount().subtract(transferDto.getAmount()).compareTo(originAccount.getMinimumBalance().getAmount()) == -1) {
+                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient credit limit" );
+            }
+        } else {
+            if(originAccount.getBalance().getAmount().compareTo(transferDto.getAmount()) == -1) {
+                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient funds" );
+            }
         }
         // Check if penalty could have been already applied:
         boolean wasPenaltyAlreadyApplied = checkPenaltyAlreadyApplied(originAccount);
