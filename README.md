@@ -8,8 +8,21 @@ that runs on a local server:
 - Documentation in the README.md file: [README.md file](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System/blob/master/README.md)
 
 ***
+## Readme INDEX:
+- How to use the API
+- Project Structure
+  1. 4 types of accounts
+  2. 3 types of Users + 2 Roles
+  3. create new Checking, Savings, or CreditCard Accounts
+  4. Interest and Fees
+  5. Account Access
+- Technical Requirements <-----------------------------------------------
+- Extra features <-----------------------------------------------
+- How the project was built <-----------------------------------------------
 
-## How to use it:
+***
+
+## How to use the API:
 1. Download the **project**: [GitHub repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
 
 2. Make sure your **DB** is ready for queries. <br/>
@@ -121,7 +134,7 @@ that runs on a local server:
     * Interest rates DEDUCTED monthly by Account Service **based on negative balance** (credit) <br/><br/>
 
 
-### 2. The system has 3 types of Users: Admins, Third-party Users and AccountHolders
+### 2. The system has 3 types of Users: Admins, Third-party Users and AccountHolders + 2 Roles
 
    ## User class
    ### Parent class
@@ -251,8 +264,7 @@ that runs on a local server:
 
 ***
 
-
-### Technical Requirements
+## Technical Requirements
 - Include a Java/Spring Boot backend.
 - Everything should be stored in MySQL database tables.
 - Include at least 1 GET, POST, PUT/PATCH, and DELETE route.
@@ -261,17 +273,12 @@ that runs on a local server:
 - Include robust error handling.
 - You must use the Money class for all currency and BigDecimal for any other decimal or large number math.
 
-### Extra features (bonus)
-#### Fraud Detection
+## Extra features
+### Fraud Detection
 The application must recognize patterns that indicate fraud and Freeze the account status when potential fraud is detected.
 Patterns that indicate fraud include:
 - Transactions made in 24 hours total to more than 150% of the customers highest daily total transactions in any other 24 hour period.
 - More than 2 transactions occur on a single account within a 1 second period.
-
-
-      
-
-
 
 ***
 
