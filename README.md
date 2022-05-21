@@ -164,8 +164,7 @@ that runs on a local server:
 
    ## ThirdParty class
    ### Parent class
-   **Table name:** Third_party
-   - no extending child classes <br/>
+   **Table name:** Third_party (no extending child classes)
    **Properties:**  <br/>
     - Long id ---> Generated Value <br/>
     - String username ---> Not Empty validation <br/>
@@ -183,8 +182,7 @@ that runs on a local server:
 
    ## Role class
    ### Parent class
-   **Table name:** Role
-   - no extending child classes <br/>
+   **Table name:** Role (no extending child classes)
    **Properties:**  <br/>
     - Long id ---> Generated Value <br/>
     - String name ---> Not Empty validation <br/>
