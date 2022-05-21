@@ -8,14 +8,15 @@ that runs on a local server:
 - Documentation in the README.md file: [README.md file](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System/blob/master/README.md)
 
 ***
-## Readme INDEX:
-- How to use the API
+## Readme index:
+-  [How to use the API](#how-to-use-the-API:)
+-  [Project Structure](#project-Structure)
 - Project Structure
-  1. 4 types of accounts
-  2. 3 types of Users + 2 Roles
-  3. create new Checking, Savings, or CreditCard Accounts
-  4. Interest and Fees
-  5. Account Access
+  - 4 types of accounts
+  - 3 types of Users + 2 Roles
+  - create new Checking, Savings, or CreditCard Accounts
+  - Interest and Fees
+  - Account Access
 - Technical Requirements <-----------------------------------------------
 - Extra features <-----------------------------------------------
 - How the project was built <-----------------------------------------------
