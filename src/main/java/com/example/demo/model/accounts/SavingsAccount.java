@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Currency;
 import java.util.Optional;
 
@@ -23,6 +24,9 @@ public class SavingsAccount  extends Account{
     @DecimalMin(value = "0", message = "CreditCard accounts should have a positive interest rate")
     private BigDecimal interestRate;
 
+    @Column(name = "interest_review_date")
+    private LocalDate interestReviewDate;
+
     // Default values
     private static final BigDecimal DEFAULT_INTEREST_RATE = new BigDecimal("0.0025");
     private static final BigDecimal DEFAULT_MINIMUM_BALANCE_AMOUNT = new BigDecimal("1000");
@@ -31,6 +35,7 @@ public class SavingsAccount  extends Account{
     public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {
         super( secretKey, primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency );
         this.interestRate = interestRate;
+        this.interestReviewDate = LocalDate.now(); // Creation date is the first value for interest review date
     }
     // default minimumBalance:
     public SavingsAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {

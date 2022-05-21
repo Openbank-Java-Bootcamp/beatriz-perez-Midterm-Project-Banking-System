@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Currency;
 import java.util.Optional;
 
@@ -22,6 +23,9 @@ public class CreditCardAccount  extends Account{
     @DecimalMax(value = "0.2", message = "CreditCard accounts should have a maximum interest rate of 0.2")
     @DecimalMin(value = "0.1", message = "CreditCard accounts should have a minimum interest rate of 0.1")
     private BigDecimal interestRate;
+
+    @Column(name = "interest_review_date")
+    private LocalDate interestReviewDate;
 
     @Embedded
     @AttributeOverrides({
@@ -41,6 +45,7 @@ public class CreditCardAccount  extends Account{
         super( secretKey, primaryOwner, secondaryOwner, DEFAULT_CREDIT_LIMIT_AMOUNT.negate(), balanceAmount, currency );
         this.interestRate = interestRate;
         this.creditLimit = creditLimit;
+        this.interestReviewDate = LocalDate.now(); // Creation date is the first value for interest review date
     }
     // default creditLimit
     public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {

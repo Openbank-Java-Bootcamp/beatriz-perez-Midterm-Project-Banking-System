@@ -3,11 +3,14 @@ package com.example.demo.service.impl.accounts;
 import com.example.demo.DTO.ThirdPartyTransactionDTO;
 import com.example.demo.DTO.TransferDTO;
 import com.example.demo.model.accounts.Account;
+import com.example.demo.model.accounts.CreditCardAccount;
+import com.example.demo.model.accounts.SavingsAccount;
 import com.example.demo.model.secondary.Money;
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.ThirdParty;
 import com.example.demo.repository.accounts.AccountRepository;
 import com.example.demo.repository.accounts.CreditCardAccountRepository;
+import com.example.demo.repository.accounts.SavingsAccountRepository;
 import com.example.demo.repository.users.AccountHolderRepository;
 import com.example.demo.repository.users.ThirdPartyRepository;
 import com.example.demo.repository.users.UserRepository;
@@ -23,6 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +41,8 @@ public class AccountService implements AccountServiceInterface {
     private AccountRepository accountRepo;
     @Autowired
     private CreditCardAccountRepository creditCardAccountRepo;
+    @Autowired
+    private SavingsAccountRepository savingsAccountRepo;
     @Autowired
     private UserRepository userRepo;
     @Autowired
@@ -51,9 +58,12 @@ public class AccountService implements AccountServiceInterface {
     public List<Account> getAllAccounts() {
         // Handle possible errors:
         if(accountRepo.findAll().size() == 0) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No elements to show" ); }
-        // Return results
         log.info("Fetching all accounts");
-        return accountRepo.findAll();
+        List<Account> list = accountRepo.findAll();
+        // Check interest rates
+        list.forEach( account -> checkInterestRates(account) );
+        // Return results
+        return list;
     }
 
     // GET A LIST OF ALL EXISTING ACCOUNTS BY OWNER ID
@@ -65,6 +75,8 @@ public class AccountService implements AccountServiceInterface {
         accounts.addAll(accountRepo.findAllByPrimaryOwner(accountHolderRepo.findById(id).get()));
         accounts.addAll(accountRepo.findAllBySecondaryOwner(accountHolderRepo.findById(id).get()));
         if(accounts.size() == 0) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No elements to show" ); }
+        // Check interest rates
+        accounts.forEach( account -> checkInterestRates(account) );
         // Return results
         return accounts;
     }
@@ -77,6 +89,8 @@ public class AccountService implements AccountServiceInterface {
         if(owner.isEmpty()) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No account holder found with the specified username"); }
         List<Account> accounts = getAllAccountsByOwner(owner.get().getId());
         if(accounts.size() == 0) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No elements to show" ); }
+        // Check interest rates
+        accounts.forEach( account -> checkInterestRates(account) );
         // Return results
         return accounts;
     }
@@ -85,9 +99,12 @@ public class AccountService implements AccountServiceInterface {
     public Account getAccountByNumber(Long accountNumber) {
         // Handle possible errors:
         if(accountRepo.findById(accountNumber).isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No account found with the specified number"); }
-        // Return user:
         log.info("Fetching account information");
-        return accountRepo.findById(accountNumber).get();
+        Account account = accountRepo.findById(accountNumber).get();
+        // Check interest rates
+        checkInterestRates(account);
+        // Return account:
+        return account;
     }
 
     // GET MY ACCOUNT'S DETAILS BY ACCOUNT NUMBER
@@ -103,9 +120,10 @@ public class AccountService implements AccountServiceInterface {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account's owner username does not match your request username");
             }
         }
-        // Return user:
-        log.info("Fetching account information");
-        return accountRepo.findById(accountNumber).get();
+        // Check interest rates
+        checkInterestRates(account.get());
+        // Return account:
+        return account.get();
     }
 
     // MODIFY AN ACCOUNTS BALANCE BY ACCOUNT NUMBER
@@ -113,6 +131,8 @@ public class AccountService implements AccountServiceInterface {
         Optional<Account> account = accountRepo.findById(accountNumber);
         // Handle possible errors:
         if(account.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No account found with the specified number"); }
+        // Check interest rates before modifications are applied
+        checkInterestRates(account.get());
         // Update account:
         log.info("Updating balance of account");
         Money newBalance = new Money( newBalanceAmount, account.get().getBalance().getCurrency() );
@@ -144,6 +164,8 @@ public class AccountService implements AccountServiceInterface {
         if(!account.get().getBalance().getCurrency().getCurrencyCode().equals(transactionCurrencyCode)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account currency does not match the request currency");
         }
+        // Check interest rates before modifications are applied
+        checkInterestRates(account.get());
         // The transaction should only be processed if the account has sufficient funds:
         // check if origin account is a credit card account:
         if(creditCardAccountRepo.findById(transactionDto.getAccountNumber()).isPresent()) {
@@ -181,6 +203,8 @@ public class AccountService implements AccountServiceInterface {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Origin account currency does not match the request currency");
         }
         if(transferDto.getAmount().compareTo(BigDecimal.ZERO) == -1) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Amount should not be negative"); }
+        // Check interest rates before modifications are applied only in destination account (origin was reviewed by getMyAccountByNumber method)
+        checkInterestRates(destinationAccount.get());
         // The transfer should only be processed if the account has sufficient funds:
         // check if origin account is a credit card account:
         if(creditCardAccountRepo.findById(transferDto.getOriginAccountNumber()).isPresent()) {
@@ -237,6 +261,46 @@ public class AccountService implements AccountServiceInterface {
             if (account.getBalance().getAmount().compareTo(account.getMinimumBalance().getAmount())  == -1) {
                 account.getBalance().decreaseAmount(account.getPenaltyFee().getAmount());
                 accountRepo.save(account);
+            }
+        }
+    }
+
+    // APPLY INTEREST RATES
+    public void checkInterestRates(Account account) {
+        log.info("Checking interest rates on account");
+        // If account is a credit card account: interest on credit
+        if(creditCardAccountRepo.findById(account.getAccountNumber()).isPresent()) {
+            CreditCardAccount cAccount = creditCardAccountRepo.findById(account.getAccountNumber()).get();
+            // Interest on credit cards is deducted from the balance monthly
+            int months = Math.abs(Period.between(cAccount.getInterestReviewDate(), LocalDate.now()).getMonths());
+            if(months > 0) {
+                // Interest on the credit will be applied if balance is below 0
+                if(cAccount.getBalance().getAmount().compareTo(BigDecimal.ZERO) == -1) {
+                    log.info("Deducting interests to balance of account");
+                    for(int i = 0; i < months; i++) {
+                        // Multiply the negative balance by the interest rate and apply it once per month
+                        cAccount.getBalance().increaseAmount(cAccount.getBalance().getAmount().multiply(cAccount.getInterestRate()));
+                    }
+                }
+                // Update review date:
+                cAccount.setInterestReviewDate(LocalDate.now());
+                creditCardAccountRepo.save(cAccount);
+            }
+        }
+        // If account is a savings account: interest on savings
+        if(savingsAccountRepo.findById(account.getAccountNumber()).isPresent()) {
+            SavingsAccount sAccount = savingsAccountRepo.findById(account.getAccountNumber()).get();
+            // Interest on savings accounts is added to the account annually
+            int years = Math.abs(Period.between(sAccount.getInterestReviewDate(), LocalDate.now()).getYears());
+            if(years > 0) {
+                log.info("Adding interests to balance of account");
+                for(int i = 0; i < years; i++) {
+                    // Multiply the balance by the interest rate and apply it once per year
+                    sAccount.getBalance().increaseAmount(sAccount.getBalance().getAmount().multiply(sAccount.getInterestRate()));
+                }
+                // Update review date:
+                sAccount.setInterestReviewDate(LocalDate.now());
+                savingsAccountRepo.save(sAccount);
             }
         }
     }
