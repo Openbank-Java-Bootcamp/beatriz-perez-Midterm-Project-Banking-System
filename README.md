@@ -12,15 +12,15 @@ that runs on a local server:
 ## How to use it:
 1. Download the **project**: [GitHub repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
 
-2. Make sure your **DB** is ready for queries. 
+2. Make sure your **DB** is ready for queries. <br/>
    You can use workbench and create an "ironhack_labs" schema to run the app (and an "ironhack_labs_test" schema to run the tests): [MySQL Workbench](https://www.mysql.com/products/workbench/)
 
-3. Run the **app** from your IDE, for example IntelliJ IDEA. 
+3. Run the **app** from your IDE, for example IntelliJ IDEA. <br/>
    All entity tables will be created in the DB, go check it in workbench!: [IntelliJ IDEA](https://www.jetbrains.com/idea/promo/?source=google&medium=cpc&campaign=9736637745&term=intellij%20idea&gclid=Cj0KCQjwm6KUBhC3ARIsACIwxBiNkmA6c4mmEzhGgPIqwR7oB8EcwLAwNaYghuxPdrZg9VKEas3JgLMaAjX3EALw_wcB)
 
-4. Use Postman to test all available **endpoints**. 
+4. Use Postman to test all available **endpoints**. <br/>
    You'll see in workbench how DB tables reflect the changes you make :)  [Postman](https://www.postman.com/)
-   Use this Postman collection to test the app even faster: <br/>
+   Use this Postman collection to test the app even faster: <br/> <br/>
    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/11775509-03638dea-ac4f-4625-8997-614e8e14049a?action=collection%2Ffork&collection-url=entityId%3D11775509-03638dea-ac4f-4625-8997-614e8e14049a%26entityType%3Dcollection%26workspaceId%3D14973f32-7e73-4c19-8b2d-26167656e88f)
 
 
