@@ -127,7 +127,7 @@ that runs on a local server:
     - Name name ---> Embedded <br/>
     - String username  ---> Not Empty validation <br/>
     - String password  ---> Not Empty validation <br/>
-    - Collection<Role> roles ---> ManyToMany relation <br/>
+    - Collection<Role> roles ---> ManyToMany relation **User instances are given a ROLE_ADMIN automatically**<br/>
     <br/>
    **Service methods:**  <br/>
     - getAllUsers() <br/>
@@ -146,6 +146,7 @@ that runs on a local server:
     - Date dateOfBirth ---> Not Null validation <br/>
     - Address primaryAddress ---> Embedded  + Not Null validation <br/>
     - Address mailingAddress ---> optional, Embedded <br/>
+    * **AccountHolder instances are given a ROLE_ACCOUNTHOLDER automatically**<br/>
     <br/>
    **Conditions:**  <br/>
     - The AccountHolders can access their own accounts and only their accounts when passing the correct credentials using Bearer Auth. (Account service) <br/>
@@ -175,34 +176,19 @@ that runs on a local server:
     - deleteThirdPartyById <br/>
     <br/>
 
-
-
-
-
-
-
-
-   ## --- class
-   ### Child class
+   ## Role class
+   ### Parent class
    **Extends:** --- class <br/>
-   **Included in table:** --- <br/>
+   * no extending child classes <br/><br/>
    **Properties:**  <br/>
-    -  <br/>
-    -  <br/>
+    - Long id ---> Generated Value <br/>
+    - String name ---> Not Empty validation <br/>
     <br/>
-   **Conditions:**  <br/>
-    -  <br/>
-    -  <br/>
    **Service methods:**  <br/>
-    -  <br/>
-    -  <br/>
+    - getAllRoles() <br/>
+    - createRole <br/>
+    - addRoleToUser <br/>
     <br/>
-
-
-
-### 
-
-
 
 
 ### 3. Admins can create new Checking, Savings, or CreditCard Accounts
