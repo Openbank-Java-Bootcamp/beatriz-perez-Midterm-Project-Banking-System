@@ -2,9 +2,11 @@ package com.example.demo.controller.impl;
 
 import com.example.demo.model.secondary.Address;
 import com.example.demo.model.secondary.Name;
+import com.example.demo.model.security.Role;
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.ThirdParty;
 import com.example.demo.model.users.User;
+import com.example.demo.repository.security.RoleRepository;
 import com.example.demo.repository.users.AccountHolderRepository;
 import com.example.demo.repository.users.ThirdPartyRepository;
 import com.example.demo.repository.users.UserRepository;
@@ -35,6 +37,8 @@ class UserControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
     @Autowired
+    private RoleRepository roleRepo;
+    @Autowired
     private UserRepository userRepo;
     @Autowired
     private AccountHolderRepository accountHolderRepo;
@@ -44,23 +48,33 @@ class UserControllerTest {
     private MockMvc mockMvc;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private List<Role> roles;
+    private List<User> users;
+    private List<ThirdParty> thirdParties;
+    private List<AccountHolder> accountHolders;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        List<User> users = userRepo.saveAll(
+        roles = roleRepo.saveAll(
+                List.of(
+                        new Role("ROLE_ADMIN"),
+                        new Role("ROLE_ACCOUNTHOLDER")
+                )
+        );
+        users = userRepo.saveAll(
                 List.of(
                         new User(new Name("Rita", "Hayworth"), "ritahayworth", "gilda" ),
                         new User(new Name("James", "Dean"), "jamesdean", "eastofeden" )
                 )
         );
-        List<ThirdParty> thirdParties = thirdPartyRepo.saveAll(
+        thirdParties = thirdPartyRepo.saveAll(
                 List.of(
                         new ThirdParty("clarkgable", "butler"),
                         new ThirdParty("vivienleigh", "ohara")
                 )
         );
-        List<AccountHolder> accountHolders = accountHolderRepo.saveAll(
+        accountHolders = accountHolderRepo.saveAll(
                 List.of(
                         new AccountHolder(
                                 new Name("Scarlett", "Ohara"),
@@ -75,8 +89,10 @@ class UserControllerTest {
 
     @AfterEach
     void tearDown() {
-        userRepo.deleteAll();
-        thirdPartyRepo.deleteAll();
+        roleRepo.deleteAll(roles);
+        userRepo.deleteAll(users);
+        thirdPartyRepo.deleteAll(thirdParties);
+        accountHolderRepo.deleteAll(accountHolders);
     }
 
     @Test
