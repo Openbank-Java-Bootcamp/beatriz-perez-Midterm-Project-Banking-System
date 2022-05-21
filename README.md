@@ -45,12 +45,19 @@ that runs on a local server:
     - Money minimumBalance ---> Embedded  + Not Null validation  <br/>
     - Money penaltyFee ---> Embedded , amount = 40 (FINAL value), same Currency as balance  <br/>
    **Service methods:**  <br/>
+    -  <br/>
+    -  <br/>
+    - When any account drops below the minimumBalance, the penaltyFee is deducted from the balance automatically <br/>
+    -  <br/>
+    -  <br/>
+    -  <br/>
+    -  <br/>
 
 
    ## Checking Account class
    ### Child class
    **Extends:** Account class <br/>
-   **Included in table:** Account
+   **Included in table:** Account <br/>
    **Properties:**  <br/>
     - Money monthlyMaintenanceFee ---> Embedded <br/>
     - AccountType type = REGULAR / STUDENT ---> AccountType Enum **Created as Student type by default**  <br/>
@@ -70,7 +77,7 @@ that runs on a local server:
    ## Savings Account class
    ### Child class
    **Extends:** Account class <br/>
-   **Included in table:** Account
+   **Included in table:** Account <br/>
    **Properties:**  <br/>
     - BigDecimal interestRate ---> Decimal max + Decimal min validation <br/>
     - LocalDate interestReviewDate  ---> set by constructor  as the current date <br/>
@@ -81,18 +88,32 @@ that runs on a local server:
     - interestRate max=0.5, min=0 - Controlled by **Spring Boot Validation** (min was not required, but was added to avoid negative interests) <br/>
     - minimumBalance max=1000, min=100 - Controlled by the **SERVICE** with checkMinimumBalance() method <br/>
    **Service methods:**  <br/>
-    - createSavingsAccount( <br/>
+    - createSavingsAccount() <br/>
     - checkMinimumBalance() <br/>
     * Penalty fees applied by Account Service <br/>
-    * Interest rates applied by Account Service <br/><br/>
+    * Interest rates ADDED annually by Account Service **based on balance** <br/><br/>
 
-## InterestRate
-Interest on savings accounts is added to the account annually at the rate specified interestRate per year. 
-That means that if I have 1000000 in a savings account with a 0.01 interest rate, 1% of 1 Million is added to my account after 1 year. 
-When a savings account balance is accessed, you must determine if it has been 1 year or more since either the account was created 
-or since interest was added to the account, and add the appropriate interest to the balance if necessary.
-
-
+   ## CreditCard Account class
+   ### Child class
+   **Extends:** Account class <br/>
+   **Included in table:** Account <br/>
+   **Properties:**  <br/>
+    - BigDecimal interestRate ---> Decimal max + Decimal min validation <br/>
+    - LocalDate interestReviewDate  ---> set by constructor  as the current date <br/>
+    - Money creditLimit ---> Embedded <br/>
+    <br/>
+   **Conditions:**  <br/>
+    - **Minimum balance is set by constructor according to credit limit** <br/>
+    - Default creditLimit of 100 ---> Constructor overloading + chaining <br/>
+    - Default interestRate of 0.2  ---> Constructor overloading + chaining <br/>
+    - InterestRate max=0.2, min=0.1 - Controlled by **Spring Boot Validation** <br/>
+    - CreditLimit max=100000, min=100 - Controlled by the **SERVICE** <br/>
+   **Service methods:**  <br/>
+    - createCreditCardAccount() <br/>
+    - checkCreditLimit() <br/>
+    * Penalty fees applied by Account Service <br/>
+    * Interest rates DEDUCTED monthly by Account Service **based on negative balance** (credit) <br/><br/>
+s
 
 ### 2. The system has 3 types of Users: Admins, Third-party Users and AccountHolders
 
