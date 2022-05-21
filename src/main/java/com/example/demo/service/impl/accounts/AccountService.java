@@ -208,6 +208,7 @@ public class AccountService implements AccountServiceInterface {
 
     // APPLY PENALTY FEE
     public boolean checkPenaltyAlreadyApplied(Account account) {
+        if(account.getMinimumBalance() == null) return true; // To avoid applying it in case there is no minimum
         return account.getBalance().getAmount().compareTo(account.getMinimumBalance().getAmount())  == -1 ? true : false;
     }
     public void applyPenaltyFeeIfApplicable(boolean wasPenaltyAlreadyApplied , Account account) {
