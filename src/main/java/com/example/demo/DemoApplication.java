@@ -81,7 +81,7 @@ public class DemoApplication {
 			// - savings accounts
 			savingsService.createSavingsAccount( new SavingsAccount("3210", aH2, null, new BigDecimal("10000"), Currency.getInstance("EUR")) );
 			// - credit card account
-			cCardService.createCreditCardAccount( new CreditCardAccount("abcd", aH1, null, new BigDecimal("600"), new BigDecimal("1000"), Currency.getInstance("EUR")) );
+			cCardService.createCreditCardAccount( new CreditCardAccount("abcd", aH1, null, new BigDecimal("1000"), Currency.getInstance("EUR")) );
 			// - checking accounts
 			// -----> regular (account holder 1 is over 24)
 			checkingService.createCheckingAccount( new CheckingAccount("1234", aH1, aH2, new BigDecimal("250"), Currency.getInstance("EUR")) );

@@ -1,6 +1,6 @@
 package com.example.demo.service.impl.accounts;
 
-import com.example.demo.DTO.NewCheckingAccountDTO;
+import com.example.demo.DTO.NewAccountDTO;
 import com.example.demo.enums.AccountType;
 import com.example.demo.model.accounts.CheckingAccount;
 import com.example.demo.model.secondary.Money;
@@ -31,7 +31,7 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
     // Methods
 
     // CREATE A NEW CHECKING ACCOUNT
-    public CheckingAccount createCheckingAccount(NewCheckingAccountDTO accountDTO) {
+    public CheckingAccount createCheckingAccount(NewAccountDTO accountDTO) {
         CheckingAccount account = new CheckingAccount(
                 accountDTO.getSecretKey(),
                 accHolderRepo.findById( accountDTO.getPrimaryOwnerId() ).get(),

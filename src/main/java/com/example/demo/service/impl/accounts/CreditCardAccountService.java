@@ -1,6 +1,6 @@
 package com.example.demo.service.impl.accounts;
 
-import com.example.demo.DTO.NewCreditCardAccountDTO;
+import com.example.demo.DTO.NewAccountDTO;
 import com.example.demo.model.accounts.CreditCardAccount;
 import com.example.demo.model.secondary.Money;
 import com.example.demo.repository.accounts.CreditCardAccountRepository;
@@ -30,12 +30,11 @@ public class CreditCardAccountService implements CreditCardAccountServiceInterfa
     // Methods
 
     // CREATE A NEW CREDIT CARD ACCOUNT
-    public CreditCardAccount createCreditCardAccount(NewCreditCardAccountDTO accountDTO) {
+    public CreditCardAccount createCreditCardAccount(NewAccountDTO accountDTO) {
         CreditCardAccount account = new CreditCardAccount(
                 accountDTO.getSecretKey(),
                 accHolderRepo.findById( accountDTO.getPrimaryOwnerId() ).get(),
                 null,
-                accountDTO.getMinimumBalanceAmount(),
                 accountDTO.getBalanceAmount(),
                 Currency.getInstance( accountDTO.getCurrencyCode() )
         );

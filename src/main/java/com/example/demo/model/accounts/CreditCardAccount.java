@@ -34,23 +34,24 @@ public class CreditCardAccount  extends Account{
     private static final BigDecimal DEFAULT_INTEREST_RATE = new BigDecimal("0.2");
     private static final BigDecimal DEFAULT_CREDIT_LIMIT_AMOUNT = new BigDecimal("100");
 
+    // Minimum balance = 0 - credit_limit ---> DEFAULT_CREDIT_LIMIT_AMOUNT.negate()
 
     // Constructors
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate, Money creditLimit) {
-        super( secretKey, primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency );
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate, Money creditLimit) {
+        super( secretKey, primaryOwner, secondaryOwner, DEFAULT_CREDIT_LIMIT_AMOUNT.negate(), balanceAmount, currency );
         this.interestRate = interestRate;
         this.creditLimit = creditLimit;
     }
     // default creditLimit
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {
-        this(secretKey,primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency, interestRate, new Money(DEFAULT_CREDIT_LIMIT_AMOUNT, currency));
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {
+        this(secretKey,primaryOwner, secondaryOwner, balanceAmount, currency, interestRate, new Money(DEFAULT_CREDIT_LIMIT_AMOUNT, currency));
     }
     // default interestRate
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency, Money creditLimit) {
-        this(secretKey,primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency, DEFAULT_INTEREST_RATE, creditLimit);
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency, Money creditLimit) {
+        this(secretKey,primaryOwner, secondaryOwner, balanceAmount, currency, DEFAULT_INTEREST_RATE, creditLimit);
     }
     // default creditLimit & interestRate
-    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency) {
-        this(secretKey,primaryOwner, secondaryOwner, minimumBalanceAmount, balanceAmount, currency, DEFAULT_INTEREST_RATE, new Money(DEFAULT_CREDIT_LIMIT_AMOUNT, currency));
+    public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency) {
+        this(secretKey,primaryOwner, secondaryOwner, balanceAmount, currency, DEFAULT_INTEREST_RATE, new Money(DEFAULT_CREDIT_LIMIT_AMOUNT, currency));
     }
 }

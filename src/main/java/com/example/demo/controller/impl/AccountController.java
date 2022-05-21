@@ -1,12 +1,8 @@
-package com.example.demo.controller.impl.accounts;
+package com.example.demo.controller.impl;
 
 import com.example.demo.DTO.*;
-import com.example.demo.controller.interfaces.accounts.AccountControllerInterface;
+import com.example.demo.controller.interfaces.AccountControllerInterface;
 import com.example.demo.model.accounts.Account;
-import com.example.demo.model.accounts.CheckingAccount;
-import com.example.demo.model.accounts.CreditCardAccount;
-import com.example.demo.model.accounts.SavingsAccount;
-import com.example.demo.model.users.User;
 import com.example.demo.service.interfaces.accounts.AccountServiceInterface;
 import com.example.demo.service.interfaces.accounts.CheckingAccountServiceInterface;
 import com.example.demo.service.interfaces.accounts.CreditCardAccountServiceInterface;
@@ -70,17 +66,17 @@ public class AccountController implements AccountControllerInterface {
     // Create a new Checking Account
     @PostMapping("/accounts/checking")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCheckingAccount(@RequestBody @Valid NewCheckingAccountDTO accountDTO) { checkingService.createCheckingAccount(accountDTO); }
+    public void createCheckingAccount(@RequestBody @Valid NewAccountDTO accountDTO) { checkingService.createCheckingAccount(accountDTO); }
 
     // Create a new Credit Card Account
     @PostMapping("/accounts/credit-card")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCreditCardAccount(@RequestBody @Valid NewCreditCardAccountDTO accountDTO) { creditCardService.createCreditCardAccount(accountDTO); }
+    public void createCreditCardAccount(@RequestBody @Valid NewAccountDTO accountDTO) { creditCardService.createCreditCardAccount(accountDTO); }
 
     // Create a new Savings Account
     @PostMapping("/accounts/savings")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createSavingsAccount(@RequestBody @Valid NewSavingsAccountDTO accountDTO) { savingsService.createSavingsAccount(accountDTO); }
+    public void createSavingsAccount(@RequestBody @Valid NewAccountDTO accountDTO) { savingsService.createSavingsAccount(accountDTO); }
 
 
     // PUT ENDPOINTS ----------------------------------------------------------------------------------

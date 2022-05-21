@@ -1,4 +1,4 @@
-package com.example.demo.controller.interfaces.accounts;
+package com.example.demo.controller.interfaces;
 
 import com.example.demo.DTO.*;
 import com.example.demo.model.accounts.Account;
@@ -20,11 +20,11 @@ public interface AccountControllerInterface {
 
 
     // Create a new Checking Account
-    void createCheckingAccount(NewCheckingAccountDTO accountDTO);
+    void createCheckingAccount(NewAccountDTO accountDTO);
     // Create a new Credit Card Account
-    void createCreditCardAccount(NewCreditCardAccountDTO accountDTO);
+    void createCreditCardAccount(NewAccountDTO accountDTO);
     // Create a new Savings Account
-    void createSavingsAccount(NewSavingsAccountDTO accountDTO);
+    void createSavingsAccount(NewAccountDTO accountDTO);
 
     // Modify an account's balance
     void updateAccountBalance(String number, AccountBalanceOnlyDTO accountDto);

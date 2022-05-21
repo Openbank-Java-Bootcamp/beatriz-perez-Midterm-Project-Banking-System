@@ -1,6 +1,6 @@
 package com.example.demo.service.impl.accounts;
 
-import com.example.demo.DTO.NewSavingsAccountDTO;
+import com.example.demo.DTO.NewAccountDTO;
 import com.example.demo.model.accounts.SavingsAccount;
 import com.example.demo.model.secondary.Money;
 import com.example.demo.repository.accounts.SavingsAccountRepository;
@@ -30,7 +30,7 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
     // Methods
 
     // CREATE A NEW SAVINGS ACCOUNT
-    public SavingsAccount createSavingsAccount(NewSavingsAccountDTO accountDTO) {
+    public SavingsAccount createSavingsAccount(NewAccountDTO accountDTO) {
         SavingsAccount account = new SavingsAccount(
                 accountDTO.getSecretKey(),
                 accHolderRepo.findById( accountDTO.getPrimaryOwnerId() ).get(),
