@@ -17,7 +17,7 @@ public interface AccountControllerInterface {
     // Get a list of all MY active accounts (primary AND secondary owner) as authenticated user
     List<Account> getAllMyAccounts();
     // Get account details of one of MY accounts by accountNumber (primary AND secondary owner) as authenticated user
-
+    Account getMyAccountByNumber(String number);
 
     // Create a new Checking Account
     void createCheckingAccount(NewAccountDTO accountDTO);
