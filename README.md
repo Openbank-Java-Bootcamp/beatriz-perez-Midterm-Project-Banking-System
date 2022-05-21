@@ -9,21 +9,21 @@ that runs on a local server:
 
 ***
 ## Readme index:
--  [How to use the API](#how-to-use-the-API:)
--  [Project Structure](#project-Structure)
-- Project Structure
-  - 4 types of accounts
-  - 3 types of Users + 2 Roles
-  - create new Checking, Savings, or CreditCard Accounts
-  - Interest and Fees
-  - Account Access
+- [How to use the API](#how-to-use-the-files)
+- [Project Structure](#project-Structure)
+  - [4 types of accounts](#accounts)
+  - [3 types of Users + 2 Roles](#users)
+  - [create new Checking, Savings, or CreditCard Accounts](#create-accounts)
+  - [Interest and Fees](#interest-and-fees)
+  - [Account Access](#account-access)
+
 - Technical Requirements <-----------------------------------------------
 - Extra features <-----------------------------------------------
 - How the project was built <-----------------------------------------------
 
 ***
 
-## How to use the API:
+## How to use the files
 1. Download the **project**: [GitHub repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
 
 2. Make sure your **DB** is ready for queries. <br/>
@@ -42,7 +42,8 @@ that runs on a local server:
 
 ## Project Structure
 
-### 1. The system has 4 types of accounts: StudentChecking, Checking, Savings, and CreditCard
+### Accounts
+### requirement 1: The system has 4 types of accounts: StudentChecking, Checking, Savings, and CreditCard
 
    ## Account class
    ### Parent class
@@ -135,7 +136,8 @@ that runs on a local server:
     * Interest rates DEDUCTED monthly by Account Service **based on negative balance** (credit) <br/><br/>
 
 
-### 2. The system has 3 types of Users: Admins, Third-party Users and AccountHolders + 2 Roles
+### Users
+### requirement 2: The system has 3 types of Users: Admins, Third-party Users and AccountHolders + 2 Roles
 
    ## User class
    ### Parent class
@@ -208,18 +210,21 @@ that runs on a local server:
     <br/>
 
 
-### 3. Admins can create new Checking, Savings, or CreditCard Accounts
+### Create accounts
+### requirement 3: Admins can create new Checking, Savings, or CreditCard Accounts
 
 - Create CHECKING account through createCheckingAccount() method in CheckingAccountService (it wil automatically be set to STUDENT / REGULAR by checkAge() method)<br/>
 - Create CREDIT CARD account through createCreditCardAccount() method in CreditCardAccountService (correct limits will be set by checkCreditLimit() method)<br/>
 - Create SAVINGS account through createSavingsAccount() method in SavingsAccountService (correct limits will be set by checkMinimumBalance() method)<br/>
 
-### 4. Interest and Fees are applied automatically every time an account is accessed by AccountService methods
+### Interest and fees
+### requirement 4: Interest and Fees are applied automatically every time an account is accessed by AccountService methods
 
 - Penalty fee: applied any time the balance of an account goes below the minimum through applyPenaltyFeeIfApplicable() method. Previously we check if it has been already applied through checkPenaltyAlreadyApplied() method, so it is not applied twice.
 - Interests: reviewed any time an account is accessed and applied if appropriate through checkInterestRates() method. It will check the type of the account and the date of the last review.
 
-### 5. Account Access
+### Account access
+### requirement 5: Account Access
 
 #### ANYONE can access:
 - log in endpoint: http://localhost:8080/api/login
