@@ -159,7 +159,7 @@ that runs on a local server:
 
    ## ThirdParty class
    ### Parent class
-   **Extends:** --- class <br/>
+   **Table name:** Third_party
    * no extending child classes <br/>
    **Properties:**  <br/>
     - Long id ---> Generated Value <br/>
@@ -178,7 +178,7 @@ that runs on a local server:
 
    ## Role class
    ### Parent class
-   **Extends:** --- class <br/>
+   **Table name:** Role
    * no extending child classes <br/><br/>
    **Properties:**  <br/>
     - Long id ---> Generated Value <br/>
