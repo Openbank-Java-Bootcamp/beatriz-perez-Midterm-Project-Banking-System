@@ -23,6 +23,24 @@ Use this Postman collection to test the app even faster:
 
 ### 1. The system has 4 types of accounts: StudentChecking, Checking, Savings, and CreditCard
 
+   ### Parent class
+   **Table name:** Account
+   **Inheritance type:** Single Table ---> All accounts will be added in this ONE table
+   **Properties:**
+    - Long accountNumber ---> Generated Value
+    - LocalDate creationDate ---> set by constructor  as the current date
+    - String secretKey ---> HASHED KEY (encrypted before being saved in the DB) + Not Empty validation
+    - AccountHolder primaryOwner ---> User Class > AccountHolder Class (OneToOne relation) + Not Null validation
+    - AccountHolder secondaryOwner ---> User Class > AccountHolder Class (OneToOne relation) + not required
+    - Status status ---> Status Enum --> Set by constructor as ACTIVE
+    - Money balance ---> Embedded  + Not Null validation
+    - Money minimumBalance ---> Embedded  + Not Null validation
+    - Money penaltyFee ---> Embedded , amount = 40 (FINAL value), same Currency as balance
+
+
+
+
+
 ### 2. The system has 3 types of Users: Admins, Third-party Users and AccountHolders
 
 ### 3. Admins can create new Checking, Savings, or CreditCard Accounts
