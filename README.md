@@ -10,9 +10,15 @@ A working REST API, built by **Beatriz Pérez Fernández** for OpenBank-IronHack
 
 ## How to use it:
 1. Download the **project**: [GitHub repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
-2. Make sure your **DB** is ready for queries. You can use workbench and create an "ironhack_labs" schema to run the app (and an "ironhack_labs_test" schema to run the tests): [MySQL Workbench](https://www.mysql.com/products/workbench/)
-3. Run the **app** from your IDE, for example IntelliJ IDEA. All entity tables will be created in the DB, go check it in workbench!: [IntelliJ IDEA](https://www.jetbrains.com/idea/promo/?source=google&medium=cpc&campaign=9736637745&term=intellij%20idea&gclid=Cj0KCQjwm6KUBhC3ARIsACIwxBiNkmA6c4mmEzhGgPIqwR7oB8EcwLAwNaYghuxPdrZg9VKEas3JgLMaAjX3EALw_wcB)
-4. Use Postman to test all available **endpoints**. You'll see in workbench how DB tables reflect the changes you make :)  [Postman](https://www.postman.com/)
+
+2. Make sure your **DB** is ready for queries. 
+   You can use workbench and create an "ironhack_labs" schema to run the app (and an "ironhack_labs_test" schema to run the tests): [MySQL Workbench](https://www.mysql.com/products/workbench/)
+
+3. Run the **app** from your IDE, for example IntelliJ IDEA. 
+   All entity tables will be created in the DB, go check it in workbench!: [IntelliJ IDEA](https://www.jetbrains.com/idea/promo/?source=google&medium=cpc&campaign=9736637745&term=intellij%20idea&gclid=Cj0KCQjwm6KUBhC3ARIsACIwxBiNkmA6c4mmEzhGgPIqwR7oB8EcwLAwNaYghuxPdrZg9VKEas3JgLMaAjX3EALw_wcB)
+
+4. Use Postman to test all available **endpoints**. 
+   You'll see in workbench how DB tables reflect the changes you make :)  [Postman](https://www.postman.com/)
 
 Use this Postman collection to test the app even faster:
 
