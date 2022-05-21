@@ -200,7 +200,10 @@ that runs on a local server:
 - Create CREDIT CARD account through createCreditCardAccount() method in CreditCardAccountService (correct limits will be set by checkCreditLimit() method)<br/>
 - Create SAVINGS account through createSavingsAccount() method in SavingsAccountService (correct limits will be set by checkMinimumBalance() method)<br/>
 
-### 4. Interest and Fees are applied automatically every time an account is accessed
+### 4. Interest and Fees are applied automatically every time an account is accessed by AccountService methods
+
+- Penalty fee: applied any time the balance of an account goes below the minimum through applyPenaltyFeeIfApplicable() method. Previously we check if it has been already applied through checkPenaltyAlreadyApplied() method, so it is not applied twice.
+- Interests: reviewed any time an account is accessed and applied if appropriate through checkInterestRates() method. It will check the type of the account and the date of the last review.
 
 ### 5. Account Access
 
