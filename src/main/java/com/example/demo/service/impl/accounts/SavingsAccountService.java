@@ -38,8 +38,6 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
                 accountDTO.getBalanceAmount(),
                 Currency.getInstance( accountDTO.getCurrencyCode() )
         );
-        // Handle possible errors:
-            // balanceAmount < min -------------------------------------------
         // Set MINIMUM BALANCE according to allowed range:
         checkMinimumBalance(account);
         // Encrypt secret key:
@@ -50,8 +48,6 @@ public class SavingsAccountService implements SavingsAccountServiceInterface {
     }
 
     public SavingsAccount createSavingsAccount(SavingsAccount account) {
-        // Handle possible errors:
-            // balanceAmount < min -------------------------------------------
         // Set MINIMUM BALANCE according to allowed range:
         checkMinimumBalance(account);
         // Encrypt secret key:

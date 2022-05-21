@@ -9,6 +9,7 @@ import com.example.demo.model.secondary.Money;
 import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.ThirdParty;
 import com.example.demo.repository.accounts.AccountRepository;
+import com.example.demo.repository.accounts.CheckingAccountRepository;
 import com.example.demo.repository.accounts.CreditCardAccountRepository;
 import com.example.demo.repository.accounts.SavingsAccountRepository;
 import com.example.demo.repository.users.AccountHolderRepository;
@@ -40,6 +41,10 @@ public class AccountService implements AccountServiceInterface {
     @Autowired
     private AccountRepository accountRepo;
     @Autowired
+    private CheckingAccountRepository checkingAccountRepo;
+    @Autowired
+    private CheckingAccountService checkingAccountService;
+    @Autowired
     private CreditCardAccountRepository creditCardAccountRepo;
     @Autowired
     private SavingsAccountRepository savingsAccountRepo;
@@ -62,6 +67,10 @@ public class AccountService implements AccountServiceInterface {
         List<Account> list = accountRepo.findAll();
         // Check interest rates
         list.forEach( account -> checkInterestRates(account) );
+        // If checking account, check age
+        list.forEach( account -> {
+            if( checkingAccountRepo.findById(account.getAccountNumber()).isPresent() ) checkingAccountService.checkAge(checkingAccountRepo.findById(account.getAccountNumber()).get());
+        } );
         // Return results
         return list;
     }
@@ -77,6 +86,10 @@ public class AccountService implements AccountServiceInterface {
         if(accounts.size() == 0) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No elements to show" ); }
         // Check interest rates
         accounts.forEach( account -> checkInterestRates(account) );
+        // If checking account, check age
+        accounts.forEach( account -> {
+            if( checkingAccountRepo.findById(account.getAccountNumber()).isPresent() ) checkingAccountService.checkAge(checkingAccountRepo.findById(account.getAccountNumber()).get());
+        } );
         // Return results
         return accounts;
     }
@@ -91,6 +104,10 @@ public class AccountService implements AccountServiceInterface {
         if(accounts.size() == 0) { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No elements to show" ); }
         // Check interest rates
         accounts.forEach( account -> checkInterestRates(account) );
+        // If checking account, check age
+        accounts.forEach( account -> {
+            if( checkingAccountRepo.findById(account.getAccountNumber()).isPresent() ) checkingAccountService.checkAge(checkingAccountRepo.findById(account.getAccountNumber()).get());
+        } );
         // Return results
         return accounts;
     }
@@ -103,6 +120,8 @@ public class AccountService implements AccountServiceInterface {
         Account account = accountRepo.findById(accountNumber).get();
         // Check interest rates
         checkInterestRates(account);
+        // If checking account, check age
+        if( checkingAccountRepo.findById(account.getAccountNumber()).isPresent() ) checkingAccountService.checkAge(checkingAccountRepo.findById(account.getAccountNumber()).get());
         // Return account:
         return account;
     }
@@ -122,6 +141,8 @@ public class AccountService implements AccountServiceInterface {
         }
         // Check interest rates
         checkInterestRates(account.get());
+        // If checking account, check age
+        if( checkingAccountRepo.findById(account.get().getAccountNumber()).isPresent() ) checkingAccountService.checkAge(checkingAccountRepo.findById(account.get().getAccountNumber()).get());
         // Return account:
         return account.get();
     }
@@ -133,6 +154,8 @@ public class AccountService implements AccountServiceInterface {
         if(account.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No account found with the specified number"); }
         // Check interest rates before modifications are applied
         checkInterestRates(account.get());
+        // If checking account, check age
+        if( checkingAccountRepo.findById(account.get().getAccountNumber()).isPresent() ) checkingAccountService.checkAge(checkingAccountRepo.findById(account.get().getAccountNumber()).get());
         // Update account:
         log.info("Updating balance of account");
         Money newBalance = new Money( newBalanceAmount, account.get().getBalance().getCurrency() );
@@ -166,6 +189,8 @@ public class AccountService implements AccountServiceInterface {
         }
         // Check interest rates before modifications are applied
         checkInterestRates(account.get());
+        // If checking account, check age
+        if( checkingAccountRepo.findById(account.get().getAccountNumber()).isPresent() ) checkingAccountService.checkAge(checkingAccountRepo.findById(account.get().getAccountNumber()).get());
         // The transaction should only be processed if the account has sufficient funds:
         // check if origin account is a credit card account:
         if(creditCardAccountRepo.findById(transactionDto.getAccountNumber()).isPresent()) {
@@ -205,6 +230,8 @@ public class AccountService implements AccountServiceInterface {
         if(transferDto.getAmount().compareTo(BigDecimal.ZERO) == -1) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Amount should not be negative"); }
         // Check interest rates before modifications are applied only in destination account (origin was reviewed by getMyAccountByNumber method)
         checkInterestRates(destinationAccount.get());
+        // If checking account, check age
+        if( checkingAccountRepo.findById(destinationAccount.get().getAccountNumber()).isPresent() ) checkingAccountService.checkAge(checkingAccountRepo.findById(destinationAccount.get().getAccountNumber()).get());
         // The transfer should only be processed if the account has sufficient funds:
         // check if origin account is a credit card account:
         if(creditCardAccountRepo.findById(transferDto.getOriginAccountNumber()).isPresent()) {
@@ -253,6 +280,7 @@ public class AccountService implements AccountServiceInterface {
 
     // APPLY PENALTY FEE
     public boolean checkPenaltyAlreadyApplied(Account account) {
+        // will only apply if the balance was not below the limit before the transaction(it would have already been applied)
         if(account.getMinimumBalance() == null) return true; // To avoid applying it in case there is no minimum
         return account.getBalance().getAmount().compareTo(account.getMinimumBalance().getAmount())  == -1 ? true : false;
     }

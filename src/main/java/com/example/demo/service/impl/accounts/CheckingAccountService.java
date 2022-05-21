@@ -39,8 +39,6 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
                 accountDTO.getBalanceAmount(),
                 Currency.getInstance( accountDTO.getCurrencyCode() )
         );
-        // Handle possible errors:
-
         // Set account type and conditions according to owner's age:
         checkAge(account);
         // Encrypt secret key:
@@ -50,8 +48,6 @@ public class CheckingAccountService implements CheckingAccountServiceInterface {
         return CheckingAccountRepo.save(account);
     }
     public CheckingAccount createCheckingAccount(CheckingAccount account) {
-        // Handle possible errors:
-
         // Set account type and conditions according to owner's age:
         checkAge(account);
         // Encrypt secret key:

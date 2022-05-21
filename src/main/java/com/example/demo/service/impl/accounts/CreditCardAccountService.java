@@ -38,8 +38,6 @@ public class CreditCardAccountService implements CreditCardAccountServiceInterfa
                 accountDTO.getBalanceAmount(),
                 Currency.getInstance( accountDTO.getCurrencyCode() )
         );
-        // Handle possible errors:
-
         // Set CREDIT LIMIT according to allowed range:
         checkCreditLimit(account);
         // Encrypt secret key:
@@ -49,8 +47,6 @@ public class CreditCardAccountService implements CreditCardAccountServiceInterfa
         return CreditCardAccountRepo.save(account);
     }
     public CreditCardAccount createCreditCardAccount(CreditCardAccount account) {
-        // Handle possible errors:
-
         // Set CREDIT LIMIT according to allowed range:
         checkCreditLimit(account);
         // Encrypt secret key:
