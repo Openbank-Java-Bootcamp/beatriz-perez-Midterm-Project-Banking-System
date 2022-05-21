@@ -30,6 +30,7 @@ that runs on a local server:
 
 ### 1. The system has 4 types of accounts: StudentChecking, Checking, Savings, and CreditCard
 
+   ## Account class
    ### Parent class
    **Table name:** Account <br/>
    **Inheritance type:** Single Table ---> All accounts will be added in this ONE table  <br/>
@@ -44,7 +45,24 @@ that runs on a local server:
     - Money minimumBalance ---> Embedded  + Not Null validation  <br/>
     - Money penaltyFee ---> Embedded , amount = 40 (FINAL value), same Currency as balance  <br/>
 
-
+   ## Checking Account class
+   ### Child class
+   **Extends:** Account class <br/>
+   **Included in table:** Account
+   **Properties:**  <br/>
+    - Money monthlyMaintenanceFee ---> Embedded <br/>
+    - AccountType type = REGULAR / STUDENT ---> AccountType Enum **Created as Student type by default**  <br/>
+    <br/>
+    * AccountType depends on the age of the primaryOwner: if it is less than 24, a Student type account is created otherwise a Regular Checking Account is created.  <br/>
+    * When the primaryOwner of a Student Checking Account becomes 24 the account type is changed to REGULAR and conditions are changed (minimumBalance and monthlyMaintenanceFee) but the account is still valid and keeps it's original accountNumber.  <br/><br/>
+   **Conditions:**  <br/>
+    - REGULAR CheckingAccounts: minimumBalance of 250 <br/>
+    - STUDENT CheckingAccounts: minimumBalance of 0 <br/>
+    - REGULAR CheckingAccounts: monthlyMaintenanceFee of 12 <br/>
+    - STUDENT CheckingAccounts: monthlyMaintenanceFee of 0 <br/>
+   **Checking Account service methods:**  <br/>
+    - createCheckingAccount() <br/>
+    - checkAge() <br/>
 
 
 
