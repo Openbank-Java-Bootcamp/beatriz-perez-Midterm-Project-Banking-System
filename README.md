@@ -44,6 +44,7 @@ that runs on a local server:
     - Money balance ---> Embedded  + Not Null validation  <br/>
     - Money minimumBalance ---> Embedded  + Not Null validation  <br/>
     - Money penaltyFee ---> Embedded , amount = 40 (FINAL value), same Currency as balance  <br/>
+    <br/>
    **Service methods:**  <br/>
     -  <br/>
     -  <br/>
@@ -113,9 +114,96 @@ that runs on a local server:
     - checkCreditLimit() <br/>
     * Penalty fees applied by Account Service <br/>
     * Interest rates DEDUCTED monthly by Account Service **based on negative balance** (credit) <br/><br/>
-s
+
 
 ### 2. The system has 3 types of Users: Admins, Third-party Users and AccountHolders
+
+   ## User class
+   ### Parent class
+   **Table name:** User <br/>
+   **Inheritance type:** Single Table ---> All users will be added in this ONE table  <br/>
+   **Properties:**  <br/>
+    - Long id ---> Generated Value <br/>
+    - Name name ---> Embedded <br/>
+    - String username  ---> Not Empty validation <br/>
+    - String password  ---> Not Empty validation <br/>
+    - Collection<Role> roles ---> ManyToMany relation <br/>
+    <br/>
+   **Service methods:**  <br/>
+    - getAllUsers() <br/>
+    - getUserById() <br/>
+    - createUser() <br/>
+    - updateUserById() <br/>
+    - deleteUserById(Long id) <br/>
+    <br/>
+
+
+   ## AccountHolder class
+   ### Child class
+   **Extends:** User class <br/>
+   **Included in table:** User <br/>
+   **Properties:**  <br/>
+    - Date dateOfBirth ---> Not Null validation <br/>
+    - Address primaryAddress ---> Embedded  + Not Null validation <br/>
+    - Address mailingAddress ---> optional, Embedded <br/>
+    <br/>
+   **Conditions:**  <br/>
+    - The AccountHolders can access their own accounts and only their accounts when passing the correct credentials using Bearer Auth. (Account service) <br/>
+    - Account-holders can transfer money from any of their accounts to any other account (regardless of owner).  (Account service) <br/>
+   **Service methods:**  <br/>
+    - createAccountHolder() <br/>
+    - updateAccountHolderById() <br/>
+    <br/>
+
+
+   ## ThirdParty class
+   ### Parent class
+   **Extends:** --- class <br/>
+   * no extending child classes <br/>
+   **Properties:**  <br/>
+    - Long id ---> Generated Value <br/>
+    - String username ---> Not Empty validation <br/>
+    - String password ---> Not Empty validation <br/>
+    <br/>
+   **Conditions:**  <br/>
+    - Third parties can charge and refund money to other accounts (Account service) <br/>
+    - Third party users are added to the database by an admin <br/>
+   **Service methods:**  <br/>
+    - getAllThirdParties() <br/>
+    - createThirdParty() <br/>
+    - updateThirdPartyById <br/>
+    - deleteThirdPartyById <br/>
+    <br/>
+
+
+
+
+
+
+
+
+   ## --- class
+   ### Child class
+   **Extends:** --- class <br/>
+   **Included in table:** --- <br/>
+   **Properties:**  <br/>
+    -  <br/>
+    -  <br/>
+    <br/>
+   **Conditions:**  <br/>
+    -  <br/>
+    -  <br/>
+   **Service methods:**  <br/>
+    -  <br/>
+    -  <br/>
+    <br/>
+
+
+
+### 
+
+
+
 
 ### 3. Admins can create new Checking, Savings, or CreditCard Accounts
 
