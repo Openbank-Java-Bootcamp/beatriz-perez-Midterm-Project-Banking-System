@@ -38,7 +38,7 @@ public class RoleController implements RoleControllerInterface {
     }
 
     // Assign a role to a user:
-    @PostMapping("/roles/assign")
+    @PatchMapping("/roles/assign")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addRoleToUser(@RequestBody RoleToUserDTO roleToUserDTO) {
         roleService.addRoleToUser(roleToUserDTO.getUsername(), roleToUserDTO.getRoleName());

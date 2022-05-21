@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // create a new role
         http.authorizeRequests().antMatchers(POST, "/api/roles").hasAnyAuthority("ROLE_ADMIN");
         // assign a role to a user manually
-        http.authorizeRequests().antMatchers(POST, "/api/roles/assign").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(PATCH, "/api/roles/assign").hasAnyAuthority("ROLE_ADMIN");
 
         // USERS:
         // get a list of all active users

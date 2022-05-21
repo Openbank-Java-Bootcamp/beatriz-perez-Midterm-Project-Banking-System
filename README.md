@@ -6,8 +6,9 @@ that runs on a local server:
 - GitHub repository :  [GitHub repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
 - Simplified class diagram - project structure: [Class diagram](https://drive.google.com/file/d/1AzKxl9wNN_4bO68MQG1XOqBxD4r2wUzp/view?usp=sharing)
 - Documentation in the README.md file: [README.md file](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System/blob/master/README.md)
-
+  <br/><br/>
 ***
+
 ## Readme index:
 - [How to use the API](#how-to-use-the-files)
 - [Project Structure](#project-Structure)
@@ -21,6 +22,16 @@ that runs on a local server:
 - Extra features <-----------------------------------------------
 - How the project was built <-----------------------------------------------
 
+
+        Description of the project
+        Setup(Optional)
+        Technologies Used
+        Models
+        Server routes table(Method, Route or URL, Description as columns)
+        Future Work
+        Resources
+
+  <br/>
 ***
 
 ## How to use the files
@@ -36,9 +47,10 @@ that runs on a local server:
    You'll see in workbench how DB tables reflect the changes you make :)  [Postman](https://www.postman.com/) <br/> <br/>
    Use this Postman collection to test the app even faster: <br/> <br/>
    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/11775509-03638dea-ac4f-4625-8997-614e8e14049a?action=collection%2Ffork&collection-url=entityId%3D11775509-03638dea-ac4f-4625-8997-614e8e14049a%26entityType%3Dcollection%26workspaceId%3D14973f32-7e73-4c19-8b2d-26167656e88f)
-
-
+   <br/>
 ***
+
+  <br/>
 
 ## Project Structure
 
@@ -238,7 +250,7 @@ that runs on a local server:
 #### Only ADMIN role users can access:
 - endpoint to get a list of all existing roles: GET http://localhost:8080/api/roles
 - endpoint to create a new role: POST http://localhost:8080/api/roles
-- endpoint to assign a role to a user manually: POST http://localhost:8080/api/roles/assign
+- endpoint to assign a role to a user manually: PATCH http://localhost:8080/api/roles/assign
 
 - endpoint to get a list of all active users: GET http://localhost:8080/api/users
 - endpoint to get the details of any user by ID: GET http://localhost:8080/api/users/{id}
