@@ -1,6 +1,9 @@
 package com.example.demo.service.impl.users;
 
+import com.example.demo.model.users.AccountHolder;
 import com.example.demo.model.users.User;
+import com.example.demo.repository.accounts.AccountRepository;
+import com.example.demo.repository.users.AccountHolderRepository;
 import com.example.demo.repository.users.UserRepository;
 import com.example.demo.service.interfaces.security.RoleServiceInterface;
 import com.example.demo.service.interfaces.users.UserServiceInterface;
@@ -28,6 +31,10 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private AccountHolderRepository accountHolderRepo;
+    @Autowired
+    private AccountRepository accountRepo;
     @Autowired
     private RoleServiceInterface roleService;
     @Autowired
@@ -84,7 +91,16 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         Optional<User> user = userRepo.findById(id);
         // Handle possible errors:
         if(user.isEmpty()){ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No user found with the specified ID"); }
-        // CHECK FOR ACCOUNTS
+        // Check if user is an account holder:
+        if(accountHolderRepo.findById(id).isPresent()) {
+            // CHECK FOR ACCOUNTS:
+            if( accountRepo.findAllByPrimaryOwner(accountHolderRepo.findById(id).get()).size() != 0) {
+                { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "User is owner of one or more accounts. Please modify accounts first." ); }
+            }
+            if( accountRepo.findAllBySecondaryOwner(accountHolderRepo.findById(id).get()).size() != 0) {
+                { throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "User is secondary owner of one or more accounts. Please modify accounts first." ); }
+            }
+        }
         // Delete user:
         log.info("Deleting user");
         userRepo.delete(user.get());
