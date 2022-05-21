@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
         // ----------------------------------------------------------------------------------------------------------------------
-        // ANYONE ca access:
+        // ANYONE can access:
         // LOG IN
         http.authorizeRequests().antMatchers("/api/login/**").permitAll();
         // Third Party transactions
