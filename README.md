@@ -46,14 +46,19 @@ that runs on a local server:
     - Money penaltyFee ---> Embedded , amount = 40 (FINAL value), same Currency as balance  <br/>
     <br/>
    **Service methods:**  <br/>
-    -  <br/>
-    -  <br/>
-    - When any account drops below the minimumBalance, the penaltyFee is deducted from the balance automatically <br/>
-    -  <br/>
-    -  <br/>
-    -  <br/>
-    -  <br/>
-
+    - getAllAccounts() <br/>
+    - getAllAccountsByOwner() <br/>
+    - getAllMyAccounts() <br/>
+    - getAccountByNumber() <br/>
+    - getMyAccountByNumber() <br/>
+    - updateAccountBalance() <br/>
+    - operateAsThirdParty() <br/>
+    - transferMoney() <br/>
+    - deleteAccountByNumber() <br/>
+    - getOwnerFromAuthentication() <br/>
+    - checkPenaltyAlreadyApplied() <br/>
+    - applyPenaltyFeeIfApplicable() <br/>
+    - checkInterestRates() <br/>
 
    ## Checking Account class
    ### Child class
@@ -160,7 +165,7 @@ that runs on a local server:
    ## ThirdParty class
    ### Parent class
    **Table name:** Third_party
-   * no extending child classes <br/>
+   - no extending child classes <br/>
    **Properties:**  <br/>
     - Long id ---> Generated Value <br/>
     - String username ---> Not Empty validation <br/>
@@ -179,7 +184,7 @@ that runs on a local server:
    ## Role class
    ### Parent class
    **Table name:** Role
-   * no extending child classes <br/><br/>
+   - no extending child classes <br/>
    **Properties:**  <br/>
     - Long id ---> Generated Value <br/>
     - String name ---> Not Empty validation <br/>
@@ -192,6 +197,10 @@ that runs on a local server:
 
 
 ### 3. Admins can create new Checking, Savings, or CreditCard Accounts
+
+- Create CHECKING account through createCheckingAccount() method in CheckingAccountService (it wil automatically be set to STUDENT / REGULAR by checkAge() method)<br/>
+- Create CREDIT CARD account through createCreditCardAccount() method in CreditCardAccountService (correct limits will be set by checkCreditLimit() method)<br/>
+- Create SAVINGS account through createSavingsAccount() method in SavingsAccountService (correct limits will be set by checkMinimumBalance() method)<br/>
 
 ### 4. Interest and Fees are applied automatically every time an account is accessed
 
