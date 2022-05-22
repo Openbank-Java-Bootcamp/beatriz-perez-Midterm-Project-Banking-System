@@ -43,7 +43,10 @@ that runs on a local server:
 
 ## Description of the project
 
-This is an API for a banking system with a structure based on **three types of users**: admin, account holder and third party users 
+This is an API for a banking system where registered users can log in, access their accounts and transfer money.
+
+
+with a structure based on **three types of users**: admin, account holder and third party users 
 that can interact in different ways with **three types of accounts**: savings, credit card and checking accounts.
 
 **Admin users** are the ones who can create new accounts and modify their properties freely, change their balance or even delete them.
@@ -72,7 +75,10 @@ Penalty fees are applied if an account's balance goes below it's minimum balance
 ***
 
 ## Extra features
-
+- **Roles:** roles are the way to control authorization. Admin users can create new roles and assign them to any user in case new functionalities where to be added. Modifying and deleting roles is not allowed, since it could make the application stop working.
+- **Creating a user:** any time a user or an account holder is created **corresponding roles are assigned automatically**. User instances get a ROLE_ADMIN while AccountHolder instances get a ROLE_ACCOUNTHOLDER.
+- **Deleting a user:** when a user is deleted, the application **automatically searches for accounts where this user is primary or secondary owner**, and alerts for them to be deleted before deleting the user. This avoids future errors handling those accounts.
+- **Checking account type:** when a checking account is created, it's type, maintenance fee and minimum balance are set depending on the age of the primary owner. Once created, the app automatically checks the owner's age any time the account is accessed. When a STUDENT account holder becomes 24 the app **automatically updates the account's type from STUDENT to REGULAR** and sets the corresponding minimum balance and maintenance fee.
    <br/>
 
 ***
