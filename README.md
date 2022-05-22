@@ -88,7 +88,7 @@ Once the owner becomes 24, conditions will be updated and maintenance fee will b
 
 ## Bonus: Fraud Detection
 - **Account status:** each time a transfer is done by an account holder or a transaction from a third party is processed the application checks the status of the account, and only allows it if it is ACTIVE.
-- **Last transaction date:** 
+- **Last transaction date:** the date of the last transaction of each account is stored in the account DB table.
 - **Fraud detection:** 
 
    <br/>

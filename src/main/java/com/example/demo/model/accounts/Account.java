@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Optional;
 
@@ -30,6 +31,9 @@ public class Account {
 
     @Column(name = "creation_date")
     private LocalDate creationDate;
+
+    @Column(name = "last_transaction_date")
+    private LocalDateTime transactionDate;
 
     @Column(name = "conditions_review_date")
     private LocalDate conditionsReviewDate;
@@ -81,6 +85,7 @@ public class Account {
     public Account(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal minimumBalanceAmount, BigDecimal balanceAmount, Currency currency) {
         this.creationDate = LocalDate.now(); // Current date
         this.conditionsReviewDate = LocalDate.now(); // Creation date is the first value for conditions review date
+        this.transactionDate = LocalDateTime.now();
         this.secretKey = secretKey;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;

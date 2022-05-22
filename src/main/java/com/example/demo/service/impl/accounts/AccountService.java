@@ -29,7 +29,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -168,12 +170,11 @@ public class AccountService implements AccountServiceInterface {
         if(!passwordEncoder.matches(transactionDto.getAccountSecretKey(), account.get().getSecretKey()) ) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account key does not match the specified key");
         }
-        if(account.get().getStatus().equals(Status.FROZEN)){
-            throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Account is FROZEN" );
-        }
         if(!account.get().getBalance().getCurrency().getCurrencyCode().equals(transactionCurrencyCode)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account currency does not match the request currency");
         }
+        // Check fraud patterns and account status:
+        checkForFraud(account.get());
         // Check account conditions to apply corresponding fees, interests or changes
         checkConditions(account.get());
         // The transaction should only be processed if the account has sufficient funds or credit:
@@ -204,16 +205,11 @@ public class AccountService implements AccountServiceInterface {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Origin account currency does not match the request currency");
         }
         if(transferDto.getAmount().compareTo(BigDecimal.ZERO) == -1) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Amount to transfer should not be negative"); }
-        if(originAccount.getStatus().equals(Status.FROZEN)){
-            throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Origin account is FROZEN" );
-        }
-        if(destinationAccount.get().getStatus().equals(Status.FROZEN)){
-            throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Destination account is FROZEN" );
-        }
-
+        // Check fraud patterns and account status:
+        checkForFraud(originAccount);
+        checkForFraud(destinationAccount.get());
         // Check account conditions to apply corresponding fees, interests or changes (only destination acc. as origin acc. is checked in getMyAccountByNumber method)
         checkConditions(destinationAccount.get());
-
         // The transfer should only be processed if the account has sufficient funds:
         checkFundsAndCredit(originAccount, transferDto.getAmount().negate());
         // Check if penalty could have been already applied:
@@ -337,6 +333,19 @@ public class AccountService implements AccountServiceInterface {
             if(account.getBalance().getAmount().add(amount).compareTo(BigDecimal.ZERO) == -1) {
                 throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient funds" );
             }
+        }
+    }
+
+    // FRAUD DETECTION
+    public void checkForFraud(Account account) {
+        // Check for patterns that indicate fraud and Freeze account if needed
+        if( Duration.between(account.getTransactionDate(), LocalDateTime.now()).toSeconds() < 1 ) {
+            log.info("Period between transactions is too small. Freezing account.");
+            account.setStatus(Status.FROZEN);
+        }
+        // Check account status and stop transactions in case it is frozen
+        if(account.getStatus().equals(Status.FROZEN)){
+            throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Origin account is FROZEN" );
         }
     }
 
