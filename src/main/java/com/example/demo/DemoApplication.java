@@ -59,20 +59,20 @@ public class DemoApplication {
 
 				// USERS:
 				// - admin users
-				userService.createUser(new User(new Name("Antonio", "Sanchez"), "antoniosanchez", "1234"));
+				userService.createUser(new User(new Name("Marlon", "Brando"), "godfather", "1234"));
 				// - account holders
-				AccountHolder aH1 = new AccountHolder(new Name("Marta", "Lopez"), "martalopez", "1234", "1990-04-22", new Address("Villarias 10", "Bilbao", "Spain", "48888"));
-				AccountHolder aH2 = new AccountHolder(new Name("Lara", "Carreras"), "larita22", "lara26", "2000-10-03", new Address("Acacias 4", "Barcelona", "Spain", "48888"), new Address("Acacias 4", "Barcelona", "Spain", "48888"));
+				AccountHolder aH1 = new AccountHolder(new Name("Ingrid", "Bergman"), "bergman", "1234", "1990-04-22", new Address("Villarias 10", "Bilbao", "Spain", "48888"));
+				AccountHolder aH2 = new AccountHolder(new Name("James", "Dean"), "dean22", "1234", "2000-10-03", new Address("Acacias 4", "Barcelona", "Spain", "48888"), new Address("Acacias 4", "Barcelona", "Spain", "48888"));
 				aHolderService.createAccountHolder(aH1);
 				aHolderService.createAccountHolder(aH2);
 				// - third parties
-				tPartyService.createThirdParty(new ThirdParty("Paola321", "1111"));
+				tPartyService.createThirdParty(new ThirdParty("netflixsubscription", "1234"));
 
 				// ACCOUNTS
 				// - savings accounts
-				savingsService.createSavingsAccount( new SavingsAccount("3210", aH2, null, new BigDecimal("10000"), Currency.getInstance("EUR")) );
+				savingsService.createSavingsAccount( new SavingsAccount("1234", aH2, null, new BigDecimal("10000"), Currency.getInstance("EUR")) );
 				// - credit card account
-				cCardService.createCreditCardAccount( new CreditCardAccount("abcd", aH1, null, new BigDecimal("1000"), Currency.getInstance("EUR")) );
+				cCardService.createCreditCardAccount( new CreditCardAccount("1234", aH1, null, new BigDecimal("1000"), Currency.getInstance("EUR")) );
 				// - checking accounts
 				// -----> regular (account holder 1 is over 24)
 				checkingService.createCheckingAccount( new CheckingAccount("1234", aH1, aH2, new BigDecimal("250"), Currency.getInstance("EUR")) );

@@ -37,7 +37,7 @@ that runs on a local server:
    You'll see in workbench how DB tables reflect the changes you make :)  [Postman](https://www.postman.com/) <br/> <br/>
    Use this Postman collection to test the app even faster: <br/> <br/>
    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/11775509-03638dea-ac4f-4625-8997-614e8e14049a?action=collection%2Ffork&collection-url=entityId%3D11775509-03638dea-ac4f-4625-8997-614e8e14049a%26entityType%3Dcollection%26workspaceId%3D14973f32-7e73-4c19-8b2d-26167656e88f)
-   <br/>
+<br/>
 
 ***
 
