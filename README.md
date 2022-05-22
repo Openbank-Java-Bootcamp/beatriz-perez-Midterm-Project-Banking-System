@@ -93,31 +93,31 @@ Penalty fees are applied if an account's balance goes below it's minimum balance
    ![spring initializr](./src/images/initializr.png)
 
 2. Model: **ENTITIES**
-    - entities for accounts and users, properties and relationships
+    - entities for accounts and users, properties and relationships (Jakarta persistence + Lombok)
     - auxiliary classes and enums (Status, Money, Address...)
-    - dependencies and application properties for validation
+    - dependencies and application properties for validation (Spring Boot validation)
     - conditions for each entity property when needed
     * Money class for all currency and BigDecimal for any other decimal or large number
 
 3. Repository: communicate with **DATABASE**
-    - repositories for all entities: roles, accounts and users to communicate with the DataBase
+    - repositories for all entities: roles, accounts and users to communicate with the DataBase (Spring framework - JPA repository)
     - Everything is stored in MySQL database tables:
 
    ![MySQL database tables](./src/images/DBtables.png)
 
 4. Service: methods and **BUSINESS LOGIC**
     - service interfaces for all entities: roles, accounts and users to include methods to implement
-    - service implementations (classes) for all entities: roles, accounts and users to implement methods and handle possible errors
+    - service implementations (classes) for all entities: roles, accounts and users to implement methods and handle possible errors (Spring framework service)
 
 5. Controller: **ENDPOINTS** and methods for requests (GET, POST, PUT/PATCH, and DELETE route)
     - controller interfaces for roles, accounts and users to include methods to implement
-    - controller implementations (classes) for roles, accounts and users to implement methods and establish endpoint routes
+    - controller implementations (classes) for roles, accounts and users to implement methods and establish endpoint routes (Spring framework REST controller)
 
 6. Security configuration: **AUTHENTICATION** and **AUTHORIZATION** with Spring Security
     - dependencies: jwt dependency
     - filters for authentication and authorization
-    - security configuration file
-    - PasswordEncoder to encode passwords
+    - security configuration file - routes and allowed roles for each of them
+    - PasswordEncoder to encode passwords every time a password or secret key is sent to the database
 
 7. **Tests** and test application properties
 
