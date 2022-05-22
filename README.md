@@ -9,23 +9,19 @@ that runs on a local server:
 ***
 
 ## Readme index:
-- [Description of the project](#description-of-the-project)
 - [How to use the files](#how-to-use-the-files)
-- [Project Structure](#project-Structure)
+- [Description of the project and main features](#description-of-the-project)
+- [Extra features](#setup-and-technologies-used)
+- [Setup and technologies used](#setup-and-technologies-used)
+- [Project Structure and requirements](#project-Structure)
   - [Class diagram](#simplified-class-diagram)
   - [4 types of accounts](#accounts)
   - [3 types of Users + 2 Roles](#users)
   - [create new Checking, Savings, or CreditCard Accounts](#create-accounts)
   - [Interest and Fees](#interest-and-fees)
-  - [Account Access](#account-access)
-- Extra features <-----------------------------------------------
-- Setup and technologies used <-----------------------------------------------
+  - [Account Access - endpoints](#account-access)
 
 
-## Description of the project
-        
-
-  <br/>
 ***
 
 ## How to use the files
@@ -42,9 +38,88 @@ that runs on a local server:
    Use this Postman collection to test the app even faster: <br/> <br/>
    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/11775509-03638dea-ac4f-4625-8997-614e8e14049a?action=collection%2Ffork&collection-url=entityId%3D11775509-03638dea-ac4f-4625-8997-614e8e14049a%26entityType%3Dcollection%26workspaceId%3D14973f32-7e73-4c19-8b2d-26167656e88f)
    <br/>
+
 ***
 
+## Description of the project
+
+This is an API for a banking system with a structure based on **three types of users**: admin, account holder and third party users 
+that can interact in different ways with **three types of accounts**: savings, credit card and checking accounts.
+
+**Admin users** are the ones who can create new accounts and modify their properties freely, change their balance or even delete them.
+They can also create new users. User instances are automatically given a role of admin, while account holders are given an account-holder role.
+Admins could also create new roles and assign them to any user.
+Admins will also store in the database third party users. These users will not own any accounts or have a role, and will just provide a username and a password.
+
+**Account holders** can be primary or secondary owners of any type of account. 
+Once logged in, they can access the information of their own accounts and transfer money from them to any other account in the DB by providing the account number and name of one of the owners.
+
+**Third Party** users can get and send money to accounts as long as they are registered in the database and provide the account number and secret key. 
+They do not log in,and can not get any information from users or accounts.
+
+**Checking accounts** are created with different properties depending on the age f the primary owner.
+If it is below 24, the account will not have a minimum balance or a monthly maintenance fee. 
+Once the owner becomes 24, conditions will be updated automatically and maintenance fee will be applied.
+
+**Savings accounts** have an interest rate that is applied automatically every year.
+
+**Credit Card accounts** have a minimum balance according to their credit limit, and an interest rate that is deducted automatically once a month if balance is negative.
+
+Penalty fees are applied if an account's balance goes below it's minimum balance.
+
+<br/>
+
+***
+
+## Extra features
+
+   <br/>
+
+***
+
+
+## Setup and technologies used
+
+- Task management in Trello: [Trello tasks board](https://trello.com/invite/b/uEPSEIQa/8df7c946d07d38e4d7ce9ce5a126751e/midtermbankingsystem)
+
+1. Java/Spring Boot backend. Project structure created with [start.spring.io](https://start.spring.io/)
+
+   ![spring initializr](./src/images/initializr.png)
+
+2. Model: **ENTITIES**
+    - entities for accounts and users, properties and relationships
+    - auxiliary classes and enums (Status, Money, Address...)
+    - dependencies and application properties for validation
+    - conditions for each entity property when needed
+    * Money class for all currency and BigDecimal for any other decimal or large number
+
+3. Repository: communicate with **DATABASE**
+    - repositories for all entities: roles, accounts and users to communicate with the DataBase
+    - Everything is stored in MySQL database tables:
+
+   ![MySQL database tables](./src/images/DBtables.png)
+
+4. Service: methods and **BUSINESS LOGIC**
+    - service interfaces for all entities: roles, accounts and users to include methods to implement
+    - service implementations (classes) for all entities: roles, accounts and users to implement methods and handle possible errors
+
+5. Controller: **ENDPOINTS** and methods for requests (GET, POST, PUT/PATCH, and DELETE route)
+    - controller interfaces for roles, accounts and users to include methods to implement
+    - controller implementations (classes) for roles, accounts and users to implement methods and establish endpoint routes
+
+6. Security configuration: **AUTHENTICATION** and **AUTHORIZATION** with Spring Security
+    - dependencies: jwt dependency
+    - filters for authentication and authorization
+    - security configuration file
+    - PasswordEncoder to encode passwords
+
+7. **Tests** and test application properties
+
+***
+
+
   <br/>
+***
 
 ## Project Structure
 
@@ -278,58 +353,3 @@ that runs on a local server:
 - endpoint to freely modify an account's balance: PATCH http://localhost:8080/api/accounts/{account-number}
 
 - endpoint to delete an account by account number: DELETE http://localhost:8080/api/accounts/{account-number}
-
-
-***
-
-## Extra features
-### Fraud Detection
-The application must recognize patterns that indicate fraud and Freeze the account status when potential fraud is detected.
-Patterns that indicate fraud include:
-- Transactions made in 24 hours total to more than 150% of the customers highest daily total transactions in any other 24 hour period.
-- More than 2 transactions occur on a single account within a 1 second period.
-
-***
-
-## Setup and technologies used
-
-- Task management in Trello: [Trello tasks board](https://trello.com/invite/b/uEPSEIQa/8df7c946d07d38e4d7ce9ce5a126751e/midtermbankingsystem)
-
-1. Java/Spring Boot backend. Project structure created with [start.spring.io](https://start.spring.io/)
-
-    ![spring initializr](./src/images/initializr.png)
-
-2. Model: **ENTITIES**
-   - entities for accounts and users, properties and relationships
-   - auxiliary classes and enums (Status, Money, Address...)
-   - dependencies and application properties for validation
-   - conditions for each entity property when needed
-   * Money class for all currency and BigDecimal for any other decimal or large number
-
-3. Repository: communicate with **DATABASE**
-   - repositories for all entities: roles, accounts and users to communicate with the DataBase
-   - Everything is stored in MySQL database tables:
-
-   ![MySQL database tables](./src/images/DBtables.png)
-
-4. Service: methods and **BUSINESS LOGIC**
-   - service interfaces for all entities: roles, accounts and users to include methods to implement
-   - service implementations (classes) for all entities: roles, accounts and users to implement methods and handle possible errors
-
-5. Controller: **ENDPOINTS** and methods for requests (GET, POST, PUT/PATCH, and DELETE route)
-   - controller interfaces for roles, accounts and users to include methods to implement
-   - controller implementations (classes) for roles, accounts and users to implement methods and establish endpoint routes
-
-6. Security configuration: **AUTHENTICATION** and **AUTHORIZATION** with Spring Security
-   - dependencies: jwt dependency
-   - filters for authentication and authorization
-   - security configuration file
-   - PasswordEncoder to encode passwords
-   
-7. **Tests** and test application properties
-
-***
-
-
-
-
