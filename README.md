@@ -4,7 +4,6 @@ A working **REST API**, built by **Beatriz Pérez Fernández** for OpenBank-Iron
 that runs on a local server:
 
 - GitHub repository :  [GitHub repository](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System.git)
-- Simplified class diagram - project structure: [Class diagram](https://drive.google.com/file/d/1AzKxl9wNN_4bO68MQG1XOqBxD4r2wUzp/view?usp=sharing)
 - Documentation in the README.md file: [README.md file](https://github.com/Openbank-Java-Bootcamp/beatriz-perez-Midterm-Project-Banking-System/blob/master/README.md)
   <br/><br/>
 ***
@@ -52,6 +51,8 @@ that runs on a local server:
 ## Project Structure
 
 ### Simplified class diagram
+
+- editable class diagram - project structure: [Class diagram](https://drive.google.com/file/d/1AzKxl9wNN_4bO68MQG1XOqBxD4r2wUzp/view?usp=sharing)
 
 ![class diagram](./src/images/class-diagram.png)
 
