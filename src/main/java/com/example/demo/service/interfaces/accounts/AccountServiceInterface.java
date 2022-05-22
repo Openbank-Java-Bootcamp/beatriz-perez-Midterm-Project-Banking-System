@@ -45,7 +45,7 @@ public interface AccountServiceInterface {
     boolean checkPenaltyAlreadyApplied(Account account);
     void applyPenaltyFeeIfApplicable(boolean wasPenaltyAlreadyApplied , Account account);
 
-    // APPLY INTEREST RATES
-    void checkInterestRates(Account account);
+    // REVIEW ACCOUNT CONDITIONS APPLY INTEREST RATES AND MAINTENANCE FEES
+    void checkConditions(Account account);
 
 }

@@ -24,9 +24,6 @@ public class CreditCardAccount  extends Account{
     @DecimalMin(value = "0.1", message = "CreditCard accounts should have a minimum interest rate of 0.1")
     private BigDecimal interestRate;
 
-    @Column(name = "interest_review_date")
-    private LocalDate interestReviewDate;
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "amount", column = @Column(name = "credit_limit")),
@@ -38,14 +35,13 @@ public class CreditCardAccount  extends Account{
     private static final BigDecimal DEFAULT_INTEREST_RATE = new BigDecimal("0.2");
     private static final BigDecimal DEFAULT_CREDIT_LIMIT_AMOUNT = new BigDecimal("100");
 
-    // Minimum balance = 0 - credit_limit ---> DEFAULT_CREDIT_LIMIT_AMOUNT.negate()
 
     // Constructors
     public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate, Money creditLimit) {
+        // Minimum balance = 0 - credit_limit ---> DEFAULT_CREDIT_LIMIT_AMOUNT.negate()
         super( secretKey, primaryOwner, secondaryOwner, DEFAULT_CREDIT_LIMIT_AMOUNT.negate(), balanceAmount, currency );
         this.interestRate = interestRate;
         this.creditLimit = creditLimit;
-        this.interestReviewDate = LocalDate.now(); // Creation date is the first value for interest review date
     }
     // default creditLimit
     public CreditCardAccount(String secretKey, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal balanceAmount, Currency currency, BigDecimal interestRate) {
