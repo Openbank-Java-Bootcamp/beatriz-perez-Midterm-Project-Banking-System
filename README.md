@@ -18,14 +18,12 @@ that runs on a local server:
   - [create new Checking, Savings, or CreditCard Accounts](#create-accounts)
   - [Interest and Fees](#interest-and-fees)
   - [Account Access](#account-access)
-
-- Technical Requirements <-----------------------------------------------
 - Extra features <-----------------------------------------------
-- How the project was built <-----------------------------------------------
+- Setup and technologies used <-----------------------------------------------
 
 
 ## Description of the project
-        Setup(Optional) and technologies used
+        
 
   <br/>
 ***
@@ -234,8 +232,8 @@ that runs on a local server:
 ### Interest and fees
 ### requirement 4: Interest and Fees are applied automatically every time an account is accessed by AccountService methods
 
-- Penalty fee: applied any time the balance of an account goes below the minimum through applyPenaltyFeeIfApplicable() method. Previously we check if it has been already applied through checkPenaltyAlreadyApplied() method, so it is not applied twice.
-- Interests: reviewed any time an account is accessed and applied if appropriate through checkInterestRates() method. It will check the type of the account and the date of the last review.
+- **Penalty fee:** applied any time the balance of an account goes below the minimum through applyPenaltyFeeIfApplicable() method. Previously we check if it has been already applied through checkPenaltyAlreadyApplied() method, so it is not applied twice.
+- **Interests:** reviewed any time an account is accessed and applied if appropriate through checkInterestRates() method. It will check the type of the account and the date of the last review.
 
 ### Account access
 ### requirement 5: Account Access
@@ -284,15 +282,6 @@ that runs on a local server:
 
 ***
 
-## Technical Requirements
-- Include a Java/Spring Boot backend.
-- Everything should be stored in MySQL database tables.
-- Include at least 1 GET, POST, PUT/PATCH, and DELETE route.
-- Include authentication with Spring Security.
-- Include unit and integration tests.
-- Include robust error handling.
-- You must use the Money class for all currency and BigDecimal for any other decimal or large number math.
-
 ## Extra features
 ### Fraud Detection
 The application must recognize patterns that indicate fraud and Freeze the account status when potential fraud is detected.
@@ -302,42 +291,42 @@ Patterns that indicate fraud include:
 
 ***
 
-## How the project was built:
+## Setup and technologies used
 
-- Task management in Trello:
+- Task management in Trello: [Trello tasks board](https://trello.com/invite/b/uEPSEIQa/8df7c946d07d38e4d7ce9ce5a126751e/midtermbankingsystem)
 
-   [Trello tasks board](https://trello.com/invite/b/uEPSEIQa/8df7c946d07d38e4d7ce9ce5a126751e/midtermbankingsystem)
-
-### Steps
-
-1. Download PROJECT STRUCTURE and dependencies from [start.spring.io](https://start.spring.io/)
-
-    Spring Boot set up with **spring Initializr**:
+1. Java/Spring Boot backend. Project structure created with [start.spring.io](https://start.spring.io/)
 
     ![spring initializr](./src/images/initializr.png)
 
-2. Model: CREATE ENTITIES
-   - Create entities for accounts and users and establish their properties and relationships
-   - Create auxiliary classes and enums (Status, Money...)
-   - Add dependencies and application properties for validation
-   - Add conditions for each entity property when needed
+2. Model: **ENTITIES**
+   - entities for accounts and users, properties and relationships
+   - auxiliary classes and enums (Status, Money, Address...)
+   - dependencies and application properties for validation
+   - conditions for each entity property when needed
+   * Money class for all currency and BigDecimal for any other decimal or large number
 
-3. Repository: COMMUNICATE WITH DATABASE
-   - Create repositories for all entities: roles, accounts and users to communicate with the DataBase
+3. Repository: communicate with **DATABASE**
+   - repositories for all entities: roles, accounts and users to communicate with the DataBase
+   - Everything is stored in MySQL database tables:
 
-4. Service: CREATE METHODS AND ADD BUSINESS LOGIC
-   - Create service interfaces for all entities: roles, accounts and users to include methods to implement
-   - Create service implementations (classes) for all entities: roles, accounts and users to implement methods
+   ![MySQL database tables](./src/images/DBtables.png)
 
-5. Controller: create ENDPOINTS and add methods for requests
-   - Create controller interfaces for all entities: roles, accounts and users to include methods to implement
-   - Create controller implementations (classes) for all entities: roles, accounts and users to implement methods and establish endpoint routes
+4. Service: methods and **BUSINESS LOGIC**
+   - service interfaces for all entities: roles, accounts and users to include methods to implement
+   - service implementations (classes) for all entities: roles, accounts and users to implement methods and handle possible errors
 
-6. Security configuration, AUTHENTICATION and AUTHORIZATION
-   - Add dependencies: jwt dependency
-   - Add filters for authentication and authorisation
-   - Add a security configuration file
-   - Use PasswordEncoder to encode passwords
+5. Controller: **ENDPOINTS** and methods for requests (GET, POST, PUT/PATCH, and DELETE route)
+   - controller interfaces for roles, accounts and users to include methods to implement
+   - controller implementations (classes) for roles, accounts and users to implement methods and establish endpoint routes
+
+6. Security configuration: **AUTHENTICATION** and **AUTHORIZATION** with Spring Security
+   - dependencies: jwt dependency
+   - filters for authentication and authorization
+   - security configuration file
+   - PasswordEncoder to encode passwords
+   
+7. **Tests** and test application properties
 
 ***
 
