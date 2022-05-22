@@ -173,17 +173,7 @@ public class AccountService implements AccountServiceInterface {
         // Check account conditions to apply corresponding fees, interests or changes
         checkConditions(account.get());
         // The transaction should only be processed if the account has sufficient funds or credit:
-        if(creditCardAccountRepo.findById(transactionDto.getAccountNumber()).isPresent()) {
-            // Check credit availability for credit card accounts
-            if(account.get().getBalance().getAmount().add(transactionDto.getAmount()).compareTo(account.get().getMinimumBalance().getAmount()) == -1) {
-                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient credit limit" );
-            }
-        } else {
-            // Check balance availability for savings and checking accounts
-            if(account.get().getBalance().getAmount().add(transactionDto.getAmount()).compareTo(BigDecimal.ZERO) == -1) {
-                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient funds" );
-            }
-        }
+        checkFundsAndCredit(account.get(), transactionDto.getAmount());
         // Check if penalty could have been already applied:
         boolean wasPenaltyAlreadyApplied = checkPenaltyAlreadyApplied(account.get());
         // Update account:
@@ -215,16 +205,7 @@ public class AccountService implements AccountServiceInterface {
         checkConditions(destinationAccount.get());
 
         // The transfer should only be processed if the account has sufficient funds:
-        // check if origin account is a credit card account:
-        if(creditCardAccountRepo.findById(transferDto.getOriginAccountNumber()).isPresent()) {
-            if(originAccount.getBalance().getAmount().subtract(transferDto.getAmount()).compareTo(originAccount.getMinimumBalance().getAmount()) == -1) {
-                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient credit limit" );
-            }
-        } else {
-            if(originAccount.getBalance().getAmount().compareTo(transferDto.getAmount()) == -1) {
-                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient funds" );
-            }
-        }
+        checkFundsAndCredit(originAccount, transferDto.getAmount().negate());
         // Check if penalty could have been already applied:
         boolean wasPenaltyAlreadyApplied = checkPenaltyAlreadyApplied(originAccount);
         // Update accounts:
@@ -331,6 +312,22 @@ public class AccountService implements AccountServiceInterface {
         // Update review date:
         account.setConditionsReviewDate(LocalDate.now());
         accountRepo.save(account);
+    }
+
+    // CHECK SUFFICIENT FUNDS OR CREDIT
+    public void checkFundsAndCredit(Account account, BigDecimal amount) {
+        // Transactions should only be processed if the account has sufficient funds or credit:
+        if(creditCardAccountRepo.findById(account.getAccountNumber()).isPresent()) {
+            // Check credit availability for credit card accounts
+            if(account.getBalance().getAmount().add(amount).compareTo(account.getMinimumBalance().getAmount()) == -1) {
+                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient credit limit" );
+            }
+        } else {
+            // Check balance availability for savings and checking accounts
+            if(account.getBalance().getAmount().add(amount).compareTo(BigDecimal.ZERO) == -1) {
+                throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "No sufficient funds" );
+            }
+        }
     }
 
 }

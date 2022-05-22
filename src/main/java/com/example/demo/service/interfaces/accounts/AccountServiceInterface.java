@@ -48,4 +48,7 @@ public interface AccountServiceInterface {
     // REVIEW ACCOUNT CONDITIONS APPLY INTEREST RATES AND MAINTENANCE FEES
     void checkConditions(Account account);
 
+    // CHECK SUFFICIENT FUNDS OR CREDIT
+    void checkFundsAndCredit(Account account, BigDecimal amount);
+
 }
