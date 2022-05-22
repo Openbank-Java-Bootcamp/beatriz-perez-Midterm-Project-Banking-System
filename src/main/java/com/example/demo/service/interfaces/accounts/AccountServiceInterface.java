@@ -51,4 +51,7 @@ public interface AccountServiceInterface {
     // CHECK SUFFICIENT FUNDS OR CREDIT
     void checkFundsAndCredit(Account account, BigDecimal amount);
 
+    // FRAUD DETECTION
+    void checkForFraud(Account account);
+
 }

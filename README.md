@@ -12,6 +12,7 @@ that runs on a local server:
 - [How to use the files](#how-to-use-the-files)
 - [Description of the project and main features](#description-of-the-project)
 - [Extra features](#setup-and-technologies-used)
+- [Bonus: Fraud Detection](#bonus-fraud-detection)
 - [Setup and technologies used](#setup-and-technologies-used)
 - [Project Structure and requirements](#project-Structure)
   - [Class diagram](#simplified-class-diagram)
@@ -81,6 +82,15 @@ Once the owner becomes 24, conditions will be updated and maintenance fee will b
 - **Checking account type:** when a checking account is created, it's type, maintenance fee and minimum balance are set depending on the age of the primary owner. Once created, the app automatically checks the owner's age any time the account is accessed. When a STUDENT account holder becomes 24 the app **automatically updates the account's type from STUDENT to REGULAR** and sets the corresponding minimum balance and maintenance fee.
 - **CreditCard account credit:** when a credit card account type is created, minimum balance is set to the negative value of its credit limit. Any time a user tries to charge or transfer money from a credit card account the application checks this minimum balance instead of the actual balance to allow the user to benefit from credit. 
 - **CreditCard account interest:** monthly interest in credit accounts **is deducted** from the account balance every month **if balance is below 0, which means the owner is borrowing money from the bank**. This interest is only applied to negative balance, so no interest is applied when balance is positive. 
+   <br/>
+- 
+***
+
+## Bonus: Fraud Detection
+- **Account status:** when an account is created it's status is set by default to ACTIVE.
+- **Last transaction date:** the date of the last transaction of each account is stored in the account DB table.
+- **Fraud detection:** each time a transfer is done by an account holder or a transaction from a third party is processed **checkForFraud method** checks the time duration between this transaction and the previous one. If it is smaller than one second it changes the status of the account to FROZEN. Then it checks the status of the account and only allows the transaction if it is ACTIVE. Lastly, it updates the transactionDate of the account.
+
    <br/>
 
 ***
