@@ -117,20 +117,17 @@ Penalty fees are applied if an account's balance goes below it's minimum balance
 
 ***
 
-
-  <br/>
-***
-
 ## Project Structure
-
 ### Simplified class diagram
 
 - editable class diagram - project structure: [Class diagram](https://drive.google.com/file/d/1AzKxl9wNN_4bO68MQG1XOqBxD4r2wUzp/view?usp=sharing)
 
 ![class diagram](./src/images/class-diagram.png)
 
-### Accounts
-### requirement 1: The system has 4 types of accounts: StudentChecking, Checking, Savings, and CreditCard
+***
+
+## Accounts
+### The system has 4 types of accounts: StudentChecking, Checking, Savings, and CreditCard
 
    ## Account class
    ### Parent class
@@ -222,9 +219,10 @@ Penalty fees are applied if an account's balance goes below it's minimum balance
     * Penalty fees applied by Account Service <br/>
     * Interest rates DEDUCTED monthly by Account Service **based on negative balance** (credit) <br/><br/>
 
+***
 
-### Users
-### requirement 2: The system has 3 types of Users: Admins, Third-party Users and AccountHolders + 2 Roles
+## Users
+### The system has 3 types of Users: Admins, Third-party Users and AccountHolders + 2 Roles
 
    ## User class
    ### Parent class
@@ -296,19 +294,25 @@ Penalty fees are applied if an account's balance goes below it's minimum balance
     - addRoleToUser <br/>
     <br/>
 
+***
 
-### Create accounts
-### requirement 3: Admins can create new Checking, Savings, or CreditCard Accounts
+## Create accounts
+### Admins can create new Checking, Savings, or CreditCard Accounts
 
 - Create CHECKING account through createCheckingAccount() method in CheckingAccountService (it wil automatically be set to STUDENT / REGULAR by checkAge() method)<br/>
 - Create CREDIT CARD account through createCreditCardAccount() method in CreditCardAccountService (correct limits will be set by checkCreditLimit() method)<br/>
 - Create SAVINGS account through createSavingsAccount() method in SavingsAccountService (correct limits will be set by checkMinimumBalance() method)<br/>
 
-### Interest and fees
-### requirement 4: Interest and Fees are applied automatically every time an account is accessed by AccountService methods
+***
 
+## Interest and fees
+### Interest and Fees are applied automatically every time an account is accessed by AccountService methods
+
+- **Monthly maintenance fee:** reviewed any time an account is accessed and applied if appropriate through checkMaintenance() method.
 - **Penalty fee:** applied any time the balance of an account goes below the minimum through applyPenaltyFeeIfApplicable() method. Previously we check if it has been already applied through checkPenaltyAlreadyApplied() method, so it is not applied twice.
 - **Interests:** reviewed any time an account is accessed and applied if appropriate through checkInterestRates() method. It will check the type of the account and the date of the last review.
+
+***
 
 ### Account access
 ### requirement 5: Account Access
