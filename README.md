@@ -45,30 +45,28 @@ that runs on a local server:
 
 This is an API for a banking system where registered users can log in, access their accounts and transfer money.
 
-
-with a structure based on **three types of users**: admin, account holder and third party users 
-that can interact in different ways with **three types of accounts**: savings, credit card and checking accounts.
-
-**Admin users** are the ones who can create new accounts and modify their properties freely, change their balance or even delete them.
-They can also create new users. User instances are automatically given a role of admin, while account holders are given an account-holder role.
-Admins could also create new roles and assign them to any user.
-Admins will also store in the database third party users. These users will not own any accounts or have a role, and will just provide a username and a password.
+**Admin users** are the ones who can create new accounts and modify their properties freely, change their balance or delete them.
+They can also create new users, who can be new admin users or account holders.
+Admins can also store in the database third party users.
 
 **Account holders** can be primary or secondary owners of any type of account. 
-Once logged in, they can access the information of their own accounts and transfer money from them to any other account in the DB by providing the account number and name of one of the owners.
+Once logged in, they can access the information of their own accounts and transfer money from them to any other account in the DB.
 
-**Third Party** users can get and send money to accounts as long as they are registered in the database and provide the account number and secret key. 
-They do not log in,and can not get any information from users or accounts.
+**Third Party** users can charge and make refunds to accounts as long as they are registered in the database and provide the account number and secret key.
+These users will not own any accounts or have a role, and will just provide a username and a password.
+They do not log in, and can not get any information from other users or accounts.
 
-**Checking accounts** are created with different properties depending on the age f the primary owner.
+Available account types:
+
+**Checking accounts** are created with different properties depending on the age of the primary owner.
 If it is below 24, the account will not have a minimum balance or a monthly maintenance fee. 
-Once the owner becomes 24, conditions will be updated automatically and maintenance fee will be applied.
+Once the owner becomes 24, conditions will be updated and maintenance fee will be applied.
 
 **Savings accounts** have an interest rate that is applied automatically every year.
 
 **Credit Card accounts** have a minimum balance according to their credit limit, and an interest rate that is deducted automatically once a month if balance is negative.
 
-Penalty fees are applied if an account's balance goes below it's minimum balance.
+**Penalty fees** are applied if an account's balance goes below it's minimum balance.
 
 <br/>
 
