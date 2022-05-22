@@ -144,6 +144,7 @@ Once the owner becomes 24, conditions will be updated and maintenance fee will b
    **Properties:**  <br/>
     - Long accountNumber ---> Generated Value  <br/>
     - LocalDate creationDate ---> set by constructor  as the current date  <br/>
+    - LocalDate conditionsReviewDate ---> set by constructor  as the current date  <br/>
     - String secretKey ---> HASHED KEY (encrypted before being saved in the DB) + Not Empty validation  <br/>
     - AccountHolder primaryOwner ---> User Class > AccountHolder Class (OneToOne relation) + Not Null validation  <br/>
     - AccountHolder secondaryOwner ---> User Class > AccountHolder Class (OneToOne relation) + not required  <br/>
@@ -165,7 +166,8 @@ Once the owner becomes 24, conditions will be updated and maintenance fee will b
     - getOwnerFromAuthentication() <br/>
     - checkPenaltyAlreadyApplied() <br/>
     - applyPenaltyFeeIfApplicable() <br/>
-    - checkInterestRates() <br/>
+    - checkConditions() <br/>
+    - checkFundsAndCredit() <br/>
 
    ## Checking Account class
    ### Child class
@@ -193,7 +195,6 @@ Once the owner becomes 24, conditions will be updated and maintenance fee will b
    **Included in table:** Account <br/>
    **Properties:**  <br/>
     - BigDecimal interestRate ---> Decimal max + Decimal min validation <br/>
-    - LocalDate interestReviewDate  ---> set by constructor  as the current date <br/>
     <br/>
    **Conditions:**  <br/>
     - Default interestRate of 0.0025 ---> Constructor overloading + chaining <br/>
@@ -212,7 +213,6 @@ Once the owner becomes 24, conditions will be updated and maintenance fee will b
    **Included in table:** Account <br/>
    **Properties:**  <br/>
     - BigDecimal interestRate ---> Decimal max + Decimal min validation <br/>
-    - LocalDate interestReviewDate  ---> set by constructor  as the current date <br/>
     - Money creditLimit ---> Embedded <br/>
     <br/>
    **Conditions:**  <br/>
