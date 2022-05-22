@@ -10,8 +10,10 @@ that runs on a local server:
 ***
 
 ## Readme index:
-- [How to use the API](#how-to-use-the-files)
+- [Description of the project](#description-of-the-project)
+- [How to use the files](#how-to-use-the-files)
 - [Project Structure](#project-Structure)
+  - [Class diagram](#simplified-class-diagram)
   - [4 types of accounts](#accounts)
   - [3 types of Users + 2 Roles](#users)
   - [create new Checking, Savings, or CreditCard Accounts](#create-accounts)
@@ -23,13 +25,8 @@ that runs on a local server:
 - How the project was built <-----------------------------------------------
 
 
-        Description of the project
-        Setup(Optional)
-        Technologies Used
-        Models
-        Server routes table(Method, Route or URL, Description as columns)
-        Future Work
-        Resources
+## Description of the project
+        Setup(Optional) and technologies used
 
   <br/>
 ***
@@ -53,6 +50,10 @@ that runs on a local server:
   <br/>
 
 ## Project Structure
+
+### Simplified class diagram
+
+![class diagram](./src/images/class-diagram.png)
 
 ### Accounts
 ### requirement 1: The system has 4 types of accounts: StudentChecking, Checking, Savings, and CreditCard
