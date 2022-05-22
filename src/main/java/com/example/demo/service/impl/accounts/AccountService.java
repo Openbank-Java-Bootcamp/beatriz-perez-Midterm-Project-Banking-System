@@ -347,6 +347,8 @@ public class AccountService implements AccountServiceInterface {
         if(account.getStatus().equals(Status.FROZEN)){
             throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY, "Origin account is FROZEN" );
         }
+        // Update transaction date
+        account.setTransactionDate(LocalDateTime.now());
     }
 
 }
