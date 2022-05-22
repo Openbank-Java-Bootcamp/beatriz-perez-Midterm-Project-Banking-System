@@ -47,13 +47,13 @@ This is an API for a banking system where registered users can log in, access th
 
 **Admin users** are the ones who can create new accounts and modify their properties freely, change their balance or delete them.
 They can also create new users, who can be new admin users or account holders.
-Admins can also store in the database third party users.
+Admins can also store in the database third party users (external users, stores, services, etc. that might charge or refund amounts to accounts).
 
 **Account holders** can be primary or secondary owners of any type of account. 
 Once logged in, they can access the information of their own accounts and transfer money from them to any other account in the DB.
 
-**Third Party** users can charge and make refunds to accounts as long as they are registered in the database and provide the account number and secret key.
-These users will not own any accounts or have a role, and will just provide a username and a password.
+**Third Party** users can charge or make refunds to accounts as long as they are registered in the database and provide the account number and secret key.
+These users will not own any accounts or have a role. When created, they will just provide a username and a password to be stored in the DB.
 They do not log in, and can not get any information from other users or accounts.
 
 Available account types:
@@ -66,7 +66,7 @@ Once the owner becomes 24, conditions will be updated and maintenance fee will b
 
 **Credit Card accounts** have a minimum balance according to their credit limit, and an interest rate that is deducted automatically once a month if balance is negative.
 
-**Penalty fees** are applied if an account's balance goes below it's minimum balance.
+**Penalty fees** are applied if an account's balance goes below the minimum balance.
 
 <br/>
 
@@ -316,9 +316,9 @@ Once the owner becomes 24, conditions will be updated and maintenance fee will b
 ## Interest and fees
 ### Interest and Fees are applied automatically every time an account is accessed by AccountService methods
 
-- **Monthly maintenance fee:** reviewed any time an account is accessed and applied if appropriate through checkMaintenance() method.
+- **Monthly maintenance fee:** reviewed any time an account is accessed and applied if appropriate through checkConditions() method.
+- **Interests:** reviewed any time an account is accessed and applied if appropriate through checkConditions() method. It will check the type of the account and the date of the last review.
 - **Penalty fee:** applied any time the balance of an account goes below the minimum through applyPenaltyFeeIfApplicable() method. Previously we check if it has been already applied through checkPenaltyAlreadyApplied() method, so it is not applied twice.
-- **Interests:** reviewed any time an account is accessed and applied if appropriate through checkInterestRates() method. It will check the type of the account and the date of the last review.
 
 ***
 
